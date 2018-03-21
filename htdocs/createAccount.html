@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
+      <div class="container-fluid">
+        <div class="navbar-header">
+  <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+          <a class="navbar-brand" href="index.html">Stupid Cupid</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="#" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        </ul>
+      </div>
+  </nav>
+  <div class = "usingForm" style = "padding-top: 100px; padding-left: 25%; padding-right: 25%">
+    <form>
+      <legend>Login Information </legend>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="confirmPw">Confirm Password</label>
+        <input type="password" class="form-control" id="comfirmpw" placeholder="Confirm Password">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email Address</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
+      </div>
+      <br>
+      <legend>Personal Information</legend>
+      <div class="form-group">
+        <label for="username">First Name</label>
+        <input type="text" class="form-control" id="firstname" placeholder="First Name">
+      </div>
+      <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+      </div>
+      <div class="form-group">
+        <label for="birthdate">Birthdate</label>
+        <input type="password" class="form-control" id="birthdate" placeholder="mm/dd/yyyy">
+      </div>
+      <div class="form-group">
+        <label for="birthdate">Zip Code</label>
+        <input type="password" class="form-control" id="birthdate" placeholder="Example: 12345">
+      </div>
+
+
+      <!-- Gender Section -->
+      <fieldset class="form-group">
+        <legend>Gender</legend>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">
+            Female
+          </label>
+        </div>
+        <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+            Male
+          </label>
+        </div>
+        <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">
+            Other
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Preference Section -->
+      <fieldset class="form-group2">
+        <legend>Preference</legend>
+        <div class="form-check2">
+          <label class="form-check-label2">
+            <input type="radio" class="form-check-input2" name="optionsRadios2" id="optionsRadios4" value="option4">
+            Female
+          </label>
+        </div>
+        <div class="form-check2">
+        <label class="form-check-label2">
+            <input type="radio" class="form-check-input2" name="optionsRadios2" id="optionsRadios5" value="option5">
+            Male
+          </label>
+        </div>
+        <div class="form-check2">
+        <label class="form-check-label2">
+            <input type="radio" class="form-check-input2" name="optionsRadios2" id="optionsRadios6" value="option6">
+            Both
+          </label>
+        </div>
+      </fieldset>
+      <br>
+
+      <!-- About Me Section -->
+      <div class="form-group">
+        <legend>About Me</legend>
+        <textarea class="form-control" id="aboutme" rows="5" placeholder = "Please enter some biography about yourself"></textarea>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input">
+          By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy Conditions</a>.
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</body>
