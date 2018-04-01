@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+		
+		<!-- LIST OF FONTS -->
+        <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet"> 
+		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">		
+    
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<!-- Main javascript controller -->
+		<script src="controller.js"></script>
+		
+	</head>
+	
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
+            <div class="container-fluid">
+              <div class="navbar-header">
+			  <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+                <a class="navbar-brand" href="index.html">Stupid Cupid</a>
+              </div>       
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" id="myBtn" style="color: #e03c78""><span class="glyphicon glyphicon-log-in"></span>Signout</a></li>
+			</ul>
+			
+			
+			<script>
+				var btn = document.getElementById("myBtn");
+				// When the user clicks the button, open the modal 
+				btn.onclick = function() {
+					signOut();
+				}
+			</script>
+				
+		<div class="myProfile">
+			<h1 style="text-align: center" id="profileName">My Profile</h1>
+			<center><div id="profilePic">
+			<img src="./png/add-user.png" style="height:200px;width:200px">
+			</div></center>
+			
+	
+			<div id="profileContent">
+				<div class="editable">
+					<img src="./png/edit.png"><div class="heading">Firstname</div><br/>
+					<h4>Henry</p>
+				</div>
+				<div class="editable">
+					<img src="./png/edit.png"><div class="heading">Lasttname</div><br/>
+				</div>
+				<div class="editable">
+					<img src="./png/edit.png"><div class="heading">Phone</div><br/>
+				</div>
+				<div class="editable">
+					<img src="./png/edit.png"><div class="heading">Address</div><br/>
+				</div>
+				<div class="editable">
+					<img src="./png/edit.png"><div class="heading">About Me</div><br/>
+					<h4>AppName is an Android application that will change they way you interact with people. No more struggle of talking to multiple people at one time. On AppName you'll know that
+                your match is just focusing on your conversation giving you the best opportunity to showcase your personality. INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.
+                INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.
+				</p>
+				</div>
+				<div class="editable">
+					<img src="./png/edit.png"><div class="heading">My Hobbies</div><br/>
+				</div>
+			
+			</div>
+			
+		</div>
+	
+	</body>
+</html>
