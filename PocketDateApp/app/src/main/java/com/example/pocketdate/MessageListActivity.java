@@ -1,14 +1,21 @@
 package com.example.pocketdate;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.stupidcupid.R;
 
@@ -89,6 +96,127 @@ public class MessageListActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.match, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            openDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // opens the dialog for viewing match options
+    private void openDialog()
+    {
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Match Options");
+
+        // add a list
+        String[] animals = {"Unmatch", "Report"};
+        builder.setItems(animals, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // unmatch
+                        confirmUnmatch();
+                        break;
+                    case 1: // report
+                }
+            }
+        });
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    // will be interesting to see if this works well
+    private void processUnmatch()
+    {
+        ServerConnection unMatchConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
+        Log.v("user's id", Integer.toString(this.userID));
+        String resultString = unMatchConn.unmatchPerson(this.userID);
+        Log.v("Returned JSON", resultString);
+
+        JSONArray resultJSON = null;
+        JSONObject jsonObj = null;
+
+        try {
+            resultJSON = new JSONArray(resultString);
+            jsonObj = resultJSON.getJSONObject(0);
+            int userID = jsonObj.getInt("userID");
+            String userEmail = jsonObj.getString("email");
+            String profileLocation = jsonObj.getString("profileLocation");
+            String firstName = jsonObj.getString("firstName");
+            String lastName = jsonObj.getString("lastName");
+            boolean inChat = jsonObj.getBoolean("inChat");
+
+            Log.v("Profile", profileLocation);
+            // login attempt was successful and we should proceed to the next activity
+                // Start NewActivity.class
+            Intent myIntent = new Intent(MessageListActivity.this,
+                    MatchActivity.class);
+            myIntent.putExtra("userID", userID);
+            myIntent.putExtra("inputEmail", userEmail);
+            myIntent.putExtra("profileLocation", profileLocation);
+            myIntent.putExtra("firstName", firstName);
+            myIntent.putExtra("lastName", lastName);
+            myIntent.putExtra("inChat", inChat);
+            // creates a little text bubble indicating that the login was successful
+            Toast.makeText(MessageListActivity.this, "Successfully Unmatched!", Toast.LENGTH_LONG).show();
+            startActivity(myIntent);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //go through the process of switching back to the main activity page..
+    }
+    // additional dialog box to ensure that the user wants to unmatch with the current person
+    private void confirmUnmatch()
+    {
+        // setup the alert builder
+        AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this);
+        confirmBuilder.setTitle("Are you sure you want to unmatch with " + this.matchFirstName + "?");
+
+        confirmBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                // Do nothing but close the dialog
+                Log.v("Unmatch chosen", "User chose to unmatch with the person");
+                processUnmatch();
+            }
+        });
+
+        confirmBuilder.setNegativeButton("No", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+                Log.v("Cancel Chosen", "User chose to stay with match");
+            }
+        });
+
+        AlertDialog myDialog = confirmBuilder.create();
+        myDialog.show();
+
     }
 
     private void grabProfile()

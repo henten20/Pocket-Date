@@ -6,7 +6,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.stupidcupid.com.example.pocketdate.MessageListActivity">
+    tools:context="com.example.pocketdate.MessageListActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:background="@color/titlebackgroundcolor">
+    </android.support.design.widget.AppBarLayout>
 
 
     <android.support.v7.widget.RecyclerView
