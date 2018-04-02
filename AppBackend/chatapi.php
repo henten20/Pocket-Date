@@ -19,12 +19,110 @@
 		$action = $_POST['action'];
 		
 		switch($action) {
-			case 'load' : updateMessages(False);break;
+			case 'load' : userInChat();break;
 			case 'send' : updateMessages(True);break;
 			case 'profile' : getMatchID();break;
+			case 'unmatch' : unmatchPerson();break;
 		}
 	}
 	
+	// runs through the steps necessary for unmatching with someone 
+	// TODO: add a field in the db that prevents two users from matching again after they have unmatched
+	function unmatchPerson()
+	{
+		$conn = $GLOBALS["conn"];
+		$userID = $_POST["userID"];
+
+		$userOneID = -1;
+		$userTwoID = -1;
+		$chatID = -1;
+
+		$inChatBool = False;
+
+		// multiple sql queries are performed 
+		$sql = $conn->prepare("SELECT chatID, user_one, user_two FROM chat WHERE user_one = ? or user_two = ?");
+		$sql->bind_param("ss", $userID, $userID);
+		$sql->execute();
+		$result = $sql->get_result();	
+
+		while ($row = $result->fetch_assoc())
+		{
+			$chatID = $row["chatID"];
+			$userOneID = $row["user_one"];
+			$userTwoID = $row["user_two"];
+		}		
+
+		// deletes messages record from db
+		deleteMessages($chatID);
+		// deletes chat record from db
+		deleteChatRow($chatID);
+		// deletes chat record from db
+		updateUserChatStatus($inChatBool, $userOneID, $userTwoID);
+		
+
+		// use prepared statements to defend against sql injection attacks
+		$sql = $conn->prepare("SELECT userID, email, profileLocation, firstName, lastName, inChat FROM users WHERE userID = ?");
+		$sql->bind_param("s", $userID);
+		$sql->execute();
+		$result = $sql->get_result();
+		
+
+		while ($row = $result->fetch_assoc())
+		{
+			# deals with the lack of a boolean type in mysql
+			if($row["inChat"] == 0)
+			{
+				$inChat = False;
+			}
+			else
+			{
+				$inChat = True;
+			}
+
+    		$my_arr[] = array(
+						'userID' => $row['userID'],
+						'email' => $row['email'],
+						'profileLocation' => $row['profileLocation'],
+						'firstName' => $row['firstName'],
+						'lastName' => $row['lastName'],
+						'inChat' => $inChat
+					);
+		}
+
+		// encodes the array in a json readable format
+		echo(json_encode($my_arr));
+
+	}
+
+	function updateUserChatStatus($inChatBool, $userOneID, $userTwoID)
+	{
+		$conn = $GLOBALS["conn"];
+		$sql = $conn->prepare("UPDATE users SET inChat = ? WHERE userID = ? or userID = ?");
+		$sql->bind_param("sss", $inChatBool, $userOneID, $userTwoID);
+		$sql->execute();
+		$result = $sql->get_result();
+	}
+
+	function deleteMessages($chatID)
+	{
+		$conn = $GLOBALS["conn"];
+		// deletes messages record from db
+		$sql = $conn->prepare("DELETE FROM messages WHERE chatID = ?");
+		$sql->bind_param("s", $chatID);
+		$sql->execute();
+		$result = $sql->get_result();
+	}
+
+	function deleteChatRow($chatID)
+	{
+		$conn = $GLOBALS["conn"];
+
+		// deletes chat record from db
+		$sql = $conn->prepare("DELETE FROM chat WHERE chatID = ?");
+		$sql->bind_param("s", $chatID);
+		$sql->execute();
+		$result = $sql->get_result();
+	}
 
 	# takes in a connection stream and a chat id and will return all messages from this chat in order, according to the timestamp
 	function grabMessages($chatID)
@@ -216,4 +314,28 @@
 		echo("finished");
 	}
 
+	function userInChat()
+	{
+		$userID = $_POST["userID"];
+		$conn = $GLOBALS["conn"];
+
+		// use prepared statements to defend against sql injection attacks
+		$sql = $conn->prepare("SELECT inChat FROM users WHERE userID = ?");
+		$sql->bind_param("s", $userID);
+		$sql->execute();
+		$result = $sql->get_result();
+
+		while ($row = $result->fetch_assoc())
+		{
+			if($row["inChat"] == True)
+			{
+				updateMessages(False);
+			}
+			else
+			{
+				grabUnmatchedUsers($userID, $conn);
+			}
+		}	
+
+	}
 ?>
