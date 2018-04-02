@@ -72,12 +72,12 @@ function createAccount() {
     var lastname = document.getElementById("lastname");
     var email = document.getElementById("email");
     var phone = document.getElementById("phone");
-    var username = document.getElementById("username");
     var pass = document.getElementById("password");
     var confirmpass = document.getElementById("confirmpass");
     var zipcode = document.getElementById("zipcode");
     var birthdate = document.getElementById("birthdate");
-    var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, birthdate, zipcode];
+	var about = document.getElementById("about");
+    var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, birthdate, zipcode, about];
     var validate = true;
     var gender = document.getElementsByName("gender");
     var preference = document.getElementsByName("preference");
@@ -85,49 +85,51 @@ function createAccount() {
     var selectGen, selectPref;
 
 
-    
+    alert("Entering loop");
     
     // for loop will iterate through all input fields and check to make sure that they are filled out
-    for(var i = 0; i < 8; i++){
-      //  alert("Begin of iteration: " + i);
+    for(var i = 0; i < 10; i++)
+	{
+  
         var curVal = fieldArray[i].value;
-       // alert(curVal);
+		
+	
+		alert("Checking " + fieldArray[i].value);
+			
+		// checks to ensure that the fields are populated
+		if(curVal.length <= 0){
+			alert("Please fill out all fields before submitting.");
+			validate = false;
+		}
+		
+		// bypass email
+		if(i == 4) continue;
+			
+		else if(specReg.test(fieldArray[i].value))
+		{
+			alert("Invalid character(s) found. Please try again.");
+			validate = false;
+		}
 
-      
-        // checks to ensure that the fields are populated
-        if(curVal.length <= 0){
-            alert("Please fill out all fields before submitting.");
-            validate = false;
-            break;
-        }
-
-        // checks against email addresses
-        if(i == 4){
-            if(!validateEmail(fieldArray[i].value)){
-                alert("Invalid Email Address.");
-                validate = false;
-                break;
-            }
-        }
-        else if(specReg.test(fieldArray[i].value))
-        {
-            alert(fieldArray[i].value);
-            alert("Invalid character(s) found. Please try again.");
-            validate = false;
-            break;
-        }
-
-      //  alert("End of iteration " + i);
     }
+	
+	alert("Finished first loop");
 
-
-
+	if(!validateEmail(fieldArray[4].value))
+	{
+        alert("Invalid Email Address.");
+        validate = false;
+    }
+	
+	alert("Finished email");
+    	
     // checks to see if the two password fields match.
     if(validate && (fieldArray[1].value != fieldArray[2].value)){
         alert("Password fields do not match. Please try again.");
         validate = false;
     }
-
+	
+	alert("passwords match");
     
     for (var j = 0; j < gender.length; j++)
     {
@@ -136,36 +138,44 @@ function createAccount() {
             selectGen = gender[j];
             //alert(selectGen.value);
             break;
-             }
         }
+    }
 
-    
+    alert("gender is " + selectGen.value);
+	
     for (var q = 0; q < preference.length; q++)
     {
         if (preference[q].checked)
         {
-            
             selectPref = preference[q];
             //alert(selectPref.value);
             break;
-             }
         }
+    }
     
-    
+    alert("preference is " + selectPref.value);
 
-
+	alert("passed through initial checks");
+	
     // only run the jquery 
-    if(validate){
+    if(validate)
+	{
         $.ajax({
             type: 'POST',
             url: urlBase + '/create.php',
             data: {
-               // action: 'create',
-                firstname: firstname.value,
+                // action: 'create'
+				username: username.value,
+				firstname: firstname.value,
                 lastname: lastname.value,
-                email: email.value,
-                username: username.value,
-                pass: pass.value,
+				email: email.value,
+				phone: phone.value,
+				pass: pass.value,
+				zipcode: zipcode.value,
+				birthdate: birthdate.value,
+				about: about.value,
+				selectGen: selectGen.value,
+				selectPref: selectPref.value
             },
             success: function (data) {
                 // checks to see if the password was valid or not
@@ -177,6 +187,10 @@ function createAccount() {
             
         });
     }
+	else
+	{
+		alert("Please check your form before submission");
+	}
 
     // clears all forms
     //for(var j = 0; j < 7; j++)
