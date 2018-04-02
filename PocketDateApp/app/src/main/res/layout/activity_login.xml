@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.stupidcupid.com.example.pocketdate.LoginActivity"
+    tools:context="com.example.pocketdate.LoginActivity"
     android:weightSum="1">
 
 
