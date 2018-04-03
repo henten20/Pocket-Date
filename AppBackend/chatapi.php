@@ -142,7 +142,10 @@
 				);
 		}
 		# encapsulates our messages into a json object and echos that back to the app
+		
+		
 		echo(json_encode($my_arr));
+
 		$conn->close();	
 	}
 
@@ -200,7 +203,6 @@
 		$sql = $conn->prepare("INSERT into messages (chatID, senderID, messageContents) VALUES (?, ?, ?)");
 		$sql->bind_param("sss", $chatID, $userID, $message);
 		$sql->execute();
-		echo("did it blend?");
 		//grabMessages($chatID);
 	}
 
@@ -263,10 +265,11 @@
 		$boolParam = False;
 
 		// use prepared statements to defend against sql injection attacks
-		$sql = $conn->prepare("SELECT userID, email, password FROM users WHERE inChat = ? AND userID != ?");
+		$sql = $conn->prepare("SELECT userID, email, password, profileLocation FROM users WHERE inChat = ? AND userID != ?");
 		$sql->bind_param("ss", $boolParam, $currentUser);
 		$sql->execute();
 		$result = $sql->get_result();
+
 
 		// calls the function that will prepare the match
 		makeMatch($conn, $result, $currentUser);
@@ -297,6 +300,7 @@
 	function newMatchUpdate($conn, $userOne, $userTwo)
 	{
 		$userOne = $userOne['userID'];
+
 		$newStatus = True;
 
 		$updateOne = $conn->prepare("UPDATE users SET inChat = ? WHERE userID = ?");
@@ -311,7 +315,19 @@
 		$sql->bind_param("ss", $userOne, $userTwo);
 		$sql->execute();
 
-		echo("finished");
+		$sql = $conn->prepare("SELECT firstName, profileLocation FROM users where userID = ?");
+		$sql->bind_param("s", $userOne);
+		$sql->execute();
+		$result = $sql->get_result();
+
+		while ($row = $result->fetch_assoc())
+		{
+			$my_arr[] = array(
+					'profileLocation' => $row["profileLocation"],
+					'firstName' => $row["firstName"]
+				);		
+		}
+		echo(json_encode($my_arr));
 	}
 
 	function userInChat()

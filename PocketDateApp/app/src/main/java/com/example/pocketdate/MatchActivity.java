@@ -1,5 +1,6 @@
 package com.example.pocketdate;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +8,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,14 +21,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.stupidcupid.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.InputStream;
 
@@ -62,9 +69,13 @@ public class MatchActivity extends AppCompatActivity
 
         Log.v("Another Test", profileLocation);
         NavigationView myNav = (NavigationView) findViewById(R.id.nav_view);
+
+        // gives us access to the logout item button
         //Menu navMenu = myNav.getMenu();
-        //MenuItem cameraItem = navMenu.findItem(R.id.nav_camera);
-        //cameraItem.setTitle(this.profileLocation);
+        //MenuItem logoutItem = navMenu.findItem(R.id.nav_logout);
+
+        //logoutItem.setOnMenuItemClickListener()
+
         // starts the asynchronous task of downloading the image
         View headerView = myNav.getHeaderView(0);
 
@@ -114,24 +125,74 @@ public class MatchActivity extends AppCompatActivity
                 // logic goes here that will pull down information from person they are in a chat with
                 // create a connection to the php, download and pass them to the MessageList activity
                 JSONArray resultJSON = getChatInfo();
+                String matchProfileLocation = null;
+                String matchFirstName = null;
 
-                Intent myIntent = new Intent(MatchActivity.this,
-                        MessageListActivity.class);
-
-                // checks to see if the jsonobject is null, which it will be if no messages have been sent
-                if(resultJSON == null)
+                if(!inChat)
                 {
-                    myIntent.putExtra("jsonArray", "empty");
+                    try {
+                        JSONObject myObj = resultJSON.getJSONObject(0);
+                        Log.v("Getting this", myObj.toString());
+                        inChat = true;
+                        matchProfileLocation = myObj.getString("profileLocation");
+                        matchFirstName = myObj.getString("firstName");
+                        openDialog(matchProfileLocation, matchFirstName);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+                //otherwise,
                 else
                 {
-                    // passes jsonarray as a string to the next activity
-                    myIntent.putExtra("jsonArray", resultJSON.toString());
+                    Intent myIntent = new Intent(MatchActivity.this,
+                            MessageListActivity.class);
+
+                    // checks to see if the jsonobject is null, which it will be if no messages have been sent
+                    if(resultJSON == null)
+                    {
+                        myIntent.putExtra("jsonArray", "empty");
+                    }
+                    else
+                    {
+                        // passes jsonarray as a string to the next activity
+                        myIntent.putExtra("jsonArray", resultJSON.toString());
+                    }
+                    myIntent.putExtra("userID", getUserID());
+                    startActivity(myIntent);
                 }
+            }
+        });
+
+    }
+
+    private void openDialog(String matchProfileLocation, String matchFirstName)
+    {
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(MatchActivity.this, R.style.CustomDialog);
+        LayoutInflater factory = LayoutInflater.from(MatchActivity.this);
+        final View view = factory.inflate(R.layout.matchpopup, null);
+        ImageView myImage = (ImageView) view.findViewById(R.id.profileImageView);
+        TextView matchText = (TextView) view.findViewById(R.id.matchText);
+        matchText.setText("You've matched with " + matchFirstName + "!");
+        Log.v("test", matchProfileLocation);
+        new DownloadImageTask(myImage).execute(matchProfileLocation);
+
+        Button chatButton = (Button)view.findViewById(R.id.chatButton);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MatchActivity.this,
+                        MessageListActivity.class);
+                myIntent.putExtra("jsonArray", "empty");
                 myIntent.putExtra("userID", getUserID());
                 startActivity(myIntent);
             }
         });
+
+        alertadd.setView(view);
+        AlertDialog alert = alertadd.create();
+
+        alert.show();
 
     }
 
@@ -140,6 +201,7 @@ public class MatchActivity extends AppCompatActivity
     {
         return this.userID;
     }
+
     // method that will obtain the current chat information for a user when open the messages screen
     private JSONArray getChatInfo()
     {
@@ -148,7 +210,7 @@ public class MatchActivity extends AppCompatActivity
         // creates a ServerConnectionObject that handles establishing a connection with the remote server
         ServerConnection messageConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
         String resultString = messageConn.loadMessages(this.userID, this.userEmail);
-
+        Log.v("HELP", resultString);
         // attempts to convert the JSONString into a JSONArray for simple data manipulation
         try
         {
@@ -180,6 +242,7 @@ public class MatchActivity extends AppCompatActivity
         return true;
     }
 
+    // this is for the three dot settings option on the match page
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -187,10 +250,6 @@ public class MatchActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -201,9 +260,33 @@ public class MatchActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_gallery) {
+        // if the user decides that they want to log out
+        if (id == R.id.nav_logout)
+        {
+            AlertDialog.Builder myNotice = new AlertDialog.Builder(MatchActivity.this);
+            myNotice.setTitle("Are you sure that you want to logout?");
+            myNotice.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    // process logout
+                    Intent myIntent = new Intent(MatchActivity.this,
+                            LoginActivity.class);
+                    startActivity(myIntent);
+                }
+            });
 
-        } else if (id == R.id.nav_slideshow) {
+            myNotice.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    // Do nothing but close the dialog
+                }
+            });
+
+            // creates the dialog and displays it
+            AlertDialog alert = myNotice.create();
+            alert.show();
 
         }
 
