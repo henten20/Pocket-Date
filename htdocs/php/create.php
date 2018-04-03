@@ -1,20 +1,24 @@
 <?php
-	
 
 		// ajax post data containing user and pass input
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$email = $_POST['email'];
 		$user = $_POST['username'];
 		$pass = $_POST['pass'];
+		$phone = $_POST['phone'];
+		$email = $_POST['email'];
+		$firstname = $_POST['firstname'];
+		$lastname = $_POST['lastname'];
+		$birthdate = $_POST['birthdate'];
+		$zipcode = $_POST['zipcode'];
+		$gender = $_POST['selectGen'];
+		$preference = $_POST['selectPref'];
+		$about = $_POST['about'];
 		
 		// db deets
 		$servername = "localhost";
 		$username = "root";
 		$password = "";
-		$db = "kouki";
+		$db = "pocketdate";
 	   
-	    
 		// Establishing the connection
 		$conn = mysqli_connect($servername, $username, $password, $db); 
 		
@@ -38,13 +42,16 @@
 			// hashing the password and inserting into the db
 			$hashed_pass = crypt($pass, 'CRYPT_BLOWFISH');
 			
-			$sql = $conn->prepare("INSERT into users (username, password, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)");
-			$sql->bind_param("sssss", $user, $hashed_pass, $firstname, $lastname, $email);
+			$sql = $conn->prepare("INSERT into users (username, password, phone, email, firstname, lastname, age, zipcode, gender, preference, about) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
+			$sql->bind_param("sssss", $user, $hashed_pass, $firstname, $lastname, $email, $firstname, $lastname, $age, $zipcode, $gender, $preference, $zipcode, $about);
 			$sql->execute();
 			
 			// test to see if insertion was successful
-			if($sql)
+			if($sql && $sql2)
 				echo "Verified";
+			else 
+				echo "error";
+			
 		$sql->close();
 		$conn->close();
 
