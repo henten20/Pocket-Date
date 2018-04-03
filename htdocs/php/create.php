@@ -1,4 +1,5 @@
 <?php
+
 	
 		// grabs the indata from the post request
 		$inData = json_decode(file_get_contents('php://input'), true);
@@ -13,9 +14,9 @@
 		$servername = "localhost";
 		$username = "root";
 		$password = "";
-		$db = "kouki";
+		$db = "pocketdate";
 	   
- 
+
  		// example of returning json back to js
  		$my_arr[] = array(
 						'firstname' => $firstname,
@@ -24,7 +25,6 @@
 		$json = json_encode($my_arr);
 
 		echo($json);
-
 
 		// Establishing the connection
 		/*$conn = mysqli_connect($servername, $username, $password, $db); 
@@ -49,13 +49,14 @@
 			// hashing the password and inserting into the db
 			$hashed_pass = crypt($pass, 'CRYPT_BLOWFISH');
 			
-			$sql = $conn->prepare("INSERT into users (username, password, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)");
-			$sql->bind_param("sssss", $user, $hashed_pass, $firstname, $lastname, $email);
+			$sql = $conn->prepare("INSERT into users (username, password, phone, email, firstname, lastname, age, zipcode, gender, preference, about) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
+			$sql->bind_param("sssss", $user, $hashed_pass, $firstname, $lastname, $email, $firstname, $lastname, $age, $zipcode, $gender, $preference, $zipcode, $about);
 			$sql->execute();
 			
 			// test to see if insertion was successful
 			//if($sql)
 				//echo "Verified";
+
 		$sql->close();
 		$conn->close();
 		*/
