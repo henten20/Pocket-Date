@@ -1,17 +1,14 @@
 <?php
 
+	
+		// grabs the indata from the post request
+		$inData = json_decode(file_get_contents('php://input'), true);
+
 		// ajax post data containing user and pass input
-		$user = $_POST['username'];
-		$pass = $_POST['pass'];
-		$phone = $_POST['phone'];
-		$email = $_POST['email'];
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$birthdate = $_POST['birthdate'];
-		$zipcode = $_POST['zipcode'];
-		$gender = $_POST['selectGen'];
-		$preference = $_POST['selectPref'];
-		$about = $_POST['about'];
+		$firstname = $inData['firstname'];
+		$lastname = $inData['lastname'];
+		$user = $inData['username'];
+		$pass = $inData['pass'];
 		
 		// db deets
 		$servername = "localhost";
@@ -19,8 +16,18 @@
 		$password = "";
 		$db = "pocketdate";
 	   
+
+ 		// example of returning json back to js
+ 		$my_arr[] = array(
+						'firstname' => $firstname,
+						'lastname' => $lastname
+					);
+		$json = json_encode($my_arr);
+
+		echo($json);
+
 		// Establishing the connection
-		$conn = mysqli_connect($servername, $username, $password, $db); 
+		/*$conn = mysqli_connect($servername, $username, $password, $db); 
 		
 		 // terminates if the connection fails
 		if(!$conn)
@@ -32,7 +39,7 @@
 		$result = $sql->get_result();
 		
 		if(!$result)
-			echo "Error";		
+			//echo "Error";		
 			$row = $result->fetch_assoc();
 			$contains_username = $row["username"];
 			
@@ -47,14 +54,12 @@
 			$sql->execute();
 			
 			// test to see if insertion was successful
-			if($sql && $sql2)
-				echo "Verified";
-			else 
-				echo "error";
-			
+			//if($sql)
+				//echo "Verified";
+
 		$sql->close();
 		$conn->close();
-
+		*/
 	
 	
 ?>
