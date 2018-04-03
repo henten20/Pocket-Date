@@ -137,13 +137,14 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            // server connection class will handle initiating the connection to the remote server
-            ServerConnection loginConn = new ServerConnection("http://cop4331groupeight.com/androidlogin.php");
-            String resultString = loginConn.initialLogin(email, password);
 
             // checks to see if the login was successful or not
             try
             {
+                // server connection class will handle initiating the connection to the remote server
+                ServerConnection loginConn = new ServerConnection("http://cop4331groupeight.com/androidlogin.php");
+                String resultString = loginConn.initialLogin(email, password);
+
                 //String resultString = result.toString();
                 Log.v("JSON", resultString);
                 JSONArray resultJSON = new JSONArray(resultString);
@@ -181,12 +182,21 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             // failed login attempt
-            catch(JSONException e)
+            catch(JSONException | NullPointerException e)
             {
-                Log.v("Failed", e.toString());
-                Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                // if the user isn't currently connected to the internet, this exception will be thrown
+                if (e instanceof NullPointerException)
+                {
+                    Toast.makeText(LoginActivity.this, "Error Connecting to Internet. Check your connection settings.", Toast.LENGTH_SHORT).show();
+                }
+                // otherwise, the user's credentials were invalid and they need to try again
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+
             }
         }
     }
