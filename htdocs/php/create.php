@@ -1,12 +1,13 @@
 <?php
 	
+		// grabs the indata from the post request
+		$inData = json_decode(file_get_contents('php://input'), true);
 
 		// ajax post data containing user and pass input
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$email = $_POST['email'];
-		$user = $_POST['username'];
-		$pass = $_POST['pass'];
+		$firstname = $inData['firstname'];
+		$lastname = $inData['lastname'];
+		$user = $inData['username'];
+		$pass = $inData['pass'];
 		
 		// db deets
 		$servername = "localhost";
@@ -14,9 +15,19 @@
 		$password = "";
 		$db = "kouki";
 	   
-	    
+ 
+ 		// example of returning json back to js
+ 		$my_arr[] = array(
+						'firstname' => $firstname,
+						'lastname' => $lastname
+					);
+		$json = json_encode($my_arr);
+
+		echo($json);
+
+
 		// Establishing the connection
-		$conn = mysqli_connect($servername, $username, $password, $db); 
+		/*$conn = mysqli_connect($servername, $username, $password, $db); 
 		
 		 // terminates if the connection fails
 		if(!$conn)
@@ -28,7 +39,7 @@
 		$result = $sql->get_result();
 		
 		if(!$result)
-			echo "Error";		
+			//echo "Error";		
 			$row = $result->fetch_assoc();
 			$contains_username = $row["username"];
 			
@@ -43,11 +54,11 @@
 			$sql->execute();
 			
 			// test to see if insertion was successful
-			if($sql)
-				echo "Verified";
+			//if($sql)
+				//echo "Verified";
 		$sql->close();
 		$conn->close();
-
+		*/
 	
 	
 ?>
