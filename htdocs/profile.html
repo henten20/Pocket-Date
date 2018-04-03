@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+
+		<!-- LIST OF FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<!-- Main javascript controller -->
+		<script src="controller.js"></script>
+
+      <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+            <a class="navbar-brand" href="index.html">Pocket Date</a>
+          </div>
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span>Signout</a></li>
+          </ul>
+        </div>
+      </nav>
+  <script>
+    var btn = document.getElementById("myBtn");
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+      signOut();
+    }
+  </script>
+
+	</head>
+    <body>
+        <div class="container-fluid" style = "padding-top:80px;">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="text-center">
+                <img src="./png/add-user.png" style="height:200px;width:200px;">
+              </div>
+            </div>
+
+          <div class="col-md-8">
+            <legend>Profile</legend>
+            <div class="informationSection">
+              <label for="username">Username:</label>
+              <p> lililin64226 </p> <br>
+              <!-- Insert User's Name -->
+              <label for="email">Email Address:</label>
+              <p> lililin64226@gmail.com
+                <a href="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </p><br>
+              <label for="firstname">First Name:</label>
+              <p> Lili
+                <a href="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </p><br>
+              <label for="lastname">Last Name:</label>
+              <p> Lin
+                <a href="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </p><br>
+              <label for="dob">Date of Birth:</label>
+              <p> December 25, 1995 </p><br>
+              <label for="zipcode">Zip Code:</label>
+              <p> 33826
+                <a href="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </p><br>
+              <label for="preference">Preference:</label>
+              <p> Male
+                <a href="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </p><br>
+              <label for="about">About me:</label>
+              <p> University of Central Florida, computer science major.
+                <a href="#">
+                <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+              </p><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+</html>
