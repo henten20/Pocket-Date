@@ -30,7 +30,8 @@
             android:name="com.example.pocketdate.MatchActivity"
             android:label="@string/title_activity_match"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.example.pocketdate.MessageListActivity"></activity>
+        <activity android:name="com.example.pocketdate.MessageListActivity" />
+        <activity android:name="com.example.pocketdate.SettingsActivity"></activity>
     </application>
 
 </manifest>

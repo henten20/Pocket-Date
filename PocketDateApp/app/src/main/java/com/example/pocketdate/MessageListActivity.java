@@ -1,5 +1,6 @@
 package com.example.pocketdate;
 
+import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,6 +61,10 @@ public class MessageListActivity extends AppCompatActivity {
         // grabs the profile information of the user's match
         grabProfile();
 
+        // changes the title of the toolbar to be a little more friendly
+        //setTitle("Conversation with " + this.matchFirstName);
+
+        // sets the match's info in the custome adapter that populates the recyclerview
         adapter.setProfileLocation(this.matchProfileLocation);
         adapter.setMatchFirstName(this.matchFirstName);
         adapter.setMatchLastName(this.matchLastName);
@@ -103,6 +109,8 @@ public class MessageListActivity extends AppCompatActivity {
     {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.match, menu);
+        // changes the title of the message activity
+        setTitle("Chat with " + this.matchFirstName);
         return true;
     }
 
