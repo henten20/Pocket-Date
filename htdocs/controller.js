@@ -66,6 +66,7 @@ function validateEmail(email)
 
 // handles the creating of a new account -------------------------------------------------------------------------------------------------------
 function createAccount() {
+	alert("Hello");
     
     var username = document.getElementById("username");
     var firstname = document.getElementById("firstname");
@@ -131,7 +132,7 @@ function createAccount() {
     }
 	
 	//alert("passwords match");
-    
+    // WE NEED A WAY TO MAKE SURE THESE ARE CHECKED
     for (var j = 0; j < gender.length; j++)
     {
         if (gender[j].checked)
@@ -161,25 +162,37 @@ function createAccount() {
     /* The following code performs a post request and attempts to send data to the "create.php" file in the form of a json string
     
         var JsonPayload is the json string that passes in the necessary parameters.
-
             - These can be accessed in the php by using $_POST["username"], or whatever field that you want to access.
-
         The rest of the code here looks strange, but it involves a series of checks that make sure the php file doesn't get stuck in that infinite
         pending state, which the other Ajax code does not check for.
-
         Once you want to access data returned from the php script, var jsonObject = JSON.parse( xhr.responseText ); is the code that will allow you to grab
         an encoded JSON object from the php script. You can access elements of this just like you would do with a standard JSON file.
-
     */ 
-
+	/*
+		$user = $inData['username'];
+		$firstname = $inData['firstname'];
+		$lastname = $inData['lastname'];
+		$email = $inData['email'];
+		$phone = $inData['phone'];
+		$pass = $inData['pass'];
+		$zipcode = $inData['zipcode'];
+		$birthdate = $inData['birthdate'];
+		$about = $inData['about'];
+		$gender = $inData['selectGen'];
+		$preference = $inData['selectPref'];
+	*/
+	
     // jsonPayload is the JSON string that we are sending to the php. Always double-check the syntax of this statement, because the php won't be able to read it
     // if it's incorrect.
-    var jsonPayload = '{"username" : "' + username.value + '", "pass" : "' + pass.value + '", "email" : "' + email.value + '", "firstname" : "' + firstname.value + '", "lastname" : "' + lastname.value +'"}';
+    var jsonPayload = '{"username" : "' + username.value + '", "firstname" : "' + firstname.value + '", "lastname" : "' + lastname.value + '", "email" : "' + email.value + '", "phone" : "' + phone.value + '", "pass" : "' + pass.value
+		+ '", "zipcode" : "' + zipcode.value + '", "birthdate" : "' + birthdate.value + '", "about" : "' + about.value + '", "gender" : "' + selectGen.value + '", "preference" : "' + selectPref.value + '"}';
+		
     var url = urlBase + '/create.php';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
+	
     try
     {
         // sends the JSON string over to the php script
@@ -193,7 +206,7 @@ function createAccount() {
         var jsonObject = JSON.parse( xhr.responseText );
 
         // example of how to access json object from php
-        alert(jsonObject[0]["firstname"]);
+        //alert(jsonObject[0]["firstname"]);
    
         // here's an example of how you would access a "user" string returned from the JSON. The "user" field is a key in the JSON object.
         // if you try to access an element that isn't in the json object, this statement will fail.
@@ -210,10 +223,8 @@ function createAccount() {
 	
     /*
         SUPER IMPORTANT - READ THIS
-
         - For one reason or another, when trying to use the Ajax call before the php file enters an endless "pending" state. To avoid this,
         use the post method listed directly above. 
-
         - I'm leaving the code below in case someone needs to reference it to fill the parameters in above, but it should be deleted afterwards.
     */
 
@@ -276,9 +287,8 @@ function fillProfile(data)
         document.getELementById("profileName").innerHTML = 
     }
     
-
-
     
     });
 }
 */
+
