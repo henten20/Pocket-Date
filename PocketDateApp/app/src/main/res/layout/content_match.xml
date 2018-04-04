@@ -8,18 +8,133 @@
     tools:context="com.example.pocketdate.MatchActivity"
     tools:showIn="@layout/app_bar_match">
 
-    <Button
-        android:id="@+id/match_button"
-        android:layout_width="129dp"
-        android:layout_height="75dp"
-        android:text="Start Matching"
+
+    <TextView
+        android:id="@+id/titleView"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:text="Pocket Date"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:fontFamily="cursive"
+        android:textSize="30sp"
+        android:gravity="top"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="398dp"
+        app:layout_constraintBottom_toTopOf="@+id/match_button" />
+
+    <LinearLayout
+        android:layout_width="368dp"
+        app:layout_constraintBottom_toTopOf="@+id/happyPhrase"
+        app:layout_constraintTop_toBottomOf="@+id/titleView"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <ViewFlipper
+                android:id="@+id/image_view_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="201dp">
+
+                <ImageView
+                    android:id="@+id/image_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/cutecouple" />
+
+                <ImageView
+                    android:id="@+id/image_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/rick" />
+
+                <ImageView
+                    android:id="@+id/image_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/cutecouple2" />
+
+                <ImageView
+                    android:id="@+id/image_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/cutecouple3" />
+
+                <ImageView
+                    android:id="@+id/image_five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/cutecouple4" />
+            </ViewFlipper>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/happyPhrase"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:text="Find your true love today"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:fontFamily="cursive"
+        android:textSize="30sp"
+        android:gravity="top"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="108dp"
+        app:layout_constraintBottom_toTopOf="@+id/match_button" />
+
+
+
+
+    <Button
+        android:id="@+id/match_button"
+
+        android:text="Start Matching"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+
+        android:layout_width="250dp"
+        android:layout_height="68dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#919191"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.501"
-        android:onClick = "performMatch"/>
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="427dp"
+        app:layout_constraintHorizontal_bias="0.504" />
 
 </android.support.constraint.ConstraintLayout>

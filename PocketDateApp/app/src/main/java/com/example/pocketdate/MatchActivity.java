@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,10 +23,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.example.stupidcupid.R;
 
@@ -38,8 +41,9 @@ import java.io.InputStream;
 public class MatchActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final int CONNECTION_TIMEOUT=10000;
-    public static final int READ_TIMEOUT=15000;
+    private static final int FLIP_DURATION = 3000;
+    private ViewFlipper viewFlipper;
+    private boolean isSlideshowOn = false;
 
     boolean isClicked = false;
     int userID;
@@ -54,6 +58,7 @@ public class MatchActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
         // grabs the intent object that contains the bundled data being passed in
@@ -70,6 +75,12 @@ public class MatchActivity extends AppCompatActivity
         Log.v("Another Test", profileLocation);
         NavigationView myNav = (NavigationView) findViewById(R.id.nav_view);
 
+        // grabs the viewflipper view
+        viewFlipper = (ViewFlipper)findViewById(R.id.image_view_flipper);
+        // references the animations for when the slideshow flips between images
+        viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+        startSlideshow();
         // gives us access to the logout item button
         //Menu navMenu = myNav.getMenu();
         //MenuItem logoutItem = navMenu.findItem(R.id.nav_logout);
@@ -90,16 +101,6 @@ public class MatchActivity extends AppCompatActivity
         emailText.setText(this.userEmail);
 
         myNav.setNavigationItemSelectedListener(this);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -164,6 +165,15 @@ public class MatchActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    // starts the slideshow
+    private void startSlideshow(){
+        if(!viewFlipper.isFlipping()){
+            viewFlipper.setAutoStart(true);
+            viewFlipper.setFlipInterval(FLIP_DURATION);
+            viewFlipper.startFlipping();
+        }
     }
 
     private void openDialog(String matchProfileLocation, String matchFirstName)
@@ -235,12 +245,6 @@ public class MatchActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.match, menu);
-        return true;
-    }
 
     // this is for the three dot settings option on the match page
     @Override
@@ -288,6 +292,12 @@ public class MatchActivity extends AppCompatActivity
             AlertDialog alert = myNotice.create();
             alert.show();
 
+        }
+        else if(id == R.id.nav_settings)
+        {
+            Intent myIntent = new Intent(MatchActivity.this,
+                    SettingsActivity.class);
+            startActivity(myIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
