@@ -93,8 +93,9 @@ function createAccount() {
   
         var curVal = fieldArray[i].value;
 		
-	
+
 		//alert("Checking " + fieldArray[i].value);
+
 			
 		// checks to ensure that the fields are populated
 		if(curVal.length <= 0){
@@ -154,7 +155,6 @@ function createAccount() {
     }
     
     //alert("preference is " + selectPref.value);
-
 	//alert("passed through initial checks");
 
 
