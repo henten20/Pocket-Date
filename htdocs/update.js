@@ -60,7 +60,7 @@ function updateZip()
 
 function editPreference()
 {
-  document.getElementById("preference").innerHTML = "<select name = \"preference\" id=\"newpreference\" onchange=\"updatePreference()\"> <option value=\"Male\">Male</option> <option value=\"Female\">Female</option>>";
+  document.getElementById("preference").innerHTML = "<select name = \"preference\" id=\"newpreference\" onchange=\"updatePreference()\"> <option value=\"Select\">Select</option> <option value=\"Male\">Male</option> <option value=\"Female\">Female</option> <option value=\"Both\">Both</option>>";
 }
 // make sure to use a unique name for the temporary ID that you're creating.
 function updatePreference()
