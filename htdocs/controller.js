@@ -17,21 +17,21 @@ function processLogin()
     firstName = "";
     lastName = "";
     
-    alert("Attempting to login");
+    //alert("Attempting to login");
     
-    var login = document.getElementById("inputEmail").value;
-    var password = document.getElementById("inputPassword").value;
+    var username = document.getElementById("inputUser").value;
+    var pass = document.getElementById("inputPassword").value;
    
     var specReg = /[^A-Za-z0-9 ]/;
 
     // checks for invalid characters in login attempt
-    if(specReg.test(login) || specReg.test(password))
+    if(specReg.test(username) || specReg.test(pass))
     {
         alert("Invalid characters found. Please try again.");
         return;
     }
 
-    var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
+    var jsonPayload = '{"username" : "' + username + '", "password" : "' + pass + '"}';
     var url = urlBase + '/auth.' + extension;
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, false);
@@ -40,6 +40,7 @@ function processLogin()
     try
     {
         xhr.send(jsonPayload);
+		//alert(xhr.responseText);
         var jsonObject = JSON.parse( xhr.responseText );
 
         if(jsonObject["error"] != null)
@@ -49,7 +50,7 @@ function processLogin()
         }
         user = jsonObject[0]["user"];
         document.cookie = user;
-        window.location.href = "./home.html";
+        window.location.href = "/home.html";
     }
     catch(err)
     {
@@ -64,9 +65,18 @@ function validateEmail(email)
     return re.test(email);
 }
 
+function getAge()
+{
+		var birthDay = document.getElementById("birthdate").value;
+        var DOB = new Date(birthDay);
+        var today = new Date();
+        var age = today.getTime() - DOB.getTime();
+        age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+        return age;
+}
+
 // handles the creating of a new account -------------------------------------------------------------------------------------------------------
 function createAccount() {
-	alert("Hello");
     
     var username = document.getElementById("username");
     var firstname = document.getElementById("firstname");
@@ -76,27 +86,21 @@ function createAccount() {
     var pass = document.getElementById("password");
     var confirmpass = document.getElementById("confirmpass");
     var zipcode = document.getElementById("zipcode");
-    var birthdate = document.getElementById("birthdate");
+	var age = getAge();
 	var about = document.getElementById("about");
-    var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, birthdate, zipcode, about];
+    var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, age, zipcode, about];
     var validate = true;
     var gender = document.getElementsByName("gender");
     var preference = document.getElementsByName("preference");
     var specReg = /[^A-Za-z0-9 ]/;
     var selectGen, selectPref;
-
-
-    alert("Entering loop");
-    
+	
     // for loop will iterate through all input fields and check to make sure that they are filled out
     for(var i = 0; i < 10; i++)
 	{
-  
+		if(i == 7) continue;
         var curVal = fieldArray[i].value;
-		
-
-		//alert("Checking " + fieldArray[i].value);
-
+	
 			
 		// checks to ensure that the fields are populated
 		if(curVal.length <= 0){
@@ -105,7 +109,7 @@ function createAccount() {
 		}
 		
 		// bypass email
-		if(i == 4) continue;
+		if(i == 4 || i == 7) continue;
 			
 		else if(specReg.test(fieldArray[i].value))
 		{
@@ -115,23 +119,18 @@ function createAccount() {
 
     }
 	
-	//alert("Finished first loop");
-
 	if(!validateEmail(fieldArray[4].value))
 	{
         alert("Invalid Email Address.");
         validate = false;
     }
-	
-	//alert("Finished email");
-    	
+
     // checks to see if the two password fields match.
     if(validate && (fieldArray[1].value != fieldArray[2].value)){
         alert("Password fields do not match. Please try again.");
         validate = false;
     }
 	
-	//alert("passwords match");
     // WE NEED A WAY TO MAKE SURE THESE ARE CHECKED
     for (var j = 0; j < gender.length; j++)
     {
@@ -156,9 +155,6 @@ function createAccount() {
     }
     
     //alert("preference is " + selectPref.value);
-	//alert("passed through initial checks");
-
-
     /* The following code performs a post request and attempts to send data to the "create.php" file in the form of a json string
     
         var JsonPayload is the json string that passes in the necessary parameters.
@@ -185,7 +181,7 @@ function createAccount() {
     // jsonPayload is the JSON string that we are sending to the php. Always double-check the syntax of this statement, because the php won't be able to read it
     // if it's incorrect.
     var jsonPayload = '{"username" : "' + username.value + '", "firstname" : "' + firstname.value + '", "lastname" : "' + lastname.value + '", "email" : "' + email.value + '", "phone" : "' + phone.value + '", "pass" : "' + pass.value
-		+ '", "zipcode" : "' + zipcode.value + '", "birthdate" : "' + birthdate.value + '", "about" : "' + about.value + '", "gender" : "' + selectGen.value + '", "preference" : "' + selectPref.value + '"}';
+		+ '", "zipcode" : "' + zipcode.value + '", "age" : "' + age.value + '", "about" : "' + about.value + '", "gender" : "' + selectGen.value + '", "preference" : "' + selectPref.value + '"}';
 		
     var url = urlBase + '/create.php';
     var xhr = new XMLHttpRequest();
@@ -199,7 +195,7 @@ function createAccount() {
         xhr.send(jsonPayload);
 
         // this will create an alert with the response from the php -- this is useful in case an invalid json object is returned or an error is thrown in the php code
-        alert(xhr.responseText);
+        //alert(xhr.responseText);
 
         // IF ANYTHING IS RETURNED OTHER THAN PROPER JSON, AN ERROR WILL BE THROWN!!! This is why we have the alert statement above ^^^
         // returns a JSON string from the php script and converts it to a JSON object for easy access
@@ -213,7 +209,9 @@ function createAccount() {
         //user = jsonObject[0]["user"];
         
         // redirects the window to the home.html page
-        window.location.href = "./home.html";
+		user = jsonObject[0]["user"];
+        document.cookie = user;
+        window.location.href = "/home.html";
     }
     // if there's an error, we'll be able to see it in the form of an alert
     catch(err)
@@ -291,4 +289,3 @@ function fillProfile(data)
     });
 }
 */
-

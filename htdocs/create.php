@@ -3,6 +3,7 @@
 		// grabs the indata from the post request
 		$inData = json_decode(file_get_contents('php://input'), true);
 		// ajax post data containing containing the passed in fields
+		$user_id = 0;
 		$user = $inData['username'];
 		$firstname = $inData['firstname'];
 		$lastname = $inData['lastname'];
@@ -10,7 +11,7 @@
 		$phone = $inData['phone'];
 		$pass = $inData['pass'];
 		$zipcode = $inData['zipcode'];
-		$birthdate = $inData['birthdate'];
+		$age = $inData['age'];
 		$about = $inData['about'];
 		$gender = $inData['gender'];
 		$preference = $inData['preference'];
@@ -29,13 +30,18 @@
 			die('Error, could not connect:');
 		
 		// using prepared statements to guard against sql injection attacks
-		$sql = $conn->prepare("SELECT username, pass FROM users WHERE username = ?");
-		$sql->bind_param("s", $user);
-		$sql->execute();
-		$result = $sql->get_result();
-		
-		if(!$result)
-			echo "Error";		
+		try
+		{
+			$sql = $conn->prepare("SELECT username FROM user WHERE username = ?");
+			$sql->bind_param("s", $user);
+			$sql->execute();
+			$result = $sql->get_result();
+		}
+		catch(Exception $e)
+		{
+			//if(!$result)
+				echo "Error";		
+		}
 		
 		$row = $result->fetch_assoc();
 		$contains_username = $row["username"];
@@ -45,20 +51,19 @@
 			
 		// hashing the password and inserting into the db
 		$hashed_pass = crypt($pass, 'CRYPT_BLOWFISH');
-			
-		$sql = $conn->prepare("INSERT into users (username, pass, phone, email, firstname, lastname, age, zipcode, gender, preference, about) VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
-		$sql->bind_param("sssssssssss", $user, $hashed_pass, $phone, $email, $firstname, $lastname, 21, $zipcode, $gender, $preference, $about);
+		
+		// Before inserting into the database, we will need to calculate the users age
+		// via the birthdate that they provided. Currently using a placeholder
+		
+		$sql = $conn->prepare("INSERT into user (user_id, username, pass, phone, email, firstname, lastname, age, zipcode, gender, preference, about) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
+		$sql->bind_param("ssssssssssss", $user_id, $user, $hashed_pass, $phone, $email, $firstname, $lastname, $age, $zipcode, $gender, $preference, $about);
 		$sql->execute();
 			
-			// test to see if insertion was successful
-			//if($sql)
-				//echo "Verified";.
-			
-			
+
 		// example of returning json back to js
  		$my_arr[] = array(
-						'gender' => $gender,
-						'preferencee' => $preference
+						'user' => $user,
+						'pass' => $pass
 					);
 		$json = json_encode($my_arr);
 		echo($json);
