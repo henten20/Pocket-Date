@@ -15,6 +15,7 @@
 
 		<!-- Main javascript controller -->
 		<script src="controller.js"></script>
+    <script src="update.js"></script>
 
       <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
         <div class="container-fluid">
@@ -27,6 +28,7 @@
           </ul>
         </div>
       </nav>
+
   <script>
     var btn = document.getElementById("myBtn");
     // When the user clicks the button, open the modal
@@ -35,9 +37,13 @@
     }
   </script>
 
+  <script>
+    // junk
+  </script>
+
 	</head>
     <body>
-        <div class="container-fluid" style = "padding-top:80px;">
+        <div class="container-fluid" style = "padding-top:90px;">
           <div class="row">
             <div class="col-md-4">
               <div class="text-center">
@@ -52,42 +58,33 @@
               <p> lililin64226 </p> <br>
               <!-- Insert User's Name -->
               <label for="email">Email Address:</label>
-              <p> lililin64226@gmail.com
-                <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                </a>
+              <p id = "email"> lililin64226@gmail.com
+                <span type="button" id="setEmail" onclick = "editEmail()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="firstname">First Name:</label>
-              <p> Lili
-                <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                </a>
+              <p id = "firstname"> Lili
+                <span type="button" id="setFirst" onclick = "editFirst()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="lastname">Last Name:</label>
-              <p> Lin
-                <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                </a>
+              <p id = "lastname"> Lili
+                <span type="button" id="setLast" onclick = "editLast()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="dob">Date of Birth:</label>
               <p> December 25, 1995 </p><br>
               <label for="zipcode">Zip Code:</label>
-              <p> 33826
-                <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                </a>
+              <p id = "zipcode"> 32826
+                <span type="button" id="setZip" onclick = "editZip()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="preference">Preference:</label>
-              <p> Male
-                <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                </a>
+              <p id = "preference"> Male
+                <span type="button" id="setPreference" onclick = "editPreference()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="about">About me:</label>
-              <p> University of Central Florida, computer science major.
-                <a href="#">
-                <span class="glyphicon glyphicon-pencil"></span>
-                </a>
+              <p id = "about" style="max-width: 50%"> University of Central Florida, computer science major. University of Central Florida, computer science major.
+                University of Central Florida, computer science major.
+                University of Central Florida, computer science major.
+                University of Central Florida, computer science major.
+                <span type="button" id="setAbout" onclick = "editAbout()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
             </div>
           </div>
