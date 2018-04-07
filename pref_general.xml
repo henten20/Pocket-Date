@@ -1,0 +1,48 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sample="http://schemas.android.com/apk/res-auto">
+<PreferenceCategory android:title="General">
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="example_switch"
+        android:summary="Turn push notifications on or off"
+        android:title="Push Notifications" />
+
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="Morgan Freeman"
+        android:inputType="textCapWords"
+        android:key="example_text"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Change Password"
+        android:summary="Change your password"/>
+</PreferenceCategory>
+
+<PreferenceCategory android:title="Preferences">
+    <com.pavelsikun.seekbarpreference.SeekBarPreference
+        android:key="your_pref_key"
+        android:title="Distance"
+        android:summary="Set your preferred distance"
+        android:enabled="true"
+        android:defaultValue="10"
+
+        sample:msbp_minValue="10"
+        sample:msbp_maxValue="60"
+        sample:msbp_interval="1"
+        sample:msbp_measurementUnit="mi"
+        sample:msbp_dialogEnabled="false"/>
+
+    <ListPreference
+        android:title="Gender"
+        android:summary="Set your preferred gender"
+        android:key="gender_pref"
+        android:entries="@array/listArray"
+        android:entryValues="@array/listValues"
+        />
+
+</PreferenceCategory>
+
+
+</PreferenceScreen>
