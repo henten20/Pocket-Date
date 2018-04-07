@@ -1,17 +1,17 @@
 <html>
-    <head>
+  <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="index.css">
 		
 		<!-- LIST OF FONTS -->
-        <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet"> 
 		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">		
     
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
 		
 		<!-- Main javascript controller -->
@@ -20,16 +20,20 @@
 	</head>
 	
     <body>
+			<div id="navBarContainer"> 
         <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
             <div class="container-fluid">
               <div class="navbar-header">
 			  <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
-                <a class="navbar-brand" href="index.html">Stupid Cupid</a>
+                <a class="navbar-brand" href="index.html">Pocket Date</a>
               </div>       
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" id="myBtn" style="color: #e03c78""><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                <li><a href="./createAccount.html" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	
+                <li><a href="#" id="myBtn" style="color: #e03c78;"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+								<li><a href="./createAccount.htm" style="color: #e03c78;"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+							</ul>
+            </div>
+				</nav>
+			</div>
 
 		<!-- The Modal -->
 		<div id="myModal" class="modal">
@@ -39,8 +43,8 @@
 			<span class="close">&times;</span>
 					<form class="form-signin" style="padding-top: 40px;">
                         <h3 class="form-signin-heading">Log into your account</h2>
-                        <label for="inputUser" class="sr-only">Username</label>
-                        <input type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
+                        <label for="inputEmail" class="sr-only">Email address</label>
+                        <input type="text" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
                         <label for="inputPassword" class="sr-only">Password</label>
                         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required onkeypress="return keyPress(event);">
                         <div class="checkbox">
@@ -95,13 +99,11 @@
 			}
 			</script>	
 	
-
-			</ul>
             </div>
-        </nav>
+        
 		
 		
-		
+				<div id="wrapper">
           <div id="slideshow" class="sectionalSize">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
@@ -141,12 +143,12 @@
           <hr>
 		  
 		   <div id="whyStupidCupid" class="sectionalSize">
-            <h1> What is Stupid Cupid?</h1>
-            <p>AppName is an Android application that will change they way you interact with people. No more struggle of talking to multiple people at one time. On AppName you'll know that
-                your match is just focusing on your conversation giving you the best opportunity to showcase your personality. INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.
-                INSERT MORE GENERIC STUFF ABOUT THE APP HERE. 
+            <h1> What is Pocket Date?</h1>
+            <p>Pocket Date is an Android application that will change they way you interact with people. No more struggle of talking to multiple people at one time. On Pocket Date you'll know that
+								your match is just focusing on your conversation giving you the best opportunity to showcase your personality. Signup and make your profile! It's easy as easy as putting in some information
+								and then you can start matching with people!
             </p>
-			<img src="./png/001-two.png">
+			<img src="./png/001-two.png" width="200px" height="200" >
 			
 			
 
@@ -156,18 +158,17 @@
 		  <hr>
 
           <div id="whyStupidCupid" class="sectionalSize">
-            <h1> Why Pick AppName?</h1>
-            <p>AppName is an Android application that will change they way you interact with people. No more struggle of talking to multiple people at one time. On AppName you'll know that
-                your match is just focusing on your conversation giving you the best opportunity to showcase your personality. INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.
-                INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.  INSERT MORE GENERIC STUFF ABOUT THE APP HERE.
+            <h1> Why Pick Pocket Date?</h1>
+            <p>Have you ever had a problem finding a match on other various dating apps? Can't find that perfect someone? Pocket Date solves this problem by automatically matching you up with someone based on waiting in a queue and your
+							preferences determined in your profile. 
             </p>
 
             <br>
-           <a href="http://play.google.com/store/apps/details?id=com.google.android.apps.maps"><img src="androiddownload.jpg" alt="" width="250" height="75"></a>
+           <a href="http://play.google.com/store/apps/details?id=com.google.android.apps.maps"><img src="androiddownload.jpg" alt="" width="200" height="70"></a>
           </div>
 
           <hr>
-          <div id="testimonies" class="sectionalSize"">
+          <div id="testimonies" class="sectionalSize">
 		  
             <h1>Many other people have found dates and so can you!</h1>
             <div class="testimoniesContainer">
@@ -185,10 +186,7 @@
                     <img src="randomLady.jpg" alt="" width="300" height="175">
                 </div>
 				</div>
-               <!-- <div class="box">
-                    <p>"I decided to try appName since so many of my friends did. appName helped me to showcase my personality through spending time talking to just one person." <br>- Roger (29) </p>
-                    <img src="roger.jpg" alt="" width="300" height="175">
-                </div> -->
+              
             </div>
           </div>
  
@@ -248,18 +246,7 @@
 				<h2>Pisces</h2>
 				</div></div>
 			  </div>
-          </div>
-
-          <hr>
-
-          <div id="" class="sectionalSize">
-
-          </div>
-		  
-		  <hr>
-		  
-		  <div id="footer">
-		  <a href="">Image icons designed by {Author's Name} from Flaticon</a>
-		  </div>
+					</div>  
+				</div>       
     </body>
 </html>
