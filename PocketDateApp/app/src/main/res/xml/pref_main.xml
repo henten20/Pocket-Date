@@ -37,4 +37,5 @@
                 android:data="@string/url_terms" />
         </Preference>
     </PreferenceCategory>
+
 </PreferenceScreen>

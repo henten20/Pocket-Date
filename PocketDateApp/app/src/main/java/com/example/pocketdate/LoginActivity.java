@@ -25,8 +25,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.stupidcupid.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

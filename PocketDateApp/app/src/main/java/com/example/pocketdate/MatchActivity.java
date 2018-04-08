@@ -28,9 +28,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
-
-import com.example.stupidcupid.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -119,7 +118,7 @@ public class MatchActivity extends AppCompatActivity
             matchButton.setText("Open Conversation");
         }
 
-        // event listener that will open the new activity
+        // event listexner that will open the new activity
         matchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,18 +128,29 @@ public class MatchActivity extends AppCompatActivity
                 String matchProfileLocation = null;
                 String matchFirstName = null;
 
+                int creepLevel = -1;
+
+
+
                 if(!inChat)
                 {
                     try {
                         JSONObject myObj = resultJSON.getJSONObject(0);
                         Log.v("Getting this", myObj.toString());
                         inChat = true;
+                        creepLevel = myObj.getInt("creepLevel");
                         matchProfileLocation = myObj.getString("profileLocation");
                         matchFirstName = myObj.getString("firstName");
-                        openDialog(matchProfileLocation, matchFirstName);
+                        openDialog(matchProfileLocation, matchFirstName, creepLevel);
 
-                    } catch (JSONException e) {
+                    } catch (JSONException | NullPointerException e) {
                         e.printStackTrace();
+
+                        // in case the user loses their connection
+                        if(e instanceof  NullPointerException)
+                        {
+                            Toast.makeText(MatchActivity.this, "Error Connecting to Internet. Check your connection settings.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 //otherwise,
@@ -159,7 +169,9 @@ public class MatchActivity extends AppCompatActivity
                         // passes jsonarray as a string to the next activity
                         myIntent.putExtra("jsonArray", resultJSON.toString());
                     }
+
                     myIntent.putExtra("userID", getUserID());
+                    myIntent.putExtra("creepLevel", creepLevel);
                     startActivity(myIntent);
                 }
             }
@@ -176,7 +188,7 @@ public class MatchActivity extends AppCompatActivity
         }
     }
 
-    private void openDialog(String matchProfileLocation, String matchFirstName)
+    private void openDialog(String matchProfileLocation, String matchFirstName, final int creepLevel)
     {
         AlertDialog.Builder alertadd = new AlertDialog.Builder(MatchActivity.this, R.style.CustomDialog);
         LayoutInflater factory = LayoutInflater.from(MatchActivity.this);
@@ -195,6 +207,7 @@ public class MatchActivity extends AppCompatActivity
                         MessageListActivity.class);
                 myIntent.putExtra("jsonArray", "empty");
                 myIntent.putExtra("userID", getUserID());
+                myIntent.putExtra("creepLevel", creepLevel);
                 startActivity(myIntent);
             }
         });
@@ -220,15 +233,20 @@ public class MatchActivity extends AppCompatActivity
         // creates a ServerConnectionObject that handles establishing a connection with the remote server
         ServerConnection messageConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
         String resultString = messageConn.loadMessages(this.userID, this.userEmail);
-        Log.v("HELP", resultString);
+
         // attempts to convert the JSONString into a JSONArray for simple data manipulation
         try
         {
             resultJSON = new JSONArray(resultString);
         }
-        catch(JSONException e)
+        // handles the exception where the user loses connection to the internet
+        catch(JSONException | NullPointerException e)
         {
             Log.v("Failed", e.toString());
+            if(e instanceof NullPointerException)
+            {
+                Toast.makeText(MatchActivity.this, "Error Connecting to Internet. Check your connection settings.", Toast.LENGTH_SHORT).show();
+            }
         }
 
         // returns the JSON array with all of our JSON Objects that contains the message details
@@ -297,6 +315,11 @@ public class MatchActivity extends AppCompatActivity
         {
             Intent myIntent = new Intent(MatchActivity.this,
                     SettingsActivity.class);
+            startActivity(myIntent);
+        }
+        else if(id == R.id.nav_profile)
+        {
+            Intent myIntent = new Intent(MatchActivity.this, ProfileActivity.class);
             startActivity(myIntent);
         }
 
