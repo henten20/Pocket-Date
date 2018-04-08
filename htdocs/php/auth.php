@@ -8,7 +8,7 @@
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
-	$db = "kouki";
+	$db = "pocketdate";
 	
 	// hashes the password using php's built-in crypt function
 	$hashed_unver_pass = crypt($inData["password"], 'CRYPT_BLOWFISH');
@@ -20,15 +20,15 @@
 	else
 	{
 		// use prepared statements to defend against sql injection attacks
-		$sql = $conn->prepare("SELECT username, password FROM users where username = ? and password = ?");
-		$sql->bind_param("ss", $inData["login"], $hashed_unver_pass);
+		$sql = $conn->prepare("SELECT username, pass FROM user where username = ? and pass = ?");
+		$sql->bind_param("ss", $inData["username"], $hashed_unver_pass);
 		$sql->execute();
 		$result = $sql->get_result();
 		if ($result->num_rows > 0)
 		{
 			$row = $result->fetch_assoc();
-			$user = $row["username"];
-			$pass = $row["password"];
+			$user= $row["username"];
+			$pass = $row["pass"];
 			returnWithInfo($user, $pass);
 		}
 		else

@@ -32,41 +32,41 @@
     <form>
       <legend>Login Information </legend>
       <div class="form-group">
-        <label for="username">Username</label>
+        <label id="usernameLabel" for="username">Username*</label>
         <input type="text" class="form-control" id="username" placeholder="Username">
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label id="passwordLabel" for="password">Password*</label>
         <input type="password" class="form-control" id="password" placeholder="Password">
       </div>
       <div class="form-group">
-        <label for="confirmPw">Confirm Password</label>
+        <label id="confirmLabel" for="confirmPw">Confirm Password*</label>
         <input type="password" class="form-control" id="confirmpass" placeholder="Confirm Password">
       </div>
       <div class="form-group">
-        <label for="phoneno">Phone Number</label>
+        <label id="phoneLabel" for="phoneno">Phone Number*</label>
         <input type="phone" class="form-control" id="phone" placeholder="XXX-XXX-XXXX" maxlength="10">
       </div>
       <div class="form-group">
-        <label for="exampleInputEmail1">Email Address</label>
+        <label id="emailLabel" for="exampleInputEmail1">Email Address*</label>
         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
       </div>
       <br>
       <legend>Personal Information</legend>
       <div class="form-group">
-        <label for="username">First Name</label>
+        <label id="firstnameLabel" for="firstname">First Name*</label>
         <input type="text" class="form-control" id="firstname" placeholder="First Name">
       </div>
       <div class="form-group">
-        <label for="lastname">Last Name</label>
+        <label id="lastnameLabel" for="lastname">Last Name*</label>
         <input type="text" class="form-control" id="lastname" placeholder="Last Name">
       </div>
       <div class="form-group">
-        <label for="birthdate">Birthdate</label>
+        <label id="birthdateLabel" for="birthdate">Birthdate*</label>
         <input type="date" class="form-control" id="birthdate" placeholder="mm/dd/yyyy">
       </div>
       <div class="form-group">
-        <label for="birthdate">Zip Code</label>
+        <label id="zipcodeLabel" for="zipcode">Zip Code*</label>
         <input class="form-control" id="zipcode" maxlength="5" placeholder="Example: 12345">
       </div>
 
@@ -84,6 +84,12 @@
         <label class="form-check-label">
             <input type="radio" class="form-check-input" name="gender" id="optionsRadios2" value="Male">
             Male
+          </label>
+        </div>
+		<div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="gender" id="optionsRadios3" value="Other">
+            Other
           </label>
         </div>
       </fieldset>
@@ -123,7 +129,7 @@
           By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy Conditions</a>.
         </label>
       </div>
-      <button type="reset" class="btn btn-primary" onclick="createAccount()">Submit</button><br></br>
+      <button type="button" class="btn btn-primary" onclick="createAccount()">Submit</button><br></br>
     </form>
   </div>
 </body>

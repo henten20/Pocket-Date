@@ -21,8 +21,10 @@ function processLogin()
     
     var username = document.getElementById("inputUser").value;
     var pass = document.getElementById("inputPassword").value;
+	
+	//alert(username);
    
-    var specReg = /[^A-Za-z0-9 ]/;
+    var specReg = /[^A-Za-z0-9]/;
 
     // checks for invalid characters in login attempt
     if(specReg.test(username) || specReg.test(pass))
@@ -50,7 +52,7 @@ function processLogin()
         }
         user = jsonObject[0]["user"];
         document.cookie = user;
-        window.location.href = "/home.html";
+        window.location.href = "/profile.html";
     }
     catch(err)
     {
@@ -88,72 +90,253 @@ function createAccount() {
     var zipcode = document.getElementById("zipcode");
 	var age = getAge();
 	var about = document.getElementById("about");
-    var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, age, zipcode, about];
+    //var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, age, zipcode, about];
     var validate = true;
+	var filled = true;
     var gender = document.getElementsByName("gender");
     var preference = document.getElementsByName("preference");
     var specReg = /[^A-Za-z0-9 ]/;
+	
+	var specRegChar = /[^A-Za-z ]/;
+	var specRegNum = /[^0-9]/;
+	
     var selectGen, selectPref;
 	
+	if(age < 18)
+	{		
+		alert("Required age is 18 years or older");
+		return;
+	}
+	
+	/*
     // for loop will iterate through all input fields and check to make sure that they are filled out
     for(var i = 0; i < 10; i++)
 	{
-		if(i == 7) continue;
+		//if(i == 4 || i == 7) continue;
+		
         var curVal = fieldArray[i].value;
 	
-			
+
 		// checks to ensure that the fields are populated
 		if(curVal.length <= 0){
 			alert("Please fill out all fields before submitting.");
 			validate = false;
+			break;
 		}
+
 		
-		// bypass email
-		if(i == 4 || i == 7) continue;
-			
+		// checking for empty inputs
+		if(curVal == "")
+		{
+			alert("Please fill out all fields before submitting.");
+			validate == false;
+			return;
+		}
+	
+		
+
 		else if(specReg.test(fieldArray[i].value))
 		{
 			alert("Invalid character(s) found. Please try again.");
 			validate = false;
 		}
-
-    }
 	
-	if(!validateEmail(fieldArray[4].value))
+    }
+	*/
+	
+	
+	// Run though every field to make sure it's not empty. Invalid entries will be labeled in red
+	if(username.value == "")
+	{
+		filled = false;
+		document.getElementById("usernameLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("usernameLabel").style.color = "black";
+	}
+	if(pass.value == "")
+	{
+		filled = false;
+		document.getElementById("passwordLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("passwordLabel").style.color = "black";
+	}
+	if(confirmpass.value == "")
+	{
+		filled = false;
+		document.getElementById("confirmLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("confirmLabel").style.color = "black";
+	}
+	if(phone.value == "")
+	{
+		filled = false;
+		document.getElementById("phoneLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("phoneLabel").style.color = "black";
+	}
+	if(email.value == "")
+	{
+		filled = false;
+		document.getElementById("emailLabel").style.color = "red";
+	}
+	else 
+	{
+		document.getElementById("emailLabel").style.color = "black";
+	}
+	if(firstname.value == "")
+	{
+		filled = false;
+		document.getElementById("firstnameLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("firstnameLabel").style.color = "black";
+	}
+	if(lastname.value == "")
+	{
+		filled = false;
+		document.getElementById("lastnameLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("lastnameLabel").style.color = "black";
+	}
+	if(birthdate.value == "")
+	{
+		filled = false;
+		document.getElementById("birthdateLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("birthdateLabel").style.color = "black";
+	}
+	if(zipcode.value == "")
+	{
+		filled = false;
+		document.getElementById("zipcodeLabel").style.color = "red";
+	}
+	else
+	{
+		document.getElementById("zipcodeLabel").style.color = "black";
+	}
+	
+	
+	if(filled == false)
+	{
+		alert("Please fill in all required fields before submitting.");
+		return;
+	}
+	
+	
+	// At this point all fields are checked and not empty
+	// Now we check for correct character and numeric inputs. Invalid entries will be labeled in red
+	if(specReg.test(username.value))
+	{
+		alert("Incorrect format for username");
+		document.getElementById("usernameLabel").style.color = "red";
+		validate = false;
+	}
+	else
+	{
+		document.getElementById("usernameLabel").style.color = "black";
+	}
+	if(specRegChar.test(firstname.value))
+	{
+		alert("Invalid first name");
+		document.getElementById("firstnameLabel").style.color = "red";
+		validate = false;
+	}
+	else
+	{
+		document.getElementById("firstnameLabel").style.color = "black";
+	}
+	if(specRegChar.test(lastname.value))
+	{
+		alert("Invalid last name");
+		document.getElementById("lastnameLabel").style.color = "red";
+		validate = false;
+	}
+	else
+	{
+		document.getElementById("lastnameLabel").style.color = "black";
+	}
+	if(specRegNum.test(phone.value))
+	{
+		alert("Only numeric values allowed for phone numbers");
+		document.getElementById("phoneLabel").style.color = "red";
+		validate = false;
+	}
+	else
+	{
+		document.getElementById("phoneLabel").style.color = "black";
+	}
+	if(specRegNum.test(zipcode.value))
+	{
+		alert("Zipcodes can only have number values");
+		document.getElementById("zipcodeLabel").style.color = "red";
+		validate = false;
+	}
+	else
+	{
+		document.getElementById("zipcodeLabel").style.color = "black";
+	}
+	if(!validateEmail(email.value))
 	{
         alert("Invalid Email Address.");
+		document.getElementById("emailLabel").style.color = "red";
         validate = false;
     }
-
-    // checks to see if the two password fields match.
-    if(validate && (fieldArray[1].value != fieldArray[2].value)){
+	else
+	{
+		document.getElementById("emailLabel").style.color = "black";
+	}
+    if(/*validate && */(pass.value != confirmpass.value)){
         alert("Password fields do not match. Please try again.");
+		document.getElementById("confirmLabel").style.color = "red";
         validate = false;
     }
+	else
+	{
+		document.getElementById("confirmLabel").style.color = "black";
+	}
 	
-    // WE NEED A WAY TO MAKE SURE THESE ARE CHECKED
+	if(validate == false)
+		return;
+	
+	// Gender and preference OPTIONAL 
+	// DEFAULT GENDER AND PREFERENCE
+	selectGen = "other";
+	selectPref = "both";
+	
     for (var j = 0; j < gender.length; j++)
     {
         if (gender[j].checked)
         {
-            selectGen = gender[j];
+            selectGen = gender[j].value;
             //alert(selectGen.value);
             break;
         }
     }
 
-    //alert("gender is " + selectGen.value);
-	
     for (var q = 0; q < preference.length; q++)
     {
         if (preference[q].checked)
         {
-            selectPref = preference[q];
+            selectPref = preference[q].value;
             //alert(selectPref.value);
             break;
         }
     }
-    
+  
+	
     //alert("preference is " + selectPref.value);
     /* The following code performs a post request and attempts to send data to the "create.php" file in the form of a json string
     
@@ -181,14 +364,14 @@ function createAccount() {
     // jsonPayload is the JSON string that we are sending to the php. Always double-check the syntax of this statement, because the php won't be able to read it
     // if it's incorrect.
     var jsonPayload = '{"username" : "' + username.value + '", "firstname" : "' + firstname.value + '", "lastname" : "' + lastname.value + '", "email" : "' + email.value + '", "phone" : "' + phone.value + '", "pass" : "' + pass.value
-		+ '", "zipcode" : "' + zipcode.value + '", "age" : "' + age.value + '", "about" : "' + about.value + '", "gender" : "' + selectGen.value + '", "preference" : "' + selectPref.value + '"}';
-		
+		+ '", "zipcode" : "' + zipcode.value + '", "age" : "' + age + '", "about" : "' + about.value + '", "gender" : "' + selectGen + '", "preference" : "' + selectPref + '"}';
+	
+
     var url = urlBase + '/create.php';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-	
     try
     {
         // sends the JSON string over to the php script
@@ -209,14 +392,15 @@ function createAccount() {
         //user = jsonObject[0]["user"];
         
         // redirects the window to the home.html page
+		
 		user = jsonObject[0]["user"];
         document.cookie = user;
-        window.location.href = "/home.html";
+        window.location.href = "/profile.html";
     }
     // if there's an error, we'll be able to see it in the form of an alert
     catch(err)
     {
-        alert(err.message);
+        alert("Username already exists");
     }  
 	
     /*
