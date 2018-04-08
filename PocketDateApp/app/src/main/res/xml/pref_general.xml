@@ -2,16 +2,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="General">
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="example_switch"
-            android:summary="Turn push notifications on or off"
-            android:title="Push Notifications" />
+
+        <Preference
+            android:key="change_prof_pic"
+            android:title="Update Profile Picture"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:summary="Click here to change your profile picture" />
 
         <EditTextPreference
             android:capitalize="words"
             android:inputType="textCapWords"
-            android:key="example_text"
+            android:key="about_text"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Edit About Me"
+            android:summary="Click here to edit your about me section"/>
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textPassword"
+            android:key="change_password"
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -28,8 +40,9 @@
             android:entries="@array/listArray"
             android:entryValues="@array/listValues"
             />
-
     </PreferenceCategory>
+
+
 
 
 </PreferenceScreen>

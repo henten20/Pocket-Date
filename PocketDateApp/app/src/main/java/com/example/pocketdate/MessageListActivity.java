@@ -32,8 +32,15 @@ public class MessageListActivity extends AppCompatActivity {
     CustomAdapter adapter;
     private ArrayList<CustomPojo> listContentArr = new ArrayList<>();
     private int matchCreepLevel;
-    private int userID;
 
+    private int userID;
+    String userEmail;
+    String profileLocation;
+    String firstName;
+    String lastName;
+    boolean inChat;
+
+    private boolean justMatched;
     private String matchFirstName;
     private String matchLastName;
     private String matchProfileLocation;
@@ -52,17 +59,22 @@ public class MessageListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         adapter=new CustomAdapter(this);
 
+
+
         // grabs the intent object that contains the bundled data being passed in
         Intent thisActivity = getIntent();
         String jsonArray = thisActivity.getStringExtra("jsonArray");
         this.userID = thisActivity.getIntExtra("userID", -1);
+        this.justMatched = thisActivity.getBooleanExtra("justMatched", true);
+        // user is now in a chat if we reach this activity
+        this.inChat = true;
+        this.userEmail = thisActivity.getStringExtra("inputEmail");
+        this.profileLocation = thisActivity.getStringExtra("profileLocation");
+        this.firstName = thisActivity.getStringExtra("firstName");
+        this.lastName = thisActivity.getStringExtra("lastName");
 
         // grabs the profile information of the user's match
         grabProfile();
-
-        Log.v("Match's creep level", Integer.toString(this.matchCreepLevel));
-        // changes the title of the toolbar to be a little more friendly
-        //setTitle("Conversation with " + this.matchFirstName);
 
         // sets the match's info in the custome adapter that populates the recyclerview
         adapter.setProfileLocation(this.matchProfileLocation);
@@ -102,6 +114,10 @@ public class MessageListActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }
         });
+
+        getSupportActionBar().setTitle("Chat with " + this.matchFirstName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -125,6 +141,26 @@ public class MessageListActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             openDialog();
             return true;
+        }
+        else if(id == android.R.id.home)
+        {
+            // if the user's just matched, then we need to skip over the match pop-up when the back button is pressed
+            if(justMatched)
+            {
+                Intent myIntent = new Intent(this, MatchActivity.class);
+                myIntent.putExtra("userID", this.userID);
+                myIntent.putExtra("inputEmail", this.userEmail);
+                myIntent.putExtra("profileLocation", this.profileLocation);
+                myIntent.putExtra("firstName", this.firstName);
+                myIntent.putExtra("lastName", this.lastName);
+                myIntent.putExtra("inChat", this.inChat);
+                // starts match activity with fresh info
+                startActivity(myIntent);
+            }
+            else
+            {
+                onBackPressed();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -174,7 +210,7 @@ public class MessageListActivity extends AppCompatActivity {
 
     private void processReport()
     {
-
+        // placeholder for the reporting functionality
     }
     // will be interesting to see if this works well
     private void processUnmatch()
@@ -279,13 +315,9 @@ public class MessageListActivity extends AppCompatActivity {
         ServerConnection pushConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
         String resultString = pushConn.sendMessage(contents, this.userID);
     }
+    // this is where the recyclerview is populated with all of the message data
     private void populateRecyclerViewValues(JSONArray messageArray)
     {
-        /** This is where we pass the data to the adpater using POJO class.
-         *  The for loop here is optional. I've just populated same data for 50 times.
-         *  You can use a JSON object request to gather the required values and populate in the
-         *  RecyclerView.
-         * */
         JSONObject currentMessage = null;
 
         if(messageArray != null)

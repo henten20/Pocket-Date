@@ -71,7 +71,7 @@ public class MatchActivity extends AppCompatActivity
         this.lastName = thisActivity.getStringExtra("lastName");
         this.inChat = thisActivity.getBooleanExtra("inChat", true);
 
-        Log.v("Another Test", profileLocation);
+        // grabs the navigation view
         NavigationView myNav = (NavigationView) findViewById(R.id.nav_view);
 
         // grabs the viewflipper view
@@ -80,11 +80,6 @@ public class MatchActivity extends AppCompatActivity
         viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
         viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
         startSlideshow();
-        // gives us access to the logout item button
-        //Menu navMenu = myNav.getMenu();
-        //MenuItem logoutItem = navMenu.findItem(R.id.nav_logout);
-
-        //logoutItem.setOnMenuItemClickListener()
 
         // starts the asynchronous task of downloading the image
         View headerView = myNav.getHeaderView(0);
@@ -125,18 +120,17 @@ public class MatchActivity extends AppCompatActivity
                 // logic goes here that will pull down information from person they are in a chat with
                 // create a connection to the php, download and pass them to the MessageList activity
                 JSONArray resultJSON = getChatInfo();
-                String matchProfileLocation = null;
-                String matchFirstName = null;
+                String matchProfileLocation;
+                String matchFirstName;
+                boolean justMatched = false;
 
+                // default creep level value
                 int creepLevel = -1;
-
-
 
                 if(!inChat)
                 {
                     try {
                         JSONObject myObj = resultJSON.getJSONObject(0);
-                        Log.v("Getting this", myObj.toString());
                         inChat = true;
                         creepLevel = myObj.getInt("creepLevel");
                         matchProfileLocation = myObj.getString("profileLocation");
@@ -170,7 +164,14 @@ public class MatchActivity extends AppCompatActivity
                         myIntent.putExtra("jsonArray", resultJSON.toString());
                     }
 
-                    myIntent.putExtra("userID", getUserID());
+                    // sends all of the parameters over that will be used to bring up the matchactivity again
+                    myIntent.putExtra("inputEmail", MatchActivity.this.userEmail);
+                    myIntent.putExtra("profileLocation", MatchActivity.this.profileLocation);
+                    myIntent.putExtra("firstName", MatchActivity.this.firstName);
+                    myIntent.putExtra("lastName", MatchActivity.this.lastName);
+                    myIntent.putExtra("justMatched", justMatched);
+                    myIntent.putExtra("inChat", MatchActivity.this.inChat);
+                    myIntent.putExtra("userID", MatchActivity.this.userID);
                     myIntent.putExtra("creepLevel", creepLevel);
                     startActivity(myIntent);
                 }
@@ -196,7 +197,6 @@ public class MatchActivity extends AppCompatActivity
         ImageView myImage = (ImageView) view.findViewById(R.id.profileImageView);
         TextView matchText = (TextView) view.findViewById(R.id.matchText);
         matchText.setText("You've matched with " + matchFirstName + "!");
-        Log.v("test", matchProfileLocation);
         new DownloadImageTask(myImage).execute(matchProfileLocation);
 
         Button chatButton = (Button)view.findViewById(R.id.chatButton);
@@ -205,6 +205,12 @@ public class MatchActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent myIntent = new Intent(MatchActivity.this,
                         MessageListActivity.class);
+                myIntent.putExtra("inputEmail", MatchActivity.this.userEmail);
+                myIntent.putExtra("profileLocation", MatchActivity.this.profileLocation);
+                myIntent.putExtra("firstName", MatchActivity.this.firstName);
+                myIntent.putExtra("lastName", MatchActivity.this.lastName);
+                myIntent.putExtra("justMatched", true);
+                myIntent.putExtra("inChat", MatchActivity.this.inChat);
                 myIntent.putExtra("jsonArray", "empty");
                 myIntent.putExtra("userID", getUserID());
                 myIntent.putExtra("creepLevel", creepLevel);
@@ -253,6 +259,7 @@ public class MatchActivity extends AppCompatActivity
         return resultJSON;
     }
 
+    // if the back button is pressed and the drawer is open, close it
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -262,7 +269,6 @@ public class MatchActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
 
     // this is for the three dot settings option on the match page
     @Override
@@ -317,9 +323,16 @@ public class MatchActivity extends AppCompatActivity
                     SettingsActivity.class);
             startActivity(myIntent);
         }
+        // if the profile option is selected, pass all of this data into new instance of ProfileActivity
         else if(id == R.id.nav_profile)
         {
             Intent myIntent = new Intent(MatchActivity.this, ProfileActivity.class);
+            myIntent.putExtra("userID", getUserID());
+            myIntent.putExtra("inputEmail", userEmail);
+            myIntent.putExtra("profileLocation", profileLocation);
+            myIntent.putExtra("firstName", firstName);
+            myIntent.putExtra("lastName", lastName);
+            myIntent.putExtra("inChat", inChat);
             startActivity(myIntent);
         }
 
