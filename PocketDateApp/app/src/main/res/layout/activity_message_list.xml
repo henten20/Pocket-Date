@@ -9,7 +9,7 @@
     tools:context="com.example.pocketdate.MessageListActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:background="@color/titlebackgroundcolor">
@@ -71,6 +71,7 @@
             android:id="@+id/edittext_chatbox"
             android:hint="Enter message"
             android:background="@android:color/transparent"
+            android:textColor="@color/black"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
@@ -84,7 +85,7 @@
             android:id="@+id/button_chatbox_send"
             android:text="SEND"
             android:textSize="14dp"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/send_button"
             android:clickable="true"
             android:layout_width="64dp"
             android:layout_height="48dp"

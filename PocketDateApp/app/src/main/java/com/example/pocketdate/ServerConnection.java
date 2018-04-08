@@ -197,4 +197,22 @@ public class ServerConnection {
         // returns the string that is obtained from the "chatapi.php" file
         return initiateConnection();
     }
+
+    public String updateProfilePic(String encodedString, int userID)
+    {
+        // Append parameters to URL - we can pass our parameters to the php code here
+        Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("action", "updateProfilePic")
+                .appendQueryParameter("userID", Integer.toString(userID))
+                .appendQueryParameter("encodedImage", encodedString);
+
+        // constructs the query that will be posted to the webserver
+        String query = builder.build().getEncodedQuery();
+
+        // sets object's query with the correct parameters for loading messages
+        this.query = query;
+
+        // returns the string that is obtained from the "chatapi.php" file
+        return initiateConnection();
+    }
 }
