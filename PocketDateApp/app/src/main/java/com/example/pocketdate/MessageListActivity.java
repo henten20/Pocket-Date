@@ -19,8 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.stupidcupid.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +31,8 @@ public class MessageListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CustomAdapter adapter;
     private ArrayList<CustomPojo> listContentArr = new ArrayList<>();
-    int userID;
+    private int matchCreepLevel;
+    private int userID;
 
     private String matchFirstName;
     private String matchLastName;
@@ -61,6 +60,7 @@ public class MessageListActivity extends AppCompatActivity {
         // grabs the profile information of the user's match
         grabProfile();
 
+        Log.v("Match's creep level", Integer.toString(this.matchCreepLevel));
         // changes the title of the toolbar to be a little more friendly
         //setTitle("Conversation with " + this.matchFirstName);
 
@@ -138,15 +138,20 @@ public class MessageListActivity extends AppCompatActivity {
         builder.setTitle("Match Options");
 
         // add a list
-        String[] animals = {"Unmatch", "Report"};
+        String[] animals = {"View Match Profile", "Unmatch", "Report"};
         builder.setItems(animals, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
-                    case 0: // unmatch
+                    case 0: // view match profile
+                        viewMatchProfile();
+                        break;
+                    case 1: // unmatch
                         confirmUnmatch();
                         break;
-                    case 1: // report
+                    case 2: // report
+                        processReport();
+                        break;
                 }
             }
         });
@@ -156,6 +161,21 @@ public class MessageListActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void viewMatchProfile()
+    {
+        Intent myIntent = new Intent(MessageListActivity.this,
+                MatchProfileActivity.class);
+        myIntent.putExtra("creepLevel", Integer.toString(this.matchCreepLevel));
+        myIntent.putExtra("profileLocation", this.matchProfileLocation);
+        myIntent.putExtra("matchFirstName", this.matchFirstName);
+        myIntent.putExtra("matchLastName", this.matchLastName);
+        startActivity(myIntent);
+    }
+
+    private void processReport()
+    {
+
+    }
     // will be interesting to see if this works well
     private void processUnmatch()
     {
@@ -240,10 +260,17 @@ public class MessageListActivity extends AppCompatActivity {
             this.matchFirstName = jsonObj.getString("firstName");
             this.matchLastName = jsonObj.getString("lastName");
             this.matchProfileLocation = jsonObj.getString("profileLocation");
+            this.matchCreepLevel = jsonObj.getInt("creepLevel");
 
-        } catch (JSONException e)
+        } catch (JSONException | NullPointerException e)
         {
             e.printStackTrace();
+
+            // in case the user loses connection
+            if(e instanceof NullPointerException)
+            {
+                Toast.makeText(MessageListActivity.this, "Error Connecting to Internet. Check your connection settings.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
     // method that will push a message up to our remote server

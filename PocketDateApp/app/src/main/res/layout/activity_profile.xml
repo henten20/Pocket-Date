@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.pocketdate.ProfileActivity">
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/sports_array"/>
+
+    <com.warkiz.widget.IndicatorSeekBar
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        app:isb_indicator_type="circular_bubble"
+        app:isb_progress="50"
+        app:isb_seek_bar_type="discrete_ticks_texts"
+        app:isb_tick_num="6"
+        app:isb_tick_type="oval"
+        app:layout_constraintTop_toBottomOf="@+id/listview"/>
+
+</android.support.constraint.ConstraintLayout>

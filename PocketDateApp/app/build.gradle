@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.example.stupidcupid"
+        applicationId "com.example.pocketdate"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -26,6 +26,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    compile 'com.github.warkiz.widget:indicatorseekbar:1.2.9'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.github.stfalcon:chatkit:0.2.2'
