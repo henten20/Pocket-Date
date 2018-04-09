@@ -207,10 +207,10 @@ h2 {
 	font-family: 'Indie Flower', cursive;
 }
 
-#footer {
+.footer {
 	background-color: #fafafa;
 	height: 400px;
-	margin: 10px;
+	margin: 0px auto;
 }
 
 /* =========================== HOMEPAGE PROFILE STUFF ================================ */
@@ -255,9 +255,6 @@ h2 {
 
 }
 
-::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-}
 
 .heading {
 	padding-top: 20px;
