@@ -8,7 +8,6 @@
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: none; /* Enable scroll if needed, changed from auto*/
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
@@ -135,7 +134,7 @@ hr {
     box-shadow: 0 0 30px rgba(0,0,0,.1);
     border-radius: 3px;
 }
- 
+
 .innerbox {
 	padding-top: 10px;
 	padding-bottom: 15px;
@@ -233,17 +232,17 @@ h2 {
 
 #profilePic {
 	display: block;
-	width: 200px; 
+	width: 200px;
 	height: 200px;
 	background-color: white;
-	
+
 }
 
 #profileContent {
 	margin: 0px auto;
 	padding: 25px;
 	width: 60%;
-	
+
 }
 
 .editable {
@@ -253,12 +252,11 @@ h2 {
 	padding-right: 30px;
 	padding-top: 0px;
 	background-color: #fafafa;
-	
+
 }
 
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
 }
 
 .heading {
