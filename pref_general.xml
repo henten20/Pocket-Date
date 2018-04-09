@@ -1,48 +1,59 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:sample="http://schemas.android.com/apk/res-auto">
-<PreferenceCategory android:title="General">
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="example_switch"
-        android:summary="Turn push notifications on or off"
-        android:title="Push Notifications" />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditTextPreference
-        android:capitalize="words"
-        android:defaultValue="Morgan Freeman"
-        android:inputType="textCapWords"
-        android:key="example_text"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Change Password"
-        android:summary="Change your password"/>
-</PreferenceCategory>
+    <PreferenceCategory android:title="General">
 
-<PreferenceCategory android:title="Preferences">
-    <com.pavelsikun.seekbarpreference.SeekBarPreference
-        android:key="your_pref_key"
-        android:title="Distance"
-        android:summary="Set your preferred distance"
-        android:enabled="true"
-        android:defaultValue="10"
+        <Preference
+            android:key="change_prof_pic"
+            android:title="Update Profile Picture"
+            android:singleLine="true"
+            android:selectAllOnFocus="true"
+            android:summary="Click here to change your profile picture" />
 
-        sample:msbp_minValue="10"
-        sample:msbp_maxValue="60"
-        sample:msbp_interval="1"
-        sample:msbp_measurementUnit="mi"
-        sample:msbp_dialogEnabled="false"/>
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textCapWords"
+            android:key="about_text"
+            android:maxLines="5"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Edit About Me"
+            android:summary="Click here to edit your about me section"/>
 
-    <ListPreference
-        android:title="Gender"
-        android:summary="Set your preferred gender"
-        android:key="gender_pref"
-        android:entries="@array/listArray"
-        android:entryValues="@array/listValues"
-        />
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textPassword"
+            android:key="change_password"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Change Password"
+            android:summary="Change your password"/>
+    </PreferenceCategory>
 
-</PreferenceCategory>
+    <PreferenceCategory android:title="Preferences">
+
+        <ListPreference
+            android:title="Gender"
+            android:summary="Set your preferred gender"
+            android:key="gender_pref"
+            android:entries="@array/listArray"
+            android:entryValues="@array/listValues"
+            />
+
+        <org.anasthase.androidseekbarpreference.SeekBarPreference
+            android:defaultValue="10"
+            android:key="PREFERENCE_KEY"
+            android:summary="Set your preferred distance"
+            android:title="Distance"
+            app:format="mi."
+            app:maxValue="60"
+            app:minValue="1"
+            app:stepValue="1"
+            />
+    </PreferenceCategory>
+
+
 
 
 </PreferenceScreen>
