@@ -167,10 +167,12 @@ function createAccount() {
     var pass = document.getElementById("password");
     var confirmpass = document.getElementById("confirmpass");
     var zipcode = document.getElementById("zipcode");
-	//var age = getAge();
+	
 
 	var birthdate = document.getElementById("birthdate");
-
+	alert(birthdate);
+	var age = getAge(birthdate.value);	
+	alert(age);
 	var about = document.getElementById("about");
     //var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, age, zipcode, about];
     var validate = true;
@@ -447,7 +449,7 @@ function createAccount() {
     // if it's incorrect.
     var jsonPayload = '{"username" : "' + username.value + '", "firstname" : "' + firstname.value + '", "lastname" : "' + lastname.value + '", "email" : "' + email.value + '", "phone" : "' + phone.value + '", "pass" : "' + pass.value
 		+ '", "zipcode" : "' + zipcode.value + '", "birthdate" : "' + birthdate.value + '", "about" : "' + about.value + '", "gender" : "' + selectGen + '", "preference" : "' + selectPref + '"}';
-	
+	alert(jsonPayload);
 
     var url = urlBase + '/create.php';
     var xhr = new XMLHttpRequest();
