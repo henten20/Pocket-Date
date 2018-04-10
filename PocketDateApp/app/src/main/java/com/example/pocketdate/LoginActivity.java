@@ -1,9 +1,11 @@
 package com.example.pocketdate;
 
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +15,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.net.HttpURLConnection;
@@ -46,6 +50,64 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        ImageView instaView = (ImageView) findViewById(R.id.instagram_image);
+        ImageView facebookView = (ImageView) findViewById(R.id.facebook_image);
+        ImageView twitterView = (ImageView) findViewById(R.id.twitter_image);
+
+        // opens up pocketdate's twitter page
+        twitterView.setOnClickListener(new OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+               try {
+                   Intent intent = new Intent(Intent.ACTION_VIEW,
+                           Uri.parse("twitter://user?screen_name=[PocketDate]"));
+                   startActivity(intent);
+               } catch (Exception e) {
+                   startActivity(new Intent(Intent.ACTION_VIEW,
+                           Uri.parse("https://mobile.twitter.com/PocketDate")));
+               }
+
+           }
+       });
+
+        // loads up pocketdate's instagram profile
+        instaView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://instagram.com/_u/therealpocketdate");
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                likeIng.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://instagram.com/therealpocketdate")));
+                }
+            }
+        });
+
+        // loads up the pocketdate fb page
+        facebookView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Uri uri = Uri.parse("fb://page/520160165052879");
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                likeIng.setPackage("com.facebook.katana");
+
+                try {
+                    startActivity(likeIng);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://www.facebook.com/Pocket-Date-520160165052879/")));
+                }
+
+            }
+        });
         ActionBar bar = getSupportActionBar();
         //sets color of the action bar to black
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));

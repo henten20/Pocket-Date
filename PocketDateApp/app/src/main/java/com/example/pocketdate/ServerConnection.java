@@ -215,4 +215,24 @@ public class ServerConnection {
         // returns the string that is obtained from the "chatapi.php" file
         return initiateConnection();
     }
+
+    public String reportUser(int userID, int recipientID, String reason, String comments)
+    {
+        // Append parameters to URL - we can pass our parameters to the php code here
+        Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("action", "report")
+                .appendQueryParameter("userID", Integer.toString(userID))
+                .appendQueryParameter("reason", reason)
+                .appendQueryParameter("recipientID", Integer.toString(recipientID))
+                .appendQueryParameter("comments", comments);
+
+        // constructs the query that will be posted to the webserver
+        String query = builder.build().getEncodedQuery();
+
+        // sets object's query with the correct parameters for loading messages
+        this.query = query;
+
+        // returns the string that is obtained from the "chatapi.php" file
+        return initiateConnection();
+    }
 }

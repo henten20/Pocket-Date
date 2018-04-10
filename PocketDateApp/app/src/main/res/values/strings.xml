@@ -32,7 +32,23 @@
     <string name="title_version">Version</string>
     <string name="choose_email_client">Choose email client</string>
     <string name="key_send_feedback">key_send_feedback</string>
+    <string name="report_label">Please fill out the information below to file a report</string>
+    <string name="reason_label">Reason for filing report</string>
+    <string name="block_label">Would you like to block this user?</string>
+    <string name="comments_label">Additional comments</string>
 
+    <string-array name="reason_array">
+        <item>Fake Account</item>
+        <item>Scamming</item>
+        <item>Harrassment</item>
+        <item>Stalking</item>
+        <item>Inappropriate Behavior</item>
+    </string-array>
+
+    <string-array name="option_array">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
