@@ -20,7 +20,7 @@
 	else
 	{
 		// use prepared statements to defend against sql injection attacks
-		$sql = $conn->prepare("SELECT username, pass FROM user where username = ? and pass = ?");
+		$sql = $conn->prepare("SELECT username, pass, user_id FROM user where username = ? and pass = ?");
 		$sql->bind_param("ss", $inData["username"], $hashed_unver_pass);
 		$sql->execute();
 		$result = $sql->get_result();
@@ -29,7 +29,8 @@
 			$row = $result->fetch_assoc();
 			$user= $row["username"];
 			$pass = $row["pass"];
-			returnWithInfo($user, $pass);
+			$user_id = $row["user_id"];
+			returnWithInfo($user, $pass, $user_id);
 		}
 		else
 		{
@@ -50,15 +51,16 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"user":"","pass":"","error":"' . $err . '"}';
+		$retValue = '{"user":"","pass":"", "user_id":"", error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo( $user, $pass)
+	function returnWithInfo( $user, $pass, $user_id)
 	{
 		$my_arr[] = array(
 					'user' => $user,
 					'pass' => $pass,
+					'user_id' => $user_id,
 					'error' => "None"
 				);
 		$json = json_encode($my_arr);

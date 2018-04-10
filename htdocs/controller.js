@@ -7,6 +7,84 @@ var firstName = "";
 var lastName = "";
 
 
+// when the document initially opens
+function profileLoad() 
+{
+	alert("Trying to load");
+    user_id = document.cookie;
+
+    // updates the form submit of the profile update input so that the php file will have access to the user's id
+    var frm = document.getElementById('form-submit');
+    frm.action = "/php/upload.php/?user_id=" + user_id;
+
+    // json string that will contain the user's id
+    var jsonPayload = '{"user_id" : "' + user_id + '"}';
+    var url = urlBase + '/profileupdate.' + extension;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try
+    {
+        xhr.send(jsonPayload);
+
+        var jsonObject = JSON.parse( xhr.responseText );
+
+        if(jsonObject["error"] != null)
+        {
+            alert("Couldn't grab profile image.");
+            return;
+        }
+
+        // checks to see if the profileLocation field is there or not
+        if(jsonObject[0]["profileLocation"] != null)
+        {
+        	profileLocation = jsonObject[0]["profileLocation"];
+        	
+        	// makes sure that the user has selected a profile image
+        	if(profileLocation != "empty")
+        	{
+        		document.getElementById("profile_img").src = profileLocation;
+        	}
+        	
+        }
+		
+		var username = jsonObject[0]["username"]; 
+		var firstname = jsonObject[0]["firstname"];
+		var lastname = jsonObject[0]["lastname"];
+		var birthdate = jsonObject[0]["birthdate"];
+		var age = getAge(birthdate);
+	
+		
+		var email = jsonObject[0]["email"];
+		var preference = jsonObject[0]["preference"];
+		var zipcode = jsonObject[0]["zipcode"];
+		var about = jsonObject[0]["about"];
+      
+        // updates the source of the profile image	
+        document.getElementById("username").innerHTML = username;
+        document.getElementById("firstname").innerHTML = "<p id = \"firstname\">" + firstname + "<span type=\"button\" id=\"setFirst\" onclick = \"editFirst()\" class=\"glyphicon glyphicon-pencil\"></span>"
+        document.getElementById("lastname").innerHTML = "<p id = \"lastname\">" + lastname + "<span type=\"button\" id=\"setLast\" onclick = \"editLast()\" class=\"glyphicon glyphicon-pencil\"></span>"
+        document.getElementById("age").innerHTML = "<p id=\"age\">" + age + "</p>"
+        document.getElementById("email").innerHTML = "<p id = \"email\">" + email + "<span type=\"button\" id=\"setEmail\" onclick = \"editEmail()\" class=\"glyphicon glyphicon-pencil\"></span>"
+        document.getElementById("preference").innerHTML = "<p id = \"preference\">" + preference + "<span type=\"button\" id=\"setPreference\" onclick = \"editPreference()\" class=\"glyphicon glyphicon-pencil\"></span>"
+        document.getElementById("zipcode").innerHTML = "<p id = \"zipcode\">" + zipcode + "<span type=\"button\" id=\"setZip\" onclick = \"editZip()\" class=\"glyphicon glyphicon-pencil\"></span>"
+        document.getElementById("about").innerHTML = "<p id = \"about\">" + about + "<span type=\"button\" id=\"setAbout\" onclick = \"editAbout()\" class=\"glyphicon glyphicon-pencil\"></span>"
+        
+    }
+    catch(err)
+    {
+        alert(xhr.responseText);
+    }  
+}
+
+// uploads the profile image once a file is selected.
+function uploadFile()
+{
+    document.getElementById("form-submit").submit();
+}
+
+
 function signOut(){
     window.location.href = "./index.html";
 }
@@ -42,7 +120,7 @@ function processLogin()
     try
     {
         xhr.send(jsonPayload);
-		//alert(xhr.responseText);
+		alert(xhr.responseText);
         var jsonObject = JSON.parse( xhr.responseText );
 
         if(jsonObject["error"] != null)
@@ -50,12 +128,13 @@ function processLogin()
             alert("User/Password combination incorrect");
             return;
         }
-        user = jsonObject[0]["user"];
+        user = jsonObject[0]["user_id"];
         document.cookie = user;
         window.location.href = "/profile.html";
     }
     catch(err)
     {
+		alert(xhr.responseText);
         alert(err.message);
     }  
 }
@@ -67,9 +146,9 @@ function validateEmail(email)
     return re.test(email);
 }
 
-function getAge()
+function getAge(birthDay)
 {
-		var birthDay = document.getElementById("birthdate").value;
+		//var birthDay = document.getElementById("birthdate").value;
         var DOB = new Date(birthDay);
         var today = new Date();
         var age = today.getTime() - DOB.getTime();
@@ -88,7 +167,10 @@ function createAccount() {
     var pass = document.getElementById("password");
     var confirmpass = document.getElementById("confirmpass");
     var zipcode = document.getElementById("zipcode");
-	var age = getAge();
+	//var age = getAge();
+
+	var birthdate = document.getElementById("birthdate");
+
 	var about = document.getElementById("about");
     //var fieldArray = [username, pass, confirmpass, phone, email, firstname, lastname, age, zipcode, about];
     var validate = true;
@@ -364,7 +446,7 @@ function createAccount() {
     // jsonPayload is the JSON string that we are sending to the php. Always double-check the syntax of this statement, because the php won't be able to read it
     // if it's incorrect.
     var jsonPayload = '{"username" : "' + username.value + '", "firstname" : "' + firstname.value + '", "lastname" : "' + lastname.value + '", "email" : "' + email.value + '", "phone" : "' + phone.value + '", "pass" : "' + pass.value
-		+ '", "zipcode" : "' + zipcode.value + '", "age" : "' + age + '", "about" : "' + about.value + '", "gender" : "' + selectGen + '", "preference" : "' + selectPref + '"}';
+		+ '", "zipcode" : "' + zipcode.value + '", "birthdate" : "' + birthdate.value + '", "about" : "' + about.value + '", "gender" : "' + selectGen + '", "preference" : "' + selectPref + '"}';
 	
 
     var url = urlBase + '/create.php';
@@ -392,14 +474,15 @@ function createAccount() {
         //user = jsonObject[0]["user"];
         
         // redirects the window to the home.html page
-		
-		user = jsonObject[0]["user"];
-        document.cookie = user;
+		alert(xhr.responseText);
+		var user_id = jsonObject[0]["user_id"];
+        document.cookie = user_id;
         window.location.href = "/profile.html";
     }
     // if there's an error, we'll be able to see it in the form of an alert
     catch(err)
     {
+		alert(xhr.responseText);
         alert("Username already exists");
     }  
 	

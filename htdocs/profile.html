@@ -43,47 +43,50 @@
 
 	</head>
     <body>
+	<body onload="profileLoad()">
         <div class="container-fluid" style = "padding-top:90px;">
           <div class="row">
             <div class="col-md-4">
               <div class="text-center">
-                <button id="profilePic"><img src="./png/add-user.png" style="height:200px;width:200px;"></button>
+                <form action="upload.php" id="form-submit" method="post" enctype="multipart/form-data" onchange="uploadFile()">
+                  <label for="file-input">
+                    <img title="Click to update profile picture" class="profile-location" id="profile_img" for="fileElem" src="./png/add-user.png" style="height:200px;width:200px;">
+                  </label>
+                <input name="file-input" id="file-input" type="file" style="visibility: hidden;"/>
+                </form>
               </div>
             </div>
 
           <div class="col-md-8">
             <legend>Profile</legend>
             <div class="informationSection">
-              <label for="username">Username:</label>
-              <p> lililin64226 </p> <br>
+              <label for="username" >Username:</label>
+              <p id="username"></p> <br>
               <!-- Insert User's Name -->
               <label for="email">Email Address:</label>
-              <p id = "email"> lililin64226@gmail.com
+              <p id = "email">
                 <span type="button" id="setEmail" onclick = "editEmail()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="firstname">First Name:</label>
-              <p id = "firstname"> Lili
+              <p id = "firstname"> 
                 <span type="button" id="setFirst" onclick = "editFirst()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="lastname">Last Name:</label>
-              <p id = "lastname"> Lili
+              <p id = "lastname"> 
                 <span type="button" id="setLast" onclick = "editLast()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
-              <label for="dob">Date of Birth:</label>
-              <p> December 25, 1995 </p><br>
+              <label for="dob">Age:</label>
+              <p id="age"> </p><br>
               <label for="zipcode">Zip Code:</label>
-              <p id = "zipcode"> 32826
+              <p id = "zipcode"> 
                 <span type="button" id="setZip" onclick = "editZip()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="preference">Preference:</label>
-              <p id = "preference"> Male
+              <p id = "preference"> 
                 <span type="button" id="setPreference" onclick = "editPreference()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="about">About me:</label>
-              <p id = "about" style="max-width: 50%"> University of Central Florida, computer science major. University of Central Florida, computer science major.
-                University of Central Florida, computer science major.
-                University of Central Florida, computer science major.
-                University of Central Florida, computer science major.
+              <p id = "about" style="max-width: 50%"> 
                 <span type="button" id="setAbout" onclick = "editAbout()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
             </div>

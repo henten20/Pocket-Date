@@ -11,10 +11,11 @@
 		$phone = $inData['phone'];
 		$pass = $inData['pass'];
 		$zipcode = $inData['zipcode'];
-		$age = $inData['age'];
+		$birthdate = $inData['birthdate'];
 		$about = $inData['about'];
 		$gender = $inData['gender'];
 		$preference = $inData['preference'];
+		$profileLocation = "empty";
 		
 		// db deets
 		$servername = "localhost";
@@ -61,20 +62,31 @@
 		// Before inserting into the database, we will need to calculate the users age
 		// via the birthdate that they provided. Currently using a placeholder
 		
-		$sql = $conn->prepare("INSERT into user (user_id, username, pass, phone, email, firstname, lastname, age, zipcode, gender, preference, about) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
-		$sql->bind_param("ssssssssssss", $user_id, $user, $hashed_pass, $phone, $email, $firstname, $lastname, $age, $zipcode, $gender, $preference, $about);
+		$sql = $conn->prepare("INSERT into user (user_id, username, pass, phone, email, firstname, lastname, profileLocation, birthdate, zipcode, gender, preference, about) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?)");
+		$sql->bind_param("sssssssssssss", $user_id, $user, $hashed_pass, $phone, $email, $firstname, $lastname, $profileLocation, $birthdate, $zipcode, $gender, $preference, $about);
 		$sql->execute();
 			
-		// example of returning json back to js
- 		$my_arr[] = array(
-						'user' => $user
+		$sql = $conn->prepare("SELECT user_id from user where username = ?");
+		$sql->bind_param("s", $user);
+		$sql->execute();
+		$result = $sql->get_result();
+
+		while ($row = $result->fetch_assoc())
+	    {
+	    	// example of returning json back to js
+ 			$my_arr[] = array(
+ 						'user_id' => $row["user_id"],
+						'user' => $user,
+						'pass' => $pass
 					);
+	    }
+		
 		$json = json_encode($my_arr);
 		echo($json);
 		
 		$sql->close();
 		$conn->close();
-	
+
 	
 	
 ?>
