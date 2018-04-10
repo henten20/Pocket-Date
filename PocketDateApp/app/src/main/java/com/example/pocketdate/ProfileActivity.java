@@ -145,16 +145,16 @@ public class ProfileActivity extends AppCompatPreferenceActivity  {
             addPreferencesFromResource(R.xml.pref_general);
 
             // grabs the preference item that will activate the method for changing a user's profile image
-            Preference myPref = (Preference) findPreference("change_prof_pic");
-            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    // in onCreate or any event where your want the user to  select a file
-                    Intent intent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    // call main activity's startActivityForResult function (allows us to return data to main activity)
-                    // the 2 is an arbitrary request code. value just needs to be something greater than 0
-                    getActivity().startActivityForResult(intent, 2);
-                    return true;
+                    Preference myPref = (Preference) findPreference("change_prof_pic");
+                    myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        public boolean onPreferenceClick(Preference preference) {
+                            // in onCreate or any event where your want the user to  select a file
+                            Intent intent = new Intent(Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            // call main activity's startActivityForResult function (allows us to return data to main activity)
+                            // the 2 is an arbitrary request code. value just needs to be something greater than 0
+                            getActivity().startActivityForResult(intent, 2);
+                            return true;
                 }
             });}
     }

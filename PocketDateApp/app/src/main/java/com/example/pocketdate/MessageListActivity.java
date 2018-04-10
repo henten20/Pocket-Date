@@ -32,6 +32,7 @@ public class MessageListActivity extends AppCompatActivity {
     CustomAdapter adapter;
     private ArrayList<CustomPojo> listContentArr = new ArrayList<>();
     private int matchCreepLevel;
+    private int matchID;
 
     private int userID;
     String userEmail;
@@ -65,6 +66,7 @@ public class MessageListActivity extends AppCompatActivity {
         Intent thisActivity = getIntent();
         String jsonArray = thisActivity.getStringExtra("jsonArray");
         this.userID = thisActivity.getIntExtra("userID", -1);
+        //this.matchID = thisActivity.getIntExtra("matchID", -1);
         this.justMatched = thisActivity.getBooleanExtra("justMatched", true);
         // user is now in a chat if we reach this activity
         this.inChat = true;
@@ -211,6 +213,17 @@ public class MessageListActivity extends AppCompatActivity {
     private void processReport()
     {
         // placeholder for the reporting functionality
+        Intent myIntent = new Intent(this, ReportActivity.class);
+        myIntent.putExtra("userID", userID);
+        myIntent.putExtra("inputEmail", userEmail);
+        myIntent.putExtra("profileLocation", profileLocation);
+        myIntent.putExtra("firstName", firstName);
+        myIntent.putExtra("lastName", lastName);
+        myIntent.putExtra("inChat", inChat);
+        myIntent.putExtra("matchID", matchID);
+        myIntent.putExtra("matchFirstName", matchFirstName);
+        myIntent.putExtra("matchID", matchID);
+        startActivity(myIntent);
     }
     // will be interesting to see if this works well
     private void processUnmatch()
@@ -293,10 +306,12 @@ public class MessageListActivity extends AppCompatActivity {
         {
             resultJSON = new JSONArray(resultString);
             JSONObject jsonObj = resultJSON.getJSONObject(0);
+            Log.v("test", resultString);
             this.matchFirstName = jsonObj.getString("firstName");
             this.matchLastName = jsonObj.getString("lastName");
             this.matchProfileLocation = jsonObj.getString("profileLocation");
-            this.matchCreepLevel = jsonObj.getInt("creepLevel");
+            this.matchCreepLevel = Integer.parseInt(jsonObj.getString("creepLevel"));
+            this.matchID = Integer.parseInt(jsonObj.getString("matchID"));
 
         } catch (JSONException | NullPointerException e)
         {

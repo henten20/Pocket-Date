@@ -105,8 +105,8 @@ public class MatchProfileActivity extends AppCompatActivity {
                 this.creepTextView.setText("Very creepy. Be careful.");
                 break;
             default:
-                this.creepView.setImageResource(R.drawable.progress0);
-                this.creepTextView.setText("Not a creep!");
+                this.creepView.setImageResource(R.drawable.progress4);
+                this.creepTextView.setText("Very creepy. Be careful.");
                 break;
         }
 

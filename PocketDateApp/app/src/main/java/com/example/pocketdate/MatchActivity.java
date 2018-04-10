@@ -126,6 +126,7 @@ public class MatchActivity extends AppCompatActivity
 
                 // default creep level value
                 int creepLevel = -1;
+                //int matchID = -1;
 
                 if(!inChat)
                 {
@@ -133,6 +134,7 @@ public class MatchActivity extends AppCompatActivity
                         JSONObject myObj = resultJSON.getJSONObject(0);
                         inChat = true;
                         creepLevel = myObj.getInt("creepLevel");
+                        //matchID = myObj.getInt("matchID");
                         matchProfileLocation = myObj.getString("profileLocation");
                         matchFirstName = myObj.getString("firstName");
                         openDialog(matchProfileLocation, matchFirstName, creepLevel);
@@ -173,6 +175,7 @@ public class MatchActivity extends AppCompatActivity
                     myIntent.putExtra("inChat", MatchActivity.this.inChat);
                     myIntent.putExtra("userID", MatchActivity.this.userID);
                     myIntent.putExtra("creepLevel", creepLevel);
+                    //myIntent.putExtra("matchID", matchID);
                     startActivity(myIntent);
                 }
             }

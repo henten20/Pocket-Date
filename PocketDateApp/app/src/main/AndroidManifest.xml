@@ -32,11 +32,13 @@
             android:name=".MatchActivity"
             android:label="@string/title_activity_match"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MessageListActivity"
-            android:theme="@style/AppTheme.MessageBar"/>
+        <activity
+            android:name=".MessageListActivity"
+            android:theme="@style/AppTheme.MessageBar" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MatchProfileActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ReportActivity"></activity>
     </application>
 
 </manifest>
