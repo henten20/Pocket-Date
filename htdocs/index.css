@@ -97,7 +97,7 @@ hr {
     height: 100%;
 }
 
-#whyStupidCupid {
+#whyPocketDate {
     font-family: 'Lato', sans-serif;
     font-family: 'Raleway', sans-serif;
     text-align: center;
@@ -107,7 +107,7 @@ hr {
 	/*height: 450px;*/
 }
 
-#whyStupidCupid > p {
+#whyPocketDate > p {
     width: 75%;
     text-align: center;
     margin: 0 auto;
@@ -295,4 +295,41 @@ h4 {
 	margin: 0px auto;
 	padding-right: 10%;
 	padding-left: 10%;
+}
+
+
+
+/* Modal for the Change Password */
+.modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content2 {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+   	height: 330px;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 30%; /* Could be more or less, depending on screen size */
+  	min-width: 400px;
+}
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
