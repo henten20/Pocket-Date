@@ -16,8 +16,13 @@ var specRegNum = /[^0-9]/;
 function updateField(field, updated)
 {
 	var username = document.cookie;
-  
-  // switch command for the type of field that is going to be updated
+
+	var url = urlBase + '/update.' + extension;
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	//xhr.open("POST", url, false);
+	
+	// switch command for the type of field that is going to be updated
 	switch(field)
 	{
 		case "email": 
@@ -39,13 +44,9 @@ function updateField(field, updated)
 			var jsonPayload = '{"about" : "' + updated + '", "username" : "' + username + '", "field" : "' + "about" + '"}';
 			break;
 	}
-  
-
-	var url = urlBase + '/update.' + extension;
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, false);
+	alert(jsonPayload);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
+	/*
 	try
     {
         xhr.send(jsonPayload);
@@ -57,6 +58,20 @@ function updateField(field, updated)
     {
         alert(err.message);
     }
+	*/
+	
+	xhr.onreadystatechange = function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			var jsonObject = JSON.parse( xhr.responseText );
+			user = jsonObject[0]["user"];
+			alert(user);
+		}
+	};
+	
+	
+	xhr.send(jsonPayload);
 }
 
 // change the paragraph field to a textbox and update the information when pressing submit
@@ -149,4 +164,47 @@ function updateAbout()
   // will figure this out later
   updateField("about", updated.value);
   document.getElementById("about").innerHTML = "<p id = \"about\">" + updated.value + "<span type=\"button\" id=\"setAbout\" onclick = \"editAbout()\" class=\"glyphicon glyphicon-pencil\"></span>";
+}
+
+function editPass()
+{
+	var oldPass = document.getElementById("oldPass");
+	var newPass = document.getElementById("newPass");
+	var confirmPass = document.getElementById("confirmPass");
+	alert("Here");
+	if(oldPass.value == null || newPass.value == null || confirmPass.value == null)
+		alert("Please fill in all password fields before submitting");
+	
+	if(newPass.value != confirmPass.value)
+		alert("New passwords do not match");
+	
+	var username = document.cookie;
+
+	var url = urlBase + '/update.' + extension;
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true)
+	
+	
+	// create json payload with the password fields
+	var jsonPayload = '{"username" : "' + username + '", "oldPass" : "' + oldPass.value + '", "newPass" : "' + newPass.value + '", "field" : "' + "password" + '"}';
+	alert(jsonPayload);
+	
+	xhr.onreadystatechange = function()
+	{
+		if(this.readyState == 4 && this.status == 200)
+		{
+			alert(xhr.responseText);
+			
+			var jsonObject = JSON.parse( xhr.responseText );
+			user = jsonObject[0]["user"];
+			
+			if(user == "error")
+				alert("Old password was incorrect");
+			else alert(user);
+		}
+	};
+	
+	
+	xhr.send(jsonPayload);
+	//alert(xhr.responseText)
 }

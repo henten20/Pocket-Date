@@ -21,9 +21,9 @@ function profileLoad()
     var jsonPayload = '{"user_id" : "' + user_id + '"}';
     var url = urlBase + '/profileupdate.' + extension;
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, false);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
+    //xhr.open("POST", url, true);
+    //xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	/*
     try
     {
         xhr.send(jsonPayload);
@@ -76,6 +76,66 @@ function profileLoad()
     {
         alert(xhr.responseText);
     }  
+	*/
+	xhr.onreadystatechange = function()
+	{
+		if(this.readyState == 4)
+		{
+			if(this.status == 200)
+			{
+			
+				//console.log(xhr.responseText);
+				//xhr.send(jsonPayload);
+
+				var jsonObject = JSON.parse( xhr.responseText );
+
+				if(jsonObject["error"] != null)
+				{
+					alert("Couldn't grab profile image.");
+					return;
+				}
+
+				// checks to see if the profileLocation field is there or not
+				if(jsonObject[0]["profileLocation"] != null)
+				{
+					profileLocation = jsonObject[0]["profileLocation"];
+					
+					// makes sure that the user has selected a profile image
+					if(profileLocation != "empty")
+					{
+						document.getElementById("profile_img").src = profileLocation;
+					}
+					
+				}
+				
+				var username = jsonObject[0]["username"]; 
+				var firstname = jsonObject[0]["firstname"];
+				var lastname = jsonObject[0]["lastname"];
+				var birthdate = jsonObject[0]["birthdate"];
+				var age = getAge(birthdate);
+			
+				
+				var email = jsonObject[0]["email"];
+				var preference = jsonObject[0]["preference"];
+				var zipcode = jsonObject[0]["zipcode"];
+				var about = jsonObject[0]["about"];
+			  
+				// updates the source of the profile image	
+				document.getElementById("username").innerHTML = username;
+				document.getElementById("firstname").innerHTML = "<p id = \"firstname\">" + firstname + "<span type=\"button\" id=\"setFirst\" onclick = \"editFirst()\" class=\"glyphicon glyphicon-pencil\"></span>"
+				document.getElementById("lastname").innerHTML = "<p id = \"lastname\">" + lastname + "<span type=\"button\" id=\"setLast\" onclick = \"editLast()\" class=\"glyphicon glyphicon-pencil\"></span>"
+				document.getElementById("age").innerHTML = "<p id=\"age\">" + age + "</p>"
+				document.getElementById("email").innerHTML = "<p id = \"email\">" + email + "<span type=\"button\" id=\"setEmail\" onclick = \"editEmail()\" class=\"glyphicon glyphicon-pencil\"></span>"
+				document.getElementById("preference").innerHTML = "<p id = \"preference\">" + preference + "<span type=\"button\" id=\"setPreference\" onclick = \"editPreference()\" class=\"glyphicon glyphicon-pencil\"></span>"
+				document.getElementById("zipcode").innerHTML = "<p id = \"zipcode\">" + zipcode + "<span type=\"button\" id=\"setZip\" onclick = \"editZip()\" class=\"glyphicon glyphicon-pencil\"></span>"
+				document.getElementById("about").innerHTML = "<p id = \"about\">" + about + "<span type=\"button\" id=\"setAbout\" onclick = \"editAbout()\" class=\"glyphicon glyphicon-pencil\"></span>"
+				
+			}
+		}
+	};
+	xhr.open("POST", url, true);
+	xhr.send(jsonPayload);
+	
 }
 
 // uploads the profile image once a file is selected.

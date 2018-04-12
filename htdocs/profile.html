@@ -54,6 +54,67 @@
                   </label>
                 <input name="file-input" id="file-input" type="file" style="visibility: hidden;"/>
                 </form>
+                <br><br><br><br><br>
+
+                <!-- Trigger/Open The Modal -->
+                <button type="button" class="btn btn-primary" id = "myCP"> Change Password</button>
+
+
+                <!-- The Modal -->
+                  <div id="myModal2" class="modal2" style= "height = 200px;">
+                    <!-- Modal content -->
+                    <div class="modal-content2">
+                    <span class="close">&times;</span>
+                        <form class="form-changepassword" style="padding-top: 20px;">
+                                      <h3 class="form-changepassword-heading">Change Your Password</h3>
+                                      <label for="inputPassword" class="sr-only">Old Password</label>
+                                      <input type="password" id="oldPass" class="form-control" placeholder="Old Password">
+                                      <label for="password" class="sr-only">New Password</label>
+                                      <input type="password" id="newPass" class="form-control" placeholder="New Password">
+                                      <label for="confirmPassword" class="sr-only">Confirm Password</label>
+                                      <input type="password" id="confirmPass" class="form-control" placeholder="Confirm Password" onkeypress="return keyPress(event);"><br>
+                                      <button type="button" id="editPassword" class="btn btn-lg btn-primary btn-block" onclick="editPass();">Change Password</button>
+                                  </form>
+                    </div>
+                  </div>
+
+				  <!-- Script for hitting enter on the search -->
+			<script>
+			function keyPress(e)
+			{
+				// look for window.event in case event isn't passed in
+				e = e || window.event;
+				if (e.keyCode == 13)
+				{
+					document.getElementById('editPassword').click();
+					return false;
+				}
+				return true;
+			}
+			</script>
+			
+                  <script>
+                  // Get the modal
+                  var modal2 = document.getElementById('myModal2');
+                  // Get the button that opens the modal
+                  var chp = document.getElementById("myCP");
+                  // Get the <span> element that closes the modal
+                  var span = document.getElementsByClassName("close")[0];
+                  // When the user clicks the button, open the modal
+                  chp.onclick = function() {
+                    modal2.style.display = "block";
+                  }
+                  // When the user clicks on <span> (x), close the modal
+                  span.onclick = function() {
+                    modal2.style.display = "none";
+                  }
+                  // When the user clicks anywhere outside of the modal, close it
+                  window.onclick = function(event) {
+                    if (event.target == modal2) {
+                      modal2.style.display = "none";
+                    }
+                  }
+                  </script>
               </div>
             </div>
 
@@ -68,25 +129,25 @@
                 <span type="button" id="setEmail" onclick = "editEmail()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="firstname">First Name:</label>
-              <p id = "firstname"> 
+              <p id = "firstname">
                 <span type="button" id="setFirst" onclick = "editFirst()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="lastname">Last Name:</label>
-              <p id = "lastname"> 
+              <p id = "lastname">
                 <span type="button" id="setLast" onclick = "editLast()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="dob">Age:</label>
               <p id="age"> </p><br>
               <label for="zipcode">Zip Code:</label>
-              <p id = "zipcode"> 
+              <p id = "zipcode">
                 <span type="button" id="setZip" onclick = "editZip()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="preference">Preference:</label>
-              <p id = "preference"> 
+              <p id = "preference">
                 <span type="button" id="setPreference" onclick = "editPreference()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
               <label for="about">About me:</label>
-              <p id = "about" style="max-width: 50%"> 
+              <p id = "about" style="max-width: 50%">
                 <span type="button" id="setAbout" onclick = "editAbout()" class="glyphicon glyphicon-pencil"></span>
               </p><br>
             </div>
