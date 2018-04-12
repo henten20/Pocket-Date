@@ -1,7 +1,7 @@
 # TODO
 
 Henry 
-- Add password change feature to web 
+- <strike>Add password change feature to web</strike>
 - Add any extra profile fields
 - Add additional information onto the website front end
 - Make the front end look pretty
