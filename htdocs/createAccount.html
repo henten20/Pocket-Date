@@ -1,162 +1,215 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="index.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-  <script src="controller.js"></script>
-
-</head>
-
-<body>
-  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
-      <div class="container-fluid">
-        <div class="navbar-header">
-  <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
-          <a class="navbar-brand" href="index.html">Stupid Cupid</a>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="controller.js"></script>
+    </head>
+    <body>
+        <!-- NAVIGATION BAR -->
+        <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="./png/logo.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+                    <a class="navbar-brand" href="index.html">Pocket Date</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="./createAccount.html" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                </ul>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <form class="form-signin" style="padding-top: 40px;">
+                            <h3 class="form-signin-heading">
+                            Log into your account</h2>
+                            <label for="inputUser" class="sr-only">Username</label>
+                            <input type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required onkeypress="return keyPress(event);">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="remember-me" value="remember-me"> Remember me</label>
+                            </div>
+                            <button type="reset" id="loginButton" class="btn btn-lg btn-primary btn-block" onclick="processLogin()">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- This script is responsible for displaying and hiding the model -->
+                <script>
+                    var modal = document.getElementById('myModal');
+                    var btn = document.getElementById("myBtn");
+                    var span = document.getElementsByClassName("close")[0];
+                    
+                    // When the user clicks the button, open the modal
+                    btn.onclick = function() 
+                    {
+                    	modal.style.display = "block";
+                    }
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() 
+                    {
+                    	modal.style.display = "none";
+                    }
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) 
+                    {
+                    	if (event.target == modal) 
+                    	{
+                    		modal.style.display = "none";
+                    	}
+                    }
+                    
+                </script>
+                <!-- Script for pressing enter key to initiate button click -->
+                <script>
+                    function keyPress(e)
+                    {
+                    	// look for window.event in case event isn't passed in
+                    	e = e || window.event;
+                    	if (e.keyCode == 13)
+                    	{
+                    		document.getElementById('loginButton').click();
+                    		return false;
+                    	}
+                    	return true;
+                    }
+                    
+                </script>		
+            </div>
+        </nav>
+        <!-- END NAVIGATION BAR -->
+        <div class = "usingForm" style = "padding-top: 100px; padding-left: 30%; padding-right: 30%;">
+            <form>
+                <legend>Login Information</legend>
+                <div class="form-group">
+                    <label id="usernameLabel" for="username">Username*</label>
+                    <input type="text" class="form-control" id="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label id="passwordLabel" for="password">Password*</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label id="confirmLabel" for="confirmPw">Confirm Password*</label>
+                    <input type="password" class="form-control" id="confirmpass" placeholder="Confirm Password">
+                </div>
+                <div class="form-group">
+                    <label id="phoneLabel" for="phoneno">Phone Number*</label>
+                    <input type="phone" class="form-control" id="phone" placeholder="XXX-XXX-XXXX" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label id="emailLabel" for="exampleInputEmail1">Email Address*</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
+                </div>
+                <br>
+                <legend>Personal Information</legend>
+                <div class="form-group">
+                    <label id="firstnameLabel" for="firstname">First Name*</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="First Name">
+                </div>
+                <div class="form-group">
+                    <label id="lastnameLabel" for="lastname">Last Name*</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+                </div>
+                <div class="form-group">
+                    <label id="birthdateLabel" for="birthdate">Birthdate*</label>
+                    <input type="date" class="form-control" id="birthdate" placeholder="mm/dd/yyyy">
+                </div>
+                <div class="form-group">
+                    <label id="zipcodeLabel" for="zipcode">Zip Code*</label>
+                    <input class="form-control" id="zipcode" maxlength="5" placeholder="Example: 12345">
+                </div>
+                <!-- Gender Section -->
+                <fieldset class="form-group">
+                    <legend>Gender</legend>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="gender" id="optionsRadios1" value="Female">
+                        Female
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="gender" id="optionsRadios2" value="Male">
+                        Male
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="gender" id="optionsRadios3" value="Other">
+                        Other
+                        </label>
+                    </div>
+                </fieldset>
+                <!-- Preference Section -->
+                <fieldset class="form-group2">
+                    <legend>Preference</legend>
+                    <div class="form-check2">
+                        <label class="form-check-label2">
+                        <input type="radio" class="form-check-input2" name="preference" id="optionsRadios4" value="Female">
+                        Female
+                        </label>
+                    </div>
+                    <div class="form-check2">
+                        <label class="form-check-label2">
+                        <input type="radio" class="form-check-input2" name="preference" id="optionsRadios5" value="Male">
+                        Male
+                        </label>
+                    </div>
+                    <div class="form-check2">
+                        <label class="form-check-label2">
+                        <input type="radio" class="form-check-input2" name="preference" id="optionsRadios6" value="Both">
+                        Both
+                        </label>
+                    </div>
+                </fieldset>
+                <br>
+                <!-- About Me Section -->
+                <div class="form-group">
+                    <legend>About Me</legend>
+                    <textarea class="form-control" id="about" rows="5" placeholder = "Please enter some biography about yourself"></textarea>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input">
+                    By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy Conditions</a>.
+                    </label>
+                    </br></br></br>
+                </div>
+                <center><button type="button" class="btn btn-primary" onclick="return createAccount();">Submit</button></center>
+                <br></br>
+            </form>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          <li><a href="#" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        </ul>
-      </div>
-  </nav>
-  <div class = "usingForm" style = "padding-top: 100px; padding-left: 25%; padding-right: 25%">
-    <form>
-      <legend>Login Information </legend>
-      <div class="form-group">
-        <label id="usernameLabel" for="username">Username*</label>
-        <input type="text" class="form-control" id="username" placeholder="Username">
-      </div>
-      <div class="form-group">
-        <label id="passwordLabel" for="password">Password*</label>
-        <input type="password" class="form-control" id="password" placeholder="Password">
-      </div>
-      <div class="form-group">
-        <label id="confirmLabel" for="confirmPw">Confirm Password*</label>
-        <input type="password" class="form-control" id="confirmpass" placeholder="Confirm Password">
-      </div>
-      <div class="form-group">
-        <label id="phoneLabel" for="phoneno">Phone Number*</label>
-        <input type="phone" class="form-control" id="phone" placeholder="XXX-XXX-XXXX" maxlength="10">
-      </div>
-      <div class="form-group">
-        <label id="emailLabel" for="exampleInputEmail1">Email Address*</label>
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
-      </div>
-      <br>
-      <legend>Personal Information</legend>
-      <div class="form-group">
-        <label id="firstnameLabel" for="firstname">First Name*</label>
-        <input type="text" class="form-control" id="firstname" placeholder="First Name">
-      </div>
-      <div class="form-group">
-        <label id="lastnameLabel" for="lastname">Last Name*</label>
-        <input type="text" class="form-control" id="lastname" placeholder="Last Name">
-      </div>
-      <div class="form-group">
-        <label id="birthdateLabel" for="birthdate">Birthdate*</label>
-        <input type="date" class="form-control" id="birthdate" placeholder="mm/dd/yyyy">
-      </div>
-      <div class="form-group">
-        <label id="zipcodeLabel" for="zipcode">Zip Code*</label>
-        <input class="form-control" id="zipcode" maxlength="5" placeholder="Example: 12345">
-      </div>
-
-
-      <!-- Gender Section -->
-      <fieldset class="form-group">
-        <legend>Gender</legend>
-        <div class="form-check">
-          <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="gender" id="optionsRadios1" value="Female">
-            Female
-          </label>
+        <hr>
+        <div class="footer">
+            <ul style="list-style-type:none;width:300px; height: 50px; margin: auto;padding-top: 20px;">
+                <li style="float:left"><a href="https://www.facebook.com/pg/Pocket-Date-520160165052879/posts/"><img src="./png/004-facebook.png" style="height:50px;margin:10px;display:inline;"></a></li>
+                <li style="float:left"><a href="https://twitter.com/PocketDate"><img src="./png/001-twitter.png" style="height:50px;margin:10px;display:inline;"></a></li>
+                <li style="float:left"><a href="https://www.instagram.com/therealpocketdate/"><img src="./png/002-instagram.png" style="height:50px;margin:10px;display:inline;"></a></li>
+            </ul>
+            <br><br><br><br>
+            <div style= "text-align:center">
+                <p style="font-size:20px"> Contributors: </p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Henry Ton </a></p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Austin Bryant </a></p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Priyank Krishnamoorthi </a></p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Lili Lin </a></p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Joe Hummel </a></p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Daniel Keller </a></p>
+                <p> <a href="mailto:pocketdatehelp@gmail.com">Ming Jiang </a></p>
+                <br><br>
+                <p style= "text-align:center;font-size:16px"> Designs from Flaticon </p>
+            </div>
+            <p style= "text-align:center"> Contact Us: <a href="mailto:pocketdatehelp@gmail.com">pocketdatehelp@gmail.com</a> </p>
         </div>
-        <div class="form-check">
-        <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="gender" id="optionsRadios2" value="Male">
-            Male
-          </label>
-        </div>
-		<div class="form-check">
-          <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="gender" id="optionsRadios3" value="Other">
-            Other
-          </label>
-        </div>
-      </fieldset>
-
-      <!-- Preference Section -->
-      <fieldset class="form-group2">
-        <legend>Preference</legend>
-        <div class="form-check2">
-          <label class="form-check-label2">
-            <input type="radio" class="form-check-input2" name="preference" id="optionsRadios4" value="Female">
-            Female
-          </label>
-        </div>
-        <div class="form-check2">
-        <label class="form-check-label2">
-            <input type="radio" class="form-check-input2" name="preference" id="optionsRadios5" value="Male">
-            Male
-          </label>
-        </div>
-        <div class="form-check2">
-        <label class="form-check-label2">
-            <input type="radio" class="form-check-input2" name="preference" id="optionsRadios6" value="Both">
-            Both
-          </label>
-        </div>
-      </fieldset>
-      <br>
-
-      <!-- About Me Section -->
-      <div class="form-group">
-        <legend>About Me</legend>
-        <textarea class="form-control" id="about" rows="5" placeholder = "Please enter some biography about yourself"></textarea>
-      </div>
-      <div class="form-check">
-        <label class="form-check-label">
-          <input type="checkbox" class="form-check-input">
-          By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy Conditions</a>.
-        </label>
-		</br></br></br>
-      </div>
-      <center><button type="button" class="btn btn-primary" onclick="createAccount()">Submit</button></center><br></br>
-    </form>
-  </div>
-  
-  <hr>
-  <div class="footer">
-        <ul style="list-style-type:none;width:300px; height: 50px; margin: auto;padding-top: 20px;">
-          <li style="float:left"><a href="https://www.facebook.com/pg/Pocket-Date-520160165052879/posts/"><img src="./png/004-facebook.png" style="height:50px;margin:10px;display:inline;"></a></li>
-          <li style="float:left"><a href="https://twitter.com/PocketDate"><img src="./png/001-twitter.png" style="height:50px;margin:10px;display:inline;"></a></li>
-          <li style="float:left"><a href="https://www.instagram.com/therealpocketdate/"><img src="./png/002-instagram.png" style="height:50px;margin:10px;display:inline;"></a></li>
-        </ul>
-
-        <br><br><br><br>
-        <div style= "text-align:center">
-          <p style="font-size:20px"> Contributors: </p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Henry Ton </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Austin Bryant </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Priyank Krishnamoorthi </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Lili Lin </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Joe Hummel </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Daniel Keller </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Ming Jiang </a></p><br><br>
-          <p style= "text-align:center;font-size:16px"> Designs from Flaticon </p>
-        </div>
-        <p style= "text-align:center"> Contact Us: <a href="mailto:pocketdatehelp@gmail.com">pocketdatehelp@gmail.com</a> </p>
-
-      </div>
-</body>
-
+    </body>
 </html>

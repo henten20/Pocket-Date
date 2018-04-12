@@ -31,7 +31,6 @@
             'gender' => $row['gender'],
             'preference' => $row['preference'],
             'about' => $row['about']);
-
     }
 
     // checks to see if no results were returned
@@ -57,8 +56,8 @@
                 'about' => $row['about']);
         }
     }
+	
     // encodes the array in a json readable format
     echo(json_encode($my_arr));
-
 
 ?> 

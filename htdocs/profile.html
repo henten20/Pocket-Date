@@ -4,155 +4,150 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="index.css">
-
-		<!-- LIST OF FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-		<!-- Main javascript controller -->
-		<script src="controller.js"></script>
-    <script src="update.js"></script>
-
-      <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
-            <a class="navbar-brand" href="index.html">Pocket Date</a>
-          </div>
-            <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span>Signout</a></li>
-          </ul>
-        </div>
-      </nav>
-
-  <script>
-    var btn = document.getElementById("myBtn");
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-      signOut();
-    }
-  </script>
-
-  <script>
-    // junk
-  </script>
-
-	</head>
-    <body>
-	<body onload="profileLoad()">
-        <div class="container-fluid" style = "padding-top:90px;">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="text-center">
-                <form action="upload.php" id="form-submit" method="post" enctype="multipart/form-data" onchange="uploadFile()">
-                  <label for="file-input">
-                    <img title="Click to update profile picture" class="profile-location" id="profile_img" for="fileElem" src="./png/add-user.png" style="height:200px;width:200px;">
-                  </label>
-                <input name="file-input" id="file-input" type="file" style="visibility: hidden;"/>
-                </form>
-                <br><br><br><br><br>
-
-                <!-- Trigger/Open The Modal -->
-                <button type="button" class="btn btn-primary" id = "myCP"> Change Password</button>
-
-
-                <!-- The Modal -->
-                  <div id="myModal2" class="modal2" style= "height = 200px;">
-                    <!-- Modal content -->
-                    <div class="modal-content2">
-                    <span class="close">&times;</span>
-                        <form class="form-changepassword" style="padding-top: 20px;">
-                                      <h3 class="form-changepassword-heading">Change Your Password</h3>
-                                      <label for="inputPassword" class="sr-only">Old Password</label>
-                                      <input type="password" id="oldPass" class="form-control" placeholder="Old Password">
-                                      <label for="password" class="sr-only">New Password</label>
-                                      <input type="password" id="newPass" class="form-control" placeholder="New Password">
-                                      <label for="confirmPassword" class="sr-only">Confirm Password</label>
-                                      <input type="password" id="confirmPass" class="form-control" placeholder="Confirm Password" onkeypress="return keyPress(event);"><br>
-                                      <button type="button" id="editPassword" class="btn btn-lg btn-primary btn-block" onclick="editPass();">Change Password</button>
-                                  </form>
-                    </div>
-                  </div>
-
-				  <!-- Script for hitting enter on the search -->
-			<script>
-			function keyPress(e)
+        <!-- LIST OF FONTS -->
+        <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Main javascript controller -->
+        <script src="controller.js"></script>
+        <script src="update.js"></script>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="./png/006-shapes.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+                    <a class="navbar-brand" href="index.html">Pocket Date</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span>Signout</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script>
+            var btn = document.getElementById("myBtn");
+            // When the user clicks the button, open the modal
+            btn.onclick = function() 
 			{
-				// look for window.event in case event isn't passed in
-				e = e || window.event;
-				if (e.keyCode == 13)
-				{
-					document.getElementById('editPassword').click();
-					return false;
-				}
-				return true;
-			}
-			</script>
-			
-                  <script>
-                  // Get the modal
-                  var modal2 = document.getElementById('myModal2');
-                  // Get the button that opens the modal
-                  var chp = document.getElementById("myCP");
-                  // Get the <span> element that closes the modal
-                  var span = document.getElementsByClassName("close")[0];
-                  // When the user clicks the button, open the modal
-                  chp.onclick = function() {
-                    modal2.style.display = "block";
-                  }
-                  // When the user clicks on <span> (x), close the modal
-                  span.onclick = function() {
-                    modal2.style.display = "none";
-                  }
-                  // When the user clicks anywhere outside of the modal, close it
-                  window.onclick = function(event) {
-                    if (event.target == modal2) {
-                      modal2.style.display = "none";
-                    }
-                  }
-                  </script>
-              </div>
+              signOut();
+            }
+        </script>
+        <script>
+            // junk
+        </script>
+    </head>
+    <body>
+        <body onload="profileLoad()">
+            <div class="container-fluid" style = "padding-top:90px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <form action="upload.php" id="form-submit" method="post" enctype="multipart/form-data" onchange="uploadFile()">
+                                <label for="file-input">
+                                <img title="Click to update profile picture" class="profile-location" id="profile_img" for="fileElem" src="./png/add-user.png" style="height:200px;width:200px;">
+                                </label>
+                                <input name="file-input" id="file-input" type="file" style="visibility: hidden;"/>
+                            </form>
+                            <br><br><br><br><br>
+                            <!-- Trigger/Open The Modal -->
+                            <button type="button" class="btn btn-primary" id = "myCP"> Change Password</button>
+                            <!-- The Modal -->
+                            <div id="myModal2" class="modal2" style= "height = 200px;">
+                                <!-- Modal content -->
+                                <div class="modal-content2">
+                                    <span class="close">&times;</span>
+                                    <form class="form-changepassword" style="padding-top: 20px;">
+                                        <h3 class="form-changepassword-heading">Change Your Password</h3>
+                                        <label for="inputPassword" class="sr-only">Old Password</label>
+                                        <input type="password" id="oldPass" class="form-control" placeholder="Old Password">
+                                        <label for="password" class="sr-only">New Password</label>
+                                        <input type="password" id="newPass" class="form-control" placeholder="New Password">
+                                        <label for="confirmPassword" class="sr-only">Confirm Password</label>
+                                        <input type="password" id="confirmPass" class="form-control" placeholder="Confirm Password" onkeypress="return keyPress(event);"><br>
+                                        <button type="button" id="editPassword" class="btn btn-lg btn-primary btn-block" onclick="editPass();">Change Password</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Script for hitting enter on the search -->
+                            <script>
+                                function keyPress(e)
+                                {
+                                	// look for window.event in case event isn't passed in
+                                	e = e || window.event;
+                                	if (e.keyCode == 13)
+                                	{
+                                		document.getElementById('editPassword').click();
+                                		return false;
+                                	}
+                                	return true;
+                                }
+                            </script>
+                            <script>
+                                var modal2 = document.getElementById('myModal2');
+                                var chp = document.getElementById("myCP");
+                                var span = document.getElementsByClassName("close")[0];
+                                // When the user clicks the button, open the modal
+                                chp.onclick = function() 
+								{
+                                  modal2.style.display = "block";
+                                }
+                                span.onclick = function() 
+								{
+                                  modal2.style.display = "none";
+                                }
+                                window.onclick = function(event) 
+								{
+                                  if (event.target == modal2) 
+								  {
+                                    modal2.style.display = "none";
+                                  }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <legend>Profile</legend>
+                        <div class="informationSection">
+                            <label for="username" >Username:</label>
+                            <p id="username"></p>
+                            <br>
+                            <!-- Insert User's Name -->
+                            <label for="email">Email Address:</label>
+                            <p id = "email">
+                                <span type="button" id="setEmail" onclick = "editEmail()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="firstname">First Name:</label>
+                            <p id = "firstname">
+                                <span type="button" id="setFirst" onclick = "editFirst()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="lastname">Last Name:</label>
+                            <p id = "lastname">
+                                <span type="button" id="setLast" onclick = "editLast()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="dob">Age:</label>
+                            <p id="age"> </p>
+                            <br>
+                            <label for="zipcode">Zip Code:</label>
+                            <p id = "zipcode">
+                                <span type="button" id="setZip" onclick = "editZip()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="preference">Preference:</label>
+                            <p id = "preference">
+                                <span type="button" id="setPreference" onclick = "editPreference()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="about">About me:</label>
+                            <p id = "about" style="max-width: 50%">
+                                <span type="button" id="setAbout" onclick = "editAbout()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-          <div class="col-md-8">
-            <legend>Profile</legend>
-            <div class="informationSection">
-              <label for="username" >Username:</label>
-              <p id="username"></p> <br>
-              <!-- Insert User's Name -->
-              <label for="email">Email Address:</label>
-              <p id = "email">
-                <span type="button" id="setEmail" onclick = "editEmail()" class="glyphicon glyphicon-pencil"></span>
-              </p><br>
-              <label for="firstname">First Name:</label>
-              <p id = "firstname">
-                <span type="button" id="setFirst" onclick = "editFirst()" class="glyphicon glyphicon-pencil"></span>
-              </p><br>
-              <label for="lastname">Last Name:</label>
-              <p id = "lastname">
-                <span type="button" id="setLast" onclick = "editLast()" class="glyphicon glyphicon-pencil"></span>
-              </p><br>
-              <label for="dob">Age:</label>
-              <p id="age"> </p><br>
-              <label for="zipcode">Zip Code:</label>
-              <p id = "zipcode">
-                <span type="button" id="setZip" onclick = "editZip()" class="glyphicon glyphicon-pencil"></span>
-              </p><br>
-              <label for="preference">Preference:</label>
-              <p id = "preference">
-                <span type="button" id="setPreference" onclick = "editPreference()" class="glyphicon glyphicon-pencil"></span>
-              </p><br>
-              <label for="about">About me:</label>
-              <p id = "about" style="max-width: 50%">
-                <span type="button" id="setAbout" onclick = "editAbout()" class="glyphicon glyphicon-pencil"></span>
-              </p><br>
-            </div>
-          </div>
-        </div>
-      </div>
     </body>
 </html>

@@ -2,349 +2,309 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- LIST OF STYLESHEETS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="index.css">
-
-		<!-- LIST OF FONTS -->
-		<link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-		<!-- Main javascript controller -->
-		<script src="controller.js"></script>
-
-	</head>
-
+        <!-- LIST OF FONTS -->
+        <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+        <!-- LIST OF SCRIPTS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="controller.js"></script>
+    </head>
     <body>
+        <!-- NAVIGATION BAR -->
         <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
             <div class="container-fluid">
-              <div class="navbar-header">
-			             <img src="./png/logo.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
-                <a class="navbar-brand" href="index.html">Pocket Date</a>
-              </div>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                <li><a href="./createAccount.html" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-
-	<!-- The Modal -->
-		<div id="myModal" class="modal">
-		  <!-- Modal content -->
-		  <div class="modal-content">
-			<span class="close">&times;</span>
-					<form class="form-signin" style="padding-top: 40px;">
-                        <h3 class="form-signin-heading">Log into your account</h2>
-                        <label for="inputUser" class="sr-only">Username</label>
-                        <input type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required onkeypress="return keyPress(event);">
-                        <div class="checkbox">
-                            <label><input type="checkbox" id="remember-me" value="remember-me"> Remember me</label>
-                        </div>
-                        <button type="reset" id="loginButton" class="btn btn-lg btn-primary btn-block" onclick="processLogin()">Sign in</button>
-                    </form>
-		  </div>
-		</div>
-
-			<script>
-			// Get the modal
-			var modal = document.getElementById('myModal');
-			// Get the button that opens the modal
-			var btn = document.getElementById("myBtn");
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
-			// When the user clicks the button, open the modal
-			btn.onclick = function() {
-				modal.style.display = "block";
-			}
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-				modal.style.display = "none";
-			}
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-				if (event.target == modal) {
-					modal.style.display = "none";
-				}
-			}
-			</script>
-
-			<!-- Script for hitting enter on the search -->
-			<script>
-			function keyPress(e)
-			{
-				// look for window.event in case event isn't passed in
-				e = e || window.event;
-				if (e.keyCode == 13)
-				{
-					document.getElementById('loginButton').click();
-					return false;
-				}
-				return true;
-			}
-			</script>
-
-
-			</ul>
+                <div class="navbar-header">
+                    <img src="./png/logo.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+                    <a class="navbar-brand" href="index.html">Pocket Date</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="./createAccount.html" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                </ul>
+                <!-- The Modal -->
+                <div id="myModal" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <form class="form-signin" style="padding-top: 40px;">
+                            <h3 class="form-signin-heading">
+                            Log into your account</h2>
+                            <label for="inputUser" class="sr-only">Username</label>
+                            <input type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus>
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required onkeypress="return keyPress(event);">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="remember-me" value="remember-me"> Remember me</label>
+                            </div>
+                            <button type="reset" id="loginButton" class="btn btn-lg btn-primary btn-block" onclick="processLogin()">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- This script is responsible for displaying and hiding the model -->
+                <script>
+                    var modal = document.getElementById('myModal');
+                    var btn = document.getElementById("myBtn");
+                    var span = document.getElementsByClassName("close")[0];
+                    
+                    // When the user clicks the button, open the modal
+                    btn.onclick = function() 
+                    {
+                    	modal.style.display = "block";
+                    }
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() 
+                    {
+                    	modal.style.display = "none";
+                    }
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) 
+                    {
+                    	if (event.target == modal) 
+                    	{
+                    		modal.style.display = "none";
+                    	}
+                    }
+                    
+                </script>
+                <!-- Script for pressing enter key to initiate button click -->
+                <script>
+                    function keyPress(e)
+                    {
+                    	// look for window.event in case event isn't passed in
+                    	e = e || window.event;
+                    	if (e.keyCode == 13)
+                    	{
+                    		document.getElementById('loginButton').click();
+                    		return false;
+                    	}
+                    	return true;
+                    }
+                    
+                </script>		
             </div>
         </nav>
-
-          <div id="slideshow" class="sectionalSize" >
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                          <li data-target="#myCarousel" data-slide-to="1"></li>
-                          <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-                          <div class="item active" style="height: 420px">
-                            <img src="SiteSunset.jpg" alt="">
-                          </div>
-
-                          <div class="item" style="height: 420px">
-                            <img src="pic1.jpg" alt="">
-                          </div>
-
-                          <div class="item" style="height: 420px">
-                            <img src="pic3.jpg" alt="" >
-                          </div>
-                        </div>
-
-                        <!-- Left and right controls -->
-                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                          <span class="glyphicon glyphicon-chevron-left"></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      </div>
-          </div>
-
-          <hr>
-
-		   <div id="whyStupidCupid" class="sectionalSize">
+        <!-- END NAVIGATION BAR -->
+        <div id="slideshow" class="sectionalSize">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <!-- This will be the image sample size that we will follow by -->
+                <div class="carousel-inner" style="padding-top: 70px;">
+                    <div class="item active">
+                        <img src="/photo/love.jpg" alt="" style="max-width: 100%; width: auto; height: auto">
+                    </div>
+                    <!-- Will add several other pictures here -->
+                </div>
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div id="whyStupidCupid" class="sectionalSize">
             <h1> What is Pocket Date?</h1>
-            <p>Pocket Date is an Android application that will change the way you interact with others through dating apps. You just have to create an account
-              and fill in your profile page to start matching and start chatting with other people!
-            </p>
-			<img src="./png/001-two.png">
-
-            <br>
-          </div>
-
-		  <hr>
-
-          <div id="whyStupidCupid" class="sectionalSize">
-            <h1> Why Pick Pocket Date?</h1>
+            <p>Pocket Date is a free to use Android App that completely changes the dating scene! Revolutionize your love life with
+				and all new approach. Never again will you have to stress out about finding that perfect somoene! You just have to create an account
+                and fill in your profile page to start matching and start matching for your one true love!
+			</p>
+			<br>
+			<!--<img src="./png/001-two.png"><br>-->
+			<a href="http://play.google.com/store/apps/details?id=com.google.android.apps.maps"><img src="/photo/androiddownload.jpg" alt="" width="250" height="75"></a>
+        </div>
+        <hr>
+        <!-- WHY PICK POCKET DATE SECTION -->
+        <div id="whyStupidCupid" class="sectionalSize" style="background-image: url(photo/couple.jpg); background-size: 100% auto;margin:0px auto; padding:0px; min-height: 600px; padding-top: 8%; color: white; ">
+            <h1 style="color:white"> Why Pick Pocket Date?</h1>
             <p>Pocket Date will revolutionize the way you talk to other single people looking for potential partners. No more struggle of talking to multiple people at one time. On Pocket Date, you'll know that
                 your match is only focusing on your conversation, giving you the best opportunity to showcase your personality. You will not have to worry about being passed up because of a profile picture,
                 rather you will have a chance to talk to the individual one to one and then will decide on whether to continue the interaction.
             </p>
-
             <br>
-           <a href="http://play.google.com/store/apps/details?id=com.google.android.apps.maps"><img src="androiddownload.jpg" alt="" width="250" height="75"></a>
-          </div>
-
-          <hr>
-          <div id="testimonies" class="sectionalSize">
-
+        </div>
+        <hr>
+        <!-- CUSTOMER REVIEWS SECTION -->
+        <div id="testimonies" class="sectionalSize">
             <h1>Many other people have found dates and so can you!</h1>
             <div class="testimoniesContainer">
                 <div class="box">
-				<div class="innerbox">
-                    <p>"I couldn't get a single date, but with the help of
-                        Pocket Date I'm a superstar. It's as simple as setting up your profile and the matches will come to you!" <br> - Todd (25)
-                    </p>
-                    <img src="toddBreakingBad.jpg" alt="" width="300" height="175">
-				</div>
-				</div>
-                <div class="box">
-				<div class="innerbox">
-                    <p>"I never had any luck with other apps, but I figured I would give it one more try with Pocket Date. It changed the way I meet new people. Thank you for everything!" <br>- Gertrude (36) </p>
-                    <img src="randomLady.jpg" alt="" width="300" height="175">
+                    <div class="innerbox">
+                        <p>"I couldn't get a single date, but with the help of
+                            Pocket Date I'm a superstar. It's as simple as setting up your profile and the matches will come to you!" <br> - Todd (25)
+                        </p>
+                        <img src="/photo/toddBreakingBad.jpg" alt="" width="300" height="175">
+                    </div>
                 </div>
-				</div>
-               <!-- <div class="box">
-                    <p>"I decided to try appName since so many of my friends did. appName helped me to showcase my personality through spending time talking to just one person." <br>- Roger (29) </p>
-                    <img src="roger.jpg" alt="" width="300" height="175">
-                </div> -->
+                <div class="box">
+                    <div class="innerbox">
+                        <p>"I never had any luck with other apps, but I figured I would give it one more try with Pocket Date. It changed the way I meet new people. Thank you for everything!" <br>- Gertrude (36) </p>
+                        <img src="/photo/randomLady.jpg" alt="" width="300" height="175">
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <hr>
-
-          <div id="easeofuse" class="sectionalSize">
-
-			<center><h1 style="padding-top:0px;padding-bottom:0px">It's easy to use</h1></center></br></br>
-			
-			<center><img src="/png/wifi.png" alt="" width="70%" style="padding-bottom:40px;"></center>
-          </div>
-		  
-		  
-		  <hr>
-		  
-		  <!-- horoscope stuff -->
-
-		  <div class="sectionalSize" style="margin:8%" >
-                <div id="horoscope" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                          <li data-target="#horoscope" data-slide-to="0" class="active"></li>
-                          <li data-target="#horoscope" data-slide-to="1"></li>
-                          <li data-target="#horoscope" data-slide-to="2"></li>
-                          <li data-target="#horoscope" data-slide-to="3"></li>
-                          <li data-target="#horoscope" data-slide-to="4"></li>
-                          <li data-target="#horoscope" data-slide-to="5"></li>
-                          <li data-target="#horoscope" data-slide-to="6"></li>
-                          <li data-target="#horoscope" data-slide-to="7"></li>
-                          <li data-target="#horoscope" data-slide-to="8"></li>
-                          <li data-target="#horoscope" data-slide-to="9"></li>
-                          <li data-target="#horoscope" data-slide-to="10"></li>
-                          <li data-target="#horoscope" data-slide-to="11"></li>
-                        </ol>
-
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner">
-		   				<div class ="item active horoscopeContainer">
-            				<h1>Aries<br>(March 21 to April 19)</h1>
-            				<p>Aries loves to be number one, so it’s no surprise that these audacious rams are the first sign of the zodiac. Bold and ambitious, Aries dives headfirst into even the most challenging situations.
-            				</p>
-						<!--	<center><img src="./png/001-two.png" style="height: 50px; width: 50px;"></center> -->
-							<br> 
-          				</div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Taurus<br>(April 20 to May 20)</h1>
-            				<p>Taurus is an earth sign represented by the bull. Like their celestial spirit animal, Taureans enjoy relaxing in serene, bucolic environments, surrounded by soft sounds, soothing aromas, and succulent flavors.
-            				</p>
-            				<br>
-                          </div>
-
-                         <div class="item horoscopeContainer">
-                            <h1>Gemini<br>(May 21 to June 20)</h1>
-            				<p>Have you ever been so busy that you wished you could clone yourself just to get everything done? That’s the Gemini experience in a nutshell. Appropriately symbolized by the celestial twins, this air sign was interested in so many pursuits that it had to double itself.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Cancer<br>(June 21 to July 22)</h1>
-            				<p>Cancer is a cardinal water sign. Represented by the crab, this oceanic crustacean seamlessly weaves between the sea and shore, representing Cancer’s ability to exist in both emotional and material realms. Cancers are highly intuitive, and their psychic abilities manifest in tangible spaces: For instance, Cancers can effortlessly pick up the energies of a room.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Leo<br>(July 23 to August 22)</h1>
-            				<p>Roll out the red carpet, because Leo has arrived. Leo is represented by the lion, and these spirited fire signs are the kings and queens of the celestial jungle. They’re delighted to embrace their royal status: Vivacious, theatrical, and passionate, Leos love to bask in the spotlight and celebrate themselves.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Virgo<br>(August 23 to September 22)</h1>
-            				<p>Virgo is an earth sign historically represented by the goddess of wheat and agriculture, an association that speaks to Virgo’s deep-rooted presence in the material world. Virgos are logical, practical, and systematic in their approach to life. This earth sign is a perfectionist at heart and isn’t afraid to improve skills through diligent and consistent practice.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Libra<br>(September 23 to October 22)</h1>
-            				<p>Libra is an air sign represented by the scales (interestingly, the only inanimate object of the zodiac), an association that reflects Libra's fixation on balance and harmony. Libra is obsessed with symmetry and strives to create equilibrium in all areas of life.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Scorpio<br>(October 23 to November 21)</h1>
-            				<p>Scorpio is one of the most misunderstood signs of the zodiac. Because of its incredible passion and power, Scorpio is often mistaken for a fire sign. In fact, Scorpio is a water sign that derives its strength from the psychic, emotional realm.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Sagittarius<br>(November 22 to December 21)</h1>
-            				<p>Represented by the archer, Sagittarians are always on a quest for knowledge. The last fire sign of the zodiac, Sagittarius launches its many pursuits like blazing arrows, chasing after geographical, intellectual, and spiritual adventures.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Capricorn<br>(December 22 to January 19)</h1>
-            				<p>The last earth sign of the zodiac, Capricorn is represented by the sea goat, a mythological creature with the body of a goat and tail of a fish. Accordingly, Capricorns are skilled at navigating both the material and emotional realms. 
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Aquarius<br>(January 20 to February 18)</h1>
-            				<p>Despite the “aqua” in its name, Aquarius is actually the last air sign of the zodiac. Aquarius is represented by the water bearer, the mystical healer who bestows water, or life, upon the land. Accordingly, Aquarius is the most humanitarian astrological sign.
-            				</p>
-            				<br>
-                          </div>
-
-                          <div class="item horoscopeContainer">
-                            <h1>Pisces(February 19 to March 20)</h1>
-            				<p>Pisces, a water sign, is the last constellation of the zodiac. It's symbolized by two fish swimming in opposite directions, representing the constant division of Pisces's attention between fantasy and reality. As the final sign, Pisces has absorbed every lesson — the joys and the pain, the hopes and the fears — learned by all of the other signs. 
-            				</p>
-            				<br>
-                          </div>
-
-                        </div>
-
-                        <!-- Left and right controls -->
-                        <a class="left carousel-control" href="#horoscope" data-slide="prev">
-                          <span class="glyphicon glyphicon-chevron-left"></span>
-                          <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="#horoscope" data-slide="next">
-                          <span class="glyphicon glyphicon-chevron-right"></span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      </div>
-          </div>
-		  
-		  	<!-- End horoscope stuff -->
-			<hr>
-		  
-		  <div id="commitment" class="sectionalSize">
-		  <center><h1 style="padding-top: 8%; padding-bottom:40px">Our commitment to quality</h1></center></br>
-			<center><img src="phones.png" alt="" width ="70%" style="padding-bottom:40px;"></center>
-		  </div>
-		  <hr>
-	
-	
-	 
-	
-      <div class="footer">
-        <ul style="list-style-type:none;width:300px; height: 50px; margin: auto;padding-top:20px;">
-          <li style="float:left"><a href="https://www.facebook.com/pg/Pocket-Date-520160165052879/posts/"><img src="./png/004-facebook.png" style="height:50px;margin:10px;display:inline;"></a></li>
-          <li style="float:left"><a href="https://twitter.com/PocketDate"><img src="./png/001-twitter.png" style="height:50px;margin:10px;display:inline;"></a></li>
-          <li style="float:left"><a href="https://www.instagram.com/therealpocketdate/"><img src="./png/002-instagram.png" style="height:50px;margin:10px;display:inline;"></a></li>
-        </ul>
-
-        <br><br><br><br>
-        <div style= "text-align:center">
-          <p style="font-size:20px"> Contributors: </p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Henry Ton </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Austin Bryant </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Priyank Krishnamoorthi </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Lili Lin </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Joe Hummel </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Daniel Keller </a></p>
-          <p> <a href="mailto:pocketdatehelp@gmail.com">Ming Jiang </a></p><br><br>
-          <p style= "text-align:center;font-size:16px"> Designs from Flaticon </p>
         </div>
-        <p style= "text-align:center"> Contact Us: <a href="mailto:pocketdatehelp@gmail.com">pocketdatehelp@gmail.com</a> </p>
-
-      </div>
+        <hr>
+        <!-- EASE OF USE SECTION -->
+        <div id="easeofuse" class="sectionalSize">
+            <center>
+                <h1 style="padding-top:0px;padding-bottom:0px">It's easy to use</h1>
+            </center>
+            </br></br>
+            <center><img src="/png/wifi.png" alt="" width="70%" style="padding-bottom:40px; max-height: 500px; width: auto"></center>
+        </div>
+        <hr>
+        <!-- HOROSCOPES -->
+        <div class="sectionalSize" style="margin:8%; height: 400px; background-color:#444444; background-size: 100% auto;margin:0px auto; padding:0px; min-height: 700px; padding-top: 8%; color: white;">
+            <div id="horoscope" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators" style="display: none">
+                    <li data-target="#horoscope" data-slide-to="0" class="active"></li>
+                    <li data-target="#horoscope" data-slide-to="1"></li>
+                    <li data-target="#horoscope" data-slide-to="2"></li>
+                    <li data-target="#horoscope" data-slide-to="3"></li>
+                    <li data-target="#horoscope" data-slide-to="4"></li>
+                    <li data-target="#horoscope" data-slide-to="5"></li>
+                    <li data-target="#horoscope" data-slide-to="6"></li>
+                    <li data-target="#horoscope" data-slide-to="7"></li>
+                    <li data-target="#horoscope" data-slide-to="8"></li>
+                    <li data-target="#horoscope" data-slide-to="9"></li>
+                    <li data-target="#horoscope" data-slide-to="10"></li>
+                    <li data-target="#horoscope" data-slide-to="11"></li>
+                </ol>
+                <!-- Wrapper for the horoscope slides -->
+				<center>
+                <div class="carousel-inner" style="max-width: 70%">
+                    <div class ="item active horoscopeContainer">
+						<img src="/png/zodiac/aries.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Aries<br></h1>(March 21 to April 19)<br>
+                        <p>Aries loves to be number one, so it’s no surprise that these audacious rams are the first sign of the zodiac. Bold and ambitious, Aries dives headfirst into even the most challenging situations.</p>
+                        <br> 
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/taurus.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Taurus<br></h1>(April 20 to May 20)<br>
+                        <p>Taurus is an earth sign represented by the bull. Like their celestial spirit animal, Taureans enjoy relaxing in serene, bucolic environments, surrounded by soft sounds, soothing aromas, and succulent flavors.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/gemini.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Gemini<br></h1>(May 21 to June 20)<br>
+                        <p>Have you ever been so busy that you wished you could clone yourself just to get everything done? That’s the Gemini experience in a nutshell. Appropriately symbolized by the celestial twins, this air sign was interested in so many pursuits that it had to double itself.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/cancer.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Cancer<br></h1>(June 21 to July 22)<br>
+                        <p>Cancer is a cardinal water sign. Represented by the crab, this oceanic crustacean seamlessly weaves between the sea and shore, representing Cancer’s ability to exist in both emotional and material realms. Cancers are highly intuitive, and their psychic abilities manifest in tangible spaces: For instance, Cancers can effortlessly pick up the energies of a room.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/leo.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Leo<br></h1>(July 23 to August 22)<br>
+                        <p>Roll out the red carpet, because Leo has arrived. Leo is represented by the lion, and these spirited fire signs are the kings and queens of the celestial jungle. They’re delighted to embrace their royal status: Vivacious, theatrical, and passionate, Leos love to bask in the spotlight and celebrate themselves.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/virgo.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Virgo<br></h1>(August 23 to September 22)<br>
+                        <p>Virgo is an earth sign historically represented by the goddess of wheat and agriculture, an association that speaks to Virgo’s deep-rooted presence in the material world. Virgos are logical, practical, and systematic in their approach to life. This earth sign is a perfectionist at heart and isn’t afraid to improve skills through diligent and consistent practice.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/libra.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Libra<br></h1>(September 23 to October 22)<br>
+                        <p>Libra is an air sign represented by the scales (interestingly, the only inanimate object of the zodiac), an association that reflects Libra's fixation on balance and harmony. Libra is obsessed with symmetry and strives to create equilibrium in all areas of life.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/scorpio.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Scorpio<br></h1>(October 23 to November 21)<br>
+                        <p>Scorpio is one of the most misunderstood signs of the zodiac. Because of its incredible passion and power, Scorpio is often mistaken for a fire sign. In fact, Scorpio is a water sign that derives its strength from the psychic, emotional realm.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/sagittarius.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Sagittarius<br></h1>(November 22 to December 21)<br>
+                        <p>Represented by the archer, Sagittarians are always on a quest for knowledge. The last fire sign of the zodiac, Sagittarius launches its many pursuits like blazing arrows, chasing after geographical, intellectual, and spiritual adventures.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/capricorn.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Capricorn<br></h1>(December 22 to January 19)<br>
+                        <p>The last earth sign of the zodiac, Capricorn is represented by the sea goat, a mythological creature with the body of a goat and tail of a fish. Accordingly, Capricorns are skilled at navigating both the material and emotional realms. </p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/aquarius.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Aquarius<br></h1>(January 20 to February 18)<br>
+                        <p>Despite the “aqua” in its name, Aquarius is actually the last air sign of the zodiac. Aquarius is represented by the water bearer, the mystical healer who bestows water, or life, upon the land. Accordingly, Aquarius is the most humanitarian astrological sign.</p>
+                        <br>
+                    </div>
+                    <div class="item horoscopeContainer">
+						<img src="/png/zodiac/pisces.png" style="height:150px;width:150px;margin:auto">
+                        <h1>Pisces<br></h1>(February 19 to March 20)<br>
+                        <p>Pisces, a water sign, is the last constellation of the zodiac. It's symbolized by two fish swimming in opposite directions, representing the constant division of Pisces's attention between fantasy and reality. As the final sign, Pisces has absorbed every lesson — the joys and the pain, the hopes and the fears — learned by all of the other signs. </p>
+                        <br>
+                    </div>
+                </div>
+				</center>
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#horoscope" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#horoscope" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <!-- END HOROSCOPE -->
+        <hr>
+        <div id="commitment" class="sectionalSize" style="">
+            <center>
+                <h1 style="padding-top: 8%; padding-bottom:40px">Commitment to quality</h1>
+            </center>
+            </br>
+            <center><img src="/photo/phones.png" alt="" width ="70%" style="padding-bottom:40px;"></center>
+        </div>
+        <hr>
+        <!-- FOOTER -->
+        <div class="footer">
+            <ul style="list-style-type:none;width:300px; height: 50px; margin: auto;padding-top:20px;">
+                <li style="float:left"><a href="https://www.facebook.com/pg/Pocket-Date-520160165052879/posts/"><img src="./png/004-facebook.png" style="height:50px;margin:10px;display:inline;"></a></li>
+                <li style="float:left"><a href="https://twitter.com/PocketDate"><img src="./png/001-twitter.png" style="height:50px;margin:10px;display:inline;"></a></li>
+                <li style="float:left"><a href="https://www.instagram.com/therealpocketdate/"><img src="./png/002-instagram.png" style="height:50px;margin:10px;display:inline;"></a></li>
+            </ul>
+            <br><br><br><br>
+            <div style= "text-align:center">
+                <p style="font-size:20px"> Contributors: </p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Henry Ton </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Austin Bryant </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Priyank Krishnamoorthi </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Lili Lin </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Joe Hummel </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Daniel Keller </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Ming Jiang </a></p>
+                <br><br>
+                <p style= "text-align:center;font-size:16px"> Designs from Shashicons https://smashicons.com/</p>
+            </div>
+            <p style= "text-align:center"> Contact Us: <a href="mailto:pocketdatehelp@gmail.com">pocketdatehelp@gmail.com</a> </p>
+        </div>
     </body>
 </html>
