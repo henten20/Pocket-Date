@@ -12,23 +12,24 @@
 
         <EditTextPreference
             android:capitalize="words"
-            android:inputType="textCapWords"
+            android:inputType="text"
             android:key="about_text"
             android:maxLines="5"
             android:selectAllOnFocus="true"
-            android:singleLine="true"
+            android:singleLine="false"
             android:title="Edit About Me"
-            android:summary="Click here to edit your about me section"/>
+            android:summary="Click here to edit your about me section" />
 
-        <EditTextPreference
+        <Preference
             android:capitalize="words"
             android:inputType="textPassword"
             android:key="change_password"
-            android:maxLines="1"
             android:selectAllOnFocus="true"
-            android:singleLine="true"
             android:title="Change Password"
-            android:summary="Change your password"/>
+            android:summary="Change your password"
+            />
+
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Preferences">
@@ -44,13 +45,12 @@
         <org.anasthase.androidseekbarpreference.SeekBarPreference
             android:defaultValue="10"
             android:key="PREFERENCE_KEY"
-            android:summary="Set your preferred distance"
-            android:title="Distance"
-            app:format="mi."
-            app:maxValue="60"
+            android:summary="@string/PreferenceSummary"
+            android:title="@string/PreferenceTitle"
+            app:format="@string/PreferenceFormat"
+            app:maxValue="50"
             app:minValue="1"
-            app:stepValue="1"
-            />
+            app:stepValue="1" />
     </PreferenceCategory>
 
 
