@@ -3,9 +3,16 @@
 Henry 
 - <strike>Add password change feature to web</strike>
 - Add any extra profile fields
-- Add additional information onto the website front end
-- Make the front end look pretty
-- find out who is the author for the icons
+- IMPORTANT - Phone lengeth verification, zipcode verification, password minimal length
+- IMPORTANT - Remember me to function
+- IMPORTANT - Terms of service and agreement option, javascript to check if agreement was selected
+- IMPORTANT - Fix issue where sign in and login button do not work when resizing the window too small
+- IMPORTANT - Create the power point presentation
+- IMPORTANT - Describe architecture that was used
+- Verify that all links are properly working and directing you to the proper page
+- Add additional information onto the website front end (Fill in paragraphs)
+- Work on the aeshetics of createAccount.html and profile.html
+- Find out who is the author for the icons (in progress)
 
 Austin
 - <strike>Finish back end for reporting users</strike>
