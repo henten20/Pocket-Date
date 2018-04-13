@@ -51,7 +51,6 @@ function updateField(field, updated)
         {
             var jsonObject = JSON.parse(xhr.responseText);
             user = jsonObject[0]["user"];
-            alert(user);
         }
     };
 
@@ -171,20 +170,16 @@ function editPass()
 
 		// create json payload with the password fields
 		var jsonPayload = '{"username" : "' + username + '", "oldPass" : "' + oldPass.value + '", "newPass" : "' + newPass.value + '", "field" : "' + "password" + '"}';
-		alert(jsonPayload);
 
 		xhr.onreadystatechange = function()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
-				alert(xhr.responseText);
-
 				var jsonObject = JSON.parse(xhr.responseText);
 				user = jsonObject[0]["user"];
 
 				if (user == "error")
 					alert("Old password was incorrect");
-				else alert(user);
 			}
 		};
 

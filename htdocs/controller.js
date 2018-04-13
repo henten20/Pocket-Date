@@ -167,7 +167,6 @@ function createAccount()
     var preference = document.getElementsByName("preference");
     var selectGen;
     var selectPref;
-
     // Regex
     var specReg = /[^A-Za-z0-9 ]/;
     var specRegChar = /[^A-Za-z ]/;
@@ -266,6 +265,32 @@ function createAccount()
         document.getElementById("zipcodeLabel").style.color = "black";
     }
 
+	// GENDER AND PREFERENCE
+	selectPref = "both";
+	selectGen = "undefined";
+    for (var j = 0; j < gender.length; j++)
+    {
+        if (gender[j].checked)
+        {
+            selectGen = gender[j].value;
+            break;
+        }
+    }
+	
+	if(selectGen == "undefined")
+	{
+		filled = false;
+	}
+
+    for (var q = 0; q < preference.length; q++)
+    {
+        if (preference[q].checked)
+        {
+            selectPref = preference[q].value;
+            break;
+        }
+    }
+
     if (filled == false)
     {
         alert("Please fill in all required fields before submitting.");
@@ -304,9 +329,9 @@ function createAccount()
     {
         document.getElementById("lastnameLabel").style.color = "black";
     }
-    if (specRegNum.test(phone.value))
+    if (specRegNum.test(phone.value) || phone.value.length < 10)
     {
-        alert("Only numeric values allowed for phone numbers");
+        alert("Incorrect format for phone number");
         document.getElementById("phoneLabel").style.color = "red";
         validate = false;
     }
@@ -314,9 +339,9 @@ function createAccount()
     {
         document.getElementById("phoneLabel").style.color = "black";
     }
-    if (specRegNum.test(zipcode.value))
+    if (specRegNum.test(zipcode.value) || zipcode.value.length < 5)
     {
-        alert("Zipcodes can only have number values");
+        alert("Imcorrect format for zipcode");
         document.getElementById("zipcodeLabel").style.color = "red";
         validate = false;
     }
@@ -343,29 +368,6 @@ function createAccount()
     else
     {
         document.getElementById("confirmLabel").style.color = "black";
-    }
-
-    // Gender and preference OPTIONAL 
-    // DEFAULT GENDER AND PREFERENCE
-    selectGen = "other";
-    selectPref = "both";
-
-    for (var j = 0; j < gender.length; j++)
-    {
-        if (gender[j].checked)
-        {
-            selectGen = gender[j].value;
-            break;
-        }
-    }
-
-    for (var q = 0; q < preference.length; q++)
-    {
-        if (preference[q].checked)
-        {
-            selectPref = preference[q].value;
-            break;
-        }
     }
 
 	if(validate == false)

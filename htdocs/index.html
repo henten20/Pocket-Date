@@ -45,6 +45,35 @@
                         </form>
                     </div>
                 </div>
+				<!-- This script is responsible for remembering the username -->
+				<script>
+					$(function() 
+                    {
+					if (localStorage.chkbx && localStorage.chkbx != '')
+					{
+						$('#remember-me').attr('checked', 'checked');
+						$('#inputUser').val(localStorage.inputUser);
+					} 
+					else 
+					{
+						$('#remember-me').removeAttr('checked');
+						$('#inputUser').val('');
+					}
+					$('#remember-me').click(function()
+					{
+						if ($('#remember-me').is(':checked')) 
+						{
+							localStorage.inputUser = $('#inputUser').val();
+							localStorage.chkbx = $('#remember-me').val();
+						} 
+						else 
+						{
+							localStorage.inputEmail = '';
+							localStorage.chkbx = '';
+						}
+					});
+				});
+				</script>
                 <!-- This script is responsible for displaying and hiding the model -->
                 <script>
                     var modal = document.getElementById('myModal');
