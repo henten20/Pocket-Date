@@ -1,11 +1,11 @@
 package com.example.pocketdate;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +25,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(password1.getText().toString().equals(password2.getText().toString()))
+                if(password1.getText().toString().trim().length() == 0 || password2.getText().toString().trim().length() == 0)
+                {
+                    Toast.makeText(ChangePasswordActivity.this, "One or both of the fields is/are empty.", Toast.LENGTH_SHORT).show();
+                }
+                else if(password1.getText().toString().equals(password2.getText().toString()))
                 {
                     Intent myIntent = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
                     startActivity(myIntent);
@@ -50,18 +54,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     {
                         password2.setBackgroundColor(0x2600FF00);
                     }
-                    else
-                    {
-                        password2.setBackgroundColor(0x26FF0000);
-                    }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                    if(password1.getText().toString().equals(password2.getText().toString()))
-                    {
-                        password2.setBackgroundColor(0x2600FF00);
-                    }
+                if(!(password1.getText().toString().equals(password2.getText().toString())))
+                {
+                    password2.setBackgroundColor(0x26FF0000);
+                }
             }
         });
 
@@ -88,6 +88,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     password2.setBackgroundColor(0x26FF0000);
                 }
             }
+
+
         });
     }
 }
