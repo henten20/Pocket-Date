@@ -7,7 +7,8 @@ Henry
 - IMPORTANT - Remember me to function
 - IMPORTANT - Terms of service and agreement option, javascript to check if agreement was selected
 - IMPORTANT - Fix issue where sign in and login button do not work when resizing the window too small
-- IMPORTANT - Create the power point presentation
+- IMPORTANT - Create the power point presentation 
+- Update ER and other diagrams (in progress)
 - IMPORTANT - Describe architecture that was used
 - Verify that all links are properly working and directing you to the proper page
 - Add additional information onto the website front end (Fill in paragraphs)
