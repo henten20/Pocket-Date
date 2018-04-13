@@ -12,7 +12,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="controller.js"></script>
     </head>
-    <body>
+    <body style="background-image: url(photo/angel.jpg); background-size: auto 75.4%; background-repeat: no-repeat;">
         <!-- NAVIGATION BAR -->
         <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
             <div class="container-fluid">
@@ -29,7 +29,7 @@
                     <!-- Modal content -->
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        <form class="form-signin" style="padding-top: 40px;">
+                        <form class="form-signin" style="padding-top: 40px;>
                             <h3 class="form-signin-heading">
                             Log into your account</h2>
                             <label for="inputUser" class="sr-only">Username</label>
@@ -87,107 +87,236 @@
             </div>
         </nav>
         <!-- END NAVIGATION BAR -->
-        <div class = "usingForm" style = "padding-top: 100px; padding-left: 30%; padding-right: 30%;">
-            <form>
-                <legend>Login Information</legend>
-                <div class="form-group">
-                    <label id="usernameLabel" for="username">Username*</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <label id="passwordLabel" for="password">Password*</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label id="confirmLabel" for="confirmPw">Confirm Password*</label>
-                    <input type="password" class="form-control" id="confirmpass" placeholder="Confirm Password">
-                </div>
-                <div class="form-group">
-                    <label id="phoneLabel" for="phoneno">Phone Number*</label>
-                    <input type="phone" class="form-control" id="phone" placeholder="XXX-XXX-XXXX" maxlength="10">
-                </div>
-                <div class="form-group">
-                    <label id="emailLabel" for="exampleInputEmail1">Email Address*</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
-                </div>
-                <br>
-                <legend>Personal Information</legend>
-                <div class="form-group">
-                    <label id="firstnameLabel" for="firstname">First Name*</label>
-                    <input type="text" class="form-control" id="firstname" placeholder="First Name">
-                </div>
-                <div class="form-group">
-                    <label id="lastnameLabel" for="lastname">Last Name*</label>
-                    <input type="text" class="form-control" id="lastname" placeholder="Last Name">
-                </div>
-                <div class="form-group">
-                    <label id="birthdateLabel" for="birthdate">Birthdate*</label>
-                    <input type="date" class="form-control" id="birthdate" placeholder="mm/dd/yyyy">
-                </div>
-                <div class="form-group">
-                    <label id="zipcodeLabel" for="zipcode">Zip Code*</label>
-                    <input class="form-control" id="zipcode" maxlength="5" placeholder="Example: 12345">
-                </div>
-                <!-- Gender Section -->
-                <fieldset class="form-group">
-                    <legend>Gender</legend>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="gender" id="optionsRadios1" value="Female">
-                        Female
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="gender" id="optionsRadios2" value="Male">
-                        Male
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="gender" id="optionsRadios3" value="Other">
-                        Other
-                        </label>
-                    </div>
-                </fieldset>
-                <!-- Preference Section -->
-                <fieldset class="form-group2">
-                    <legend>Preference</legend>
-                    <div class="form-check2">
-                        <label class="form-check-label2">
-                        <input type="radio" class="form-check-input2" name="preference" id="optionsRadios4" value="Female">
-                        Female
-                        </label>
-                    </div>
-                    <div class="form-check2">
-                        <label class="form-check-label2">
-                        <input type="radio" class="form-check-input2" name="preference" id="optionsRadios5" value="Male">
-                        Male
-                        </label>
-                    </div>
-                    <div class="form-check2">
-                        <label class="form-check-label2">
-                        <input type="radio" class="form-check-input2" name="preference" id="optionsRadios6" value="Both">
-                        Both
-                        </label>
-                    </div>
-                </fieldset>
-                <br>
-                <!-- About Me Section -->
-                <div class="form-group">
-                    <legend>About Me</legend>
-                    <textarea class="form-control" id="about" rows="5" placeholder = "Please enter some biography about yourself"></textarea>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input">
-                    By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy Conditions</a>.
+        <div class = "usingForm" style = "padding-left:10%; padding-top: 8%; padding-bottom: 4%; max-width: 1200px; font-family: 'Raleway', sans-serif; width: 640px;">
+        <form style=" padding-top: 4%; padding-bottom: 4%; padding-left: 9%; padding-right: 9%; border: 2px solid #b7b7b7; border-radius: 30px;background-color: white">
+            <legend>
+                <div style="color: #e03c78;">User Information</div>
+            </legend>
+            <div class="form-group">
+                <label id="usernameLabel" for="username">Username*</label>
+                <input type="text" class="form-control" id="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label id="passwordLabel" for="password">Password*</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <label id="confirmLabel" for="confirmPw">Confirm Password*</label>
+                <input type="password" class="form-control" id="confirmpass" placeholder="Confirm Password">
+            </div>
+            <div class="form-group">
+                <label id="phoneLabel" for="phoneno">Phone Number*</label>
+                <input type="phone" class="form-control" id="phone" placeholder="Please type in numbers only" maxlength="10">
+            </div>
+            <div class="form-group">
+                <label id="emailLabel" for="exampleInputEmail1">Email Address*</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label id="firstnameLabel" for="firstname">First Name*</label>
+                <input type="text" class="form-control" id="firstname" placeholder="First Name">
+            </div>
+            <div class="form-group">
+                <label id="lastnameLabel" for="lastname">Last Name*</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <label id="birthdateLabel" for="birthdate">Birthdate*</label>
+                <input type="date" class="form-control" id="birthdate" placeholder="mm/dd/yyyy">
+            </div>
+            <div class="form-group">
+                <label id="zipcodeLabel" for="zipcode">Zip Code*</label>
+                <input class="form-control" id="zipcode" maxlength="5" placeholder="Example: 12345">
+            </div>
+            <!-- Gender Section -->
+            <fieldset class="form-group">
+                <ul style="list-style:none; padding-top: 24px;">
+                    <li>
+                        <div style="color: #e03c78; display:inline; float:left;">Gender:</div>
+                    </li>
+                    <li style="display:inline; float: left; padding-left: 47px;">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="gender" id="optionsRadios1" value="Female">
+                            Female
+                            </label>
+                        </div>
+                    </li>
+                    <li style="display:inline; float: left; padding-left: 24px">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="gender" id="optionsRadios2" value="Male">
+                            Male
+                            </label>
+                        </div>
+                    </li>
+                    <li style="display:inline; float: left; padding-left: 26px">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="gender" id="optionsRadios3" value="Other">
+                            Other
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </fieldset>
+            <!-- Preference Section -->
+            <fieldset class="form-group2">
+                <ul style="list-style:none;">
+                    <li style="display:inline; float:left">
+                        <div style="color: #e03c78;">
+                            Preference:
+                    </li>
+                    <li style="display:inline; float: left; padding-left: 25px;"><div class="form-check">
+                    <label class="form-check-label2">
+                    <input type="radio" class="form-check-input2" name="preference" id="optionsRadios4" value="Female">
+                    Female
                     </label>
-                    </br></br></br>
-                </div>
-                <center><button type="button" class="btn btn-primary" onclick="return createAccount();">Submit</button></center>
-                <br></br>
-            </form>
+                    </div></li>
+                    <li style="display:inline; float: left; padding-left: 24px"><div class="form-check">
+                    <label class="form-check-label2">
+                    <input type="radio" class="form-check-input2" name="preference" id="optionsRadios5" value="Male">
+                    Male
+                    </label>
+                    </div></li>
+                    <li style="display:inline; float: left; padding-left: 26px"><div class="form-check">
+                    <label class="form-check-label2">
+                    <input type="radio" class="form-check-input2" name="preference" id="optionsRadios6" value="Both">
+                    Both
+                    </label>
+                    </div></li>
+                </ul>
+            </fieldset>
+            <br>
+            <!-- About Me Section -->
+            <div class="form-group">
+            <legend><div style="color: #e03c78; padding-top: 10px">About Me</div></legend>
+            <textarea class="form-control" id="about" rows="5" placeholder = "Please enter some biography about yourself"></textarea>
+            </div>
+            <div class="form-check">
+            <label class="form-check-label">
+            <input type="checkbox" class="form-check-input">
+            By creating an account you agree to our <a href="#" id= "myLink" style="color:dodgerblue">Terms & Privacy Conditions</a>.
+            </label>
+            </div>
+            <div id = "terms" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+            <div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 150px; margin-bottom:50px;"> 
+            <span class="close">&times;</span>
+            <div class="modal-terms"> 
+            <div class="modal-header"> 
+            <h3 class="modal-title">Terms and Conditions</h3> 
+            </div> 
+            <div class="modal-body">
+            </br>
+            <p style="width: 450px">
+            <b>1. Acceptance of Terms of Use Agreement. </b></br>
+            By creating a Pocket Date account or by using the Pocket Date iMessage app (“ Stacks”), whether through a mobile device, mobile application or computer (collectively, the “Service”) you agree to be bound by (i) these Terms of Use, (ii) our Privacy Policy and Safety Tips, each of which is incorporated by reference into this Agreement, and (iii) any terms disclosed and agreed to by you if you purchase additional features, products or services we offer on the Service (collectively, this “Agreement”). If you do not accept and agree to be bound by all of the terms of this Agreement, please do not use the Service.
+            </br></br>
+            We may make changes to this Agreement and to the Services from time to time. We may do this for a variety of reasons including to reflect changes in or requirements of the law, new features, or changes in business practices. The most recent version of this Agreement will be posted on the Services under Settings and also on gotinder.com, and you should regularly check for the most recent version. The most recent version is the version that applies. If the changes include material changes that affect your rights or obligations, we will notify you in advance of the changes by reasonable means, which could include notification through the Services or via email. If you continue to use the Services after the changes become effective, then you agree to the revised Agreement.
+            </br></br>
+            <b>2. Eligibility</b></br>
+            You must be at least 18 years of age to create an account on  and use the Service. By creating an account and using the Service, you represent and warrant that:
+            you can form a binding contract with Pocket Date,
+            you are not a person who is barred from using the Service under the laws of the United States or any other applicable jurisdiction–meaning that you do not appear on the U.S. Treasury Department’s list of Specially Designated Nationals or face any other similar prohibition,
+            you will comply with this Agreement and all applicable local, state, national and international laws, rules and regulations, and
+            you have never been convicted of a felony and that you are not required to register as a sex offender with any state, federal or local sex offender registry.
+            </br></br>
+            <b>3. Your Account</b></br>
+            In order to use Pocket Date, you may sign in using your Facebook login.  If you do so, you authorize us to access and use certain Facebook account information, including but not limited to your public Facebook profile and information about Facebook friends you share in common with other Pocket Date users. For more information regarding the information we collect from you and how we use it, please consult our Privacy Policy.
+            </br></br>
+            You are responsible for maintaining the confidentiality of your login credentials you use to sign up for Pocket Date, and you are solely responsible for all activities that occur under those credentials. If you think someone has gained access to your account, please immediately contact help@gotinder.com.
+            </br></br>
+            <b>4. Modifying the Services and Termination.</b></br>
+            Pocket Date is always striving to improve the Services and bring you additional functionality that you will find engaging and useful. This means we may add new product features or enhancements from time to time as well as remove some features, and if these actions do not materially affect your rights or obligations, we may not provide you with notice before taking them. We may even suspend the Services entirely, in which event we will notify you in advance unless extenuating circumstances, such as safety or security concerns, prevent us from doing so.
+            </br></br>
+            You may terminate your account at any time, for any reason, by following the instructions in “Settings” in the Service, however you will need to manage your in app purchases through your mobile device platform (e.g., iTunes, Google Play). Pocket Date may terminate your account at any time without notice if it believes that you have violated this Agreement. Upon such termination, you will not be entitled to any refund for purchases. After your account is terminated, this Agreement will terminate, except that the following provisions will still apply to you and Pocket Date: Section 5, Section 6, and Sections 13 through 20.
+            </br></br>
+            <b>5. Safety; Your Interactions with Other Users.</b>
+            Though Pocket Date strives to encourage a respectful user experience through features like the double opt-in that only allows users to communicate if they have both indicated interest in one another, it is not responsible for the conduct of any user on or off of the Services. You agree to use caution in all interactions with other users, particularly if you decide to communicate off the Service or meet in person. In addition, you agree to review and follow Pocket Date’s Safety Tips, located on gotinder.com, prior to using the Service. You should not provide your financial information (for example, your credit card or bank account information), or wire or otherwise send money, to other users.
+            </br></br>
+            YOU ARE SOLELY RESPONSIBLE FOR YOUR INTERACTIONS WITH OTHER USERS. YOU UNDERSTAND THAT TINDER DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS ON ITS USERS OR OTHERWISE INQUIRE INTO THE BACKGROUND OF ITS USERS. TINDER MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONDUCT OF USERS. TINDER RESERVES THE RIGHT TO CONDUCT ANY CRIMINAL BACKGROUND CHECK OR OTHER SCREENINGS (SUCH AS SEX OFFENDER REGISTER SEARCHES) AT ANY TIME USING AVAILABLE PUBLIC RECORDS
+            </br></br>
+            <b>6. Rights We Grants You.</b></br>
+            Pocket Date grants you a personal, worldwide, royalty-free, non-assignable, nonexclusive, revocable, and non-sublicensable license to access and use the Services. This license is for the sole purpose of letting you use and enjoy the Services’ benefits as intended by Pocket Date and permitted by this Agreement. Therefore, you agree not to:
+            </br></br>
+            use the Service or any content contained in the Service for any commercial purposes without our written consent.
+            copy, modify, transmit, create any derivative works from, make use of, or reproduce in any way any copyrighted material, images, trademarks, trade names, service marks, or other intellectual property, content or proprietary information accessible through the Service without Pocket Date’s prior written consent.
+            express or imply that any statements you make are endorsed by Pocket Date.
+            use any robot, bot, spider, crawler, scraper, site search/retrieval application, proxy or other manual or automatic device, method or process to access, retrieve, index, “data mine,” or in any way reproduce or circumvent the navigational structure or presentation of the Service or its contents.
+            use the Services in any way that could interfere with, disrupt or negatively affect the Service or the servers or networks connected to the Service.
+            upload viruses or other malicious code or otherwise compromise the security of the Services.
+            forge headers or otherwise manipulate identifiers in order to disguise the origin of any information transmitted to or through the Service.
+            “frame” or “mirror” any part of the Service without Pocket Date’s prior written authorization.
+            use meta tags or code or other devices containing any reference to Pocket Date or the Service (or any trademark, trade name, service mark, logo or slogan of Pocket Date) to direct any person to any other website for any purpose.
+            modify, adapt, sublicense, translate, sell, reverse engineer, decipher, decompile or otherwise disassemble any portion of the Service, or cause others to do so.
+            use or develop any third-party applications that interact with the Services or other users’ Content or information without our written consent.
+            use, access, or publish the Pocket Date application programming interface without our written consent.
+            probe, scan or test the vulnerability of our Services or any system or network.
+            encourage or promote any activity that violates this Agreement.
+            The Company may investigate and take any available legal action in response to illegal and/ or unauthorized uses of the Service, including termination of your account.
+            </br></br>
+            Any software that we provide you may automatically download and install upgrades, updates, or other new features. You may be able to adjust these automatic downloads through your device’s settings.
+            </br></br>
+            <b>7. Rights you Grant Us.</b></br>
+            By creating an account, you grant to Pocket Date a worldwide, transferable, sub-licensable, royalty-free, right and license to host, store, use, copy, display, reproduce, adapt, edit, publish, modify and distribute information you authorize us to access from Facebook, as well as any information you post, upload, display or otherwise make available (collectively, “post”) on the Service or transmit to other users (collectively, “Content”). Our license to your Content is subject to your rights under applicable law (for example laws regarding personal data protection to the extent any Content contains personal information as defined by those laws) and is for the limited purpose of operating, developing, providing, and improving the Service and researching and developing new ones. You agree that any Content you place or that you authorize us to place on the Service may be viewed by other users and may be viewed by any person visiting or participating in the Service (such as individuals who may receive shared Content from other Pocket Date users).
+            </br></br>
+            You agree that all information that you submit upon creation of your account, including information submitted from your Facebook account, is accurate and truthful and you have the right to post the Content on the Service and grant the license to Pocket Date above.
+            </br></br>
+            You understand and agree that we may monitor or review any Content you post as part of a Service. We may delete any Content, in whole or in part, that in our sole judgment violates this Agreement or may harm the reputation of the Service.
+            </br></br>
+            When communicating with our customer care representatives, you agree to be respectful and kind. If we feel that your behavior towards any of our customer care representatives or other employees is at any time threatening or offensive, we reserve the right to immediately terminate your account.
+            </br></br>
+            In consideration for Pocket Date allowing you to use the Services, you agree that we, our affiliates, and our third-party partners may place advertising on the Services. By submitting suggestions or feedback to Pocket Date regarding our Services, you agree that Pocket Date may use and share such feedback for any purpose without compensating you.
+            </br></br>
+            You agree that Pocket Date may access, preserve and disclose your account information and Content if required to do so by law or in a good faith belief that such access, preservation or disclosure is reasonably necessary, such as to: (i) comply with legal process; (ii) enforce this Agreement; (iii) respond to claims that any Content violates the rights of third parties; (iv) respond to your requests for customer service; or (v) protect the rights, property or personal safety of the Company or any other person.
+            </br></br>
+            <b>8.Notice and Procedure for Making Claims of Copyright Infringement.</b></br>
+            If you believe that your work has been copied and posted on the Service in a way that constitutes copyright infringement, please provide our Copyright Agent with the following information:
+            </br></br>
+            an electronic or physical signature of the person authorized to act on behalf of the owner of the copyright interest;
+            a description of the copyrighted work that you claim has been infringed;
+            a description of where the material that you claim is infringing is located on the Service (and such description must be reasonably sufficient to enable us to find the alleged infringing material);
+            your contact information, including address, telephone number and email address;
+            a written statement by you that you have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law; and
+            a statement by you, made under penalty of perjury, that the above information in your notice is accurate and that you are the copyright owner or authorized to act on the copyright owner’s behalf.
+            Notice of claims of copyright infringement should be provided to the Company’s Copyright Agent via email to copyright@match.com, by phone to 214-576-3272 or via mail to the following address:
+            </br></br>
+            Copyright Compliance Department c/o Match Group Legal 8750 N. Central Expressway, Suite 1400 Dallas, Texas 75231
+            </br></br>
+            Pocket Date will terminate the accounts of repeat infringers.
+            </br></br>
+            <b>9. Entire Agreement; Other.</b></br>
+            This Agreement, with the Privacy Policy, the Safety Tips and any terms disclosed and agreed to by you if you purchase additional features, products or services we offer on the Service, contains the entire agreement between you and Pocket Date regarding the use of the Service. If any provision of this Agreement is held invalid, the remainder of this Agreement shall continue in full force and effect. The failure of the Company to exercise or enforce any right or provision of this Agreement shall not constitute a waiver of such right or provision. You agree that your Pocket Date account is non-transferable and all of your rights to your account and its Content terminate upon your death. No agency, partnership, joint venture or employment is created as a result of this Agreement and you may not make any representations or bind Pocket Date in any manner.
+            </p>
+            </div> 
+            <div class="modal-footer"></div> 
+            </div> 
+            </div> 
+            </div> 
+            <script>
+                // Get the modal
+                var modal = document.getElementById('terms');
+                // Get the button that opens the modal
+                var btn = document.getElementById("myLink");
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+                // When the user clicks the button, open the modal
+                btn.onclick = function() {
+                	modal.style.display = "block"; 
+                }
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                	modal.style.display = "none";
+                }
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                	if (event.target == modal) {
+                		modal.style.display = "none";
+                	}
+                }
+            </script>
+            <center><button type="button" class="btn btn-primary" onclick="return createAccount();">Submit</button></center>
+        </form>
         </div>
         <hr>
         <div class="footer">
@@ -207,7 +336,10 @@
                 <p> <a href="mailto:pocketdatehelp@gmail.com">Daniel Keller </a></p>
                 <p> <a href="mailto:pocketdatehelp@gmail.com">Ming Jiang </a></p>
                 <br><br>
-                <p style= "text-align:center;font-size:16px"> Designs from Flaticon </p>
+                <p style= "text-align:center;font-size:16px">
+                    Designs from Shashicons <a href="">https://smashicons.com/
+                    <a>
+                </p>
             </div>
             <p style= "text-align:center"> Contact Us: <a href="mailto:pocketdatehelp@gmail.com">pocketdatehelp@gmail.com</a> </p>
         </div>

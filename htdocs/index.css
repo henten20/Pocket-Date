@@ -27,6 +27,7 @@
     border: 1px solid #888;
     width: 40%; /* Could be more or less, depending on screen size */
 	min-width: 500px;
+	max-width: 500px;
 }
 
 /* The Close Button */
@@ -332,4 +333,24 @@ h4 {
 
 .carousel-control.left, .carousel-control.right {
     background-image: none;
+}
+
+
+.modal-terms {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    height: 500px;
+    padding: 50px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    min-width: 600px;
+}
+
+.modal-dialog{
+    overflow-y: initial !important;
+}
+.modal-body{
+    height: 350px;
+    width: 100%;
+    overflow-y: auto;
 }
