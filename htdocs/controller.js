@@ -9,7 +9,6 @@ var lastName = "";
 // Function called when loading the profile page
 function profileLoad()
 {
-    alert("Trying to load");
     user_id = document.cookie;
 
     // Updates the form submit of the profile update input so that the php file will have access to the user's id
@@ -31,7 +30,7 @@ function profileLoad()
 
                 if (jsonObject["error"] != null)
                 {
-                    alert("Couldn't grab profile image.");
+                    alert("Unable to load profile image");
                     return;
                 }
 
@@ -372,6 +371,12 @@ function createAccount()
 
 	if(validate == false)
 		return; 
+	
+	if(document.getElementById("termsofserv").checked == false)
+    {
+        alert("Please read through and accept the terms of service.");
+        return;
+    }
 	
 	if(validate == true && filled == true)
 	{
