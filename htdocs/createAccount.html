@@ -190,9 +190,11 @@
             By creating an account you agree to our <a href="#" id= "myLink" style="color:dodgerblue">Terms & Privacy Conditions</a>.
             </label>
             </div>
+         
             <div id = "terms" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
             <div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 140px; margin-bottom:50px;"> 
-            <span class="close">&times;</span>
+              <span onclick="document.getElementById('terms').style.display='none'"
+                      class="close">&times;</span>
             <div class="modal-terms"> 
             <div class="modal-header"> 
             <h3 class="modal-title" style="color: #e03c78">Terms and Conditions</h3> 
@@ -286,23 +288,22 @@
             </div> 
             <script>
                 // Get the modal
-                var modal = document.getElementById('terms');
+                var modal2 = document.getElementById('terms');
                 // Get the button that opens the modal
-                var btn = document.getElementById("myLink");
+                var btn2 = document.getElementById("myLink");
                 // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];
+
                 // When the user clicks the button, open the modal
-                btn.onclick = function() {
-                	modal.style.display = "block"; 
+                btn2.onclick = function() {
+                	modal2.style.display = "block";
                 }
                 // When the user clicks on <span> (x), close the modal
-                span.onclick = function() {
-                	modal.style.display = "none";
-                }
+
                 // When the user clicks anywhere outside of the modal, close it
                 window.onclick = function(event) {
-                	if (event.target == modal) {
-                		modal.style.display = "none";
+                	if (event.target == modal2 || event.target == modal) {
+                		modal2.style.display = "none";
+                        modal.style.display = "none";
                 	}
                 }
             </script>
