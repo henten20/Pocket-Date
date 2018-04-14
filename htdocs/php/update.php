@@ -77,8 +77,6 @@
 			(
 				'user' => $msg
 			);
-			
-			return;
 		}
 	}
 	// For all other fields other than password

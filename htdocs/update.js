@@ -152,7 +152,7 @@ function editPass()
     var newPass = document.getElementById("newPass");
     var confirmPass = document.getElementById("confirmPass");
 
-    if (oldPass.value == null || newPass.value == null || confirmPass.value == null)
+    if (oldPass.value == "" || newPass.value == "" || confirmPass.value == "")
 	{
         alert("Please fill in all password fields before submitting");
 	}
@@ -167,20 +167,29 @@ function editPass()
 		var url = urlBase + '/update.' + extension;
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true)
-
+		
 		// create json payload with the password fields
 		var jsonPayload = '{"username" : "' + username + '", "oldPass" : "' + oldPass.value + '", "newPass" : "' + newPass.value + '", "field" : "' + "password" + '"}';
-
+		alert(jsonPayload);
 		xhr.onreadystatechange = function()
 		{
 			if (this.readyState == 4 && this.status == 200)
 			{
+				alert(xhr.responseText);
 				var jsonObject = JSON.parse(xhr.responseText);
 				user = jsonObject[0]["user"];
-
+				
 				if (user == "error")
 					alert("Old password was incorrect");
+				else if(user == "success")
+				{
+					document.getElementById("oldPass").value = "";
+					document.getElementById("newPass").value = "";
+					document.getElementById("confirmPass").value = "";
+					document.getElementById("close").click();
+				}
 			}
+	
 		};
 
 		xhr.send(jsonPayload);
