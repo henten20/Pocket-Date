@@ -56,9 +56,10 @@ h1 {
 }
 
 label{
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Raleway', sans-serif;
   color: #e03c78;
   font-size: large;
+  font-size: 16px;
 }
 
 .navbar {
@@ -362,7 +363,7 @@ h4 {
 }
 
 #myCP{
-  font-family: 'Indie Flower', cursive;
+  font-family: 'Raleway', sans-serif;
   background-color: white;
   color: #e03c78;
   margin-left: 203px;
@@ -370,5 +371,5 @@ h4 {
 }
 
 #profile_img{
-  margin-left: 200px;
+  margin:auto;
 }

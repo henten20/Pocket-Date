@@ -24,12 +24,12 @@
                     <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li><a href="./createAccount.html" style="color: #e03c78"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                 </ul>
-                <!-- The Modal -->
+               <!-- The Modal -->
                 <div id="myModal" class="modal">
                     <!-- Modal content -->
-                    <div class="modal-content">
+                    <div class="modal-content" style="max-width: 600px">
                         <span class="close">&times;</span>
-                        <form class="form-signin" style="padding-top: 40px;>
+                        <form class="form-signin" style="padding-top: 40px;">
                             <h3 class="form-signin-heading">
                             Log into your account</h2>
                             <label for="inputUser" class="sr-only">Username</label>
@@ -43,6 +43,36 @@
                         </form>
                     </div>
                 </div>
+                <!-- This script is responsible for displaying and hiding the model -->
+                <!-- This script is responsible for remembering the username -->
+				<script>
+					$(function() 
+                    {
+					if (localStorage.chkbx && localStorage.chkbx != '')
+					{
+						$('#remember-me').attr('checked', 'checked');
+						$('#inputUser').val(localStorage.inputUser);
+					} 
+					else 
+					{
+						$('#remember-me').removeAttr('checked');
+						$('#inputUser').val('');
+					}
+					$('#remember-me').click(function()
+					{
+						if ($('#remember-me').is(':checked')) 
+						{
+							localStorage.inputUser = $('#inputUser').val();
+							localStorage.chkbx = $('#remember-me').val();
+						} 
+						else 
+						{
+							localStorage.inputEmail = '';
+							localStorage.chkbx = '';
+						}
+					});
+				});
+				</script>
                 <!-- This script is responsible for displaying and hiding the model -->
                 <script>
                     var modal = document.getElementById('myModal');
@@ -88,7 +118,7 @@
         </nav>
         <!-- END NAVIGATION BAR -->
         <div class = "usingForm" style = "padding-left:10%; padding-top: 8%; padding-bottom: 4%; max-width: 1200px; font-family: 'Raleway', sans-serif; width: 640px;">
-        <form style=" padding-top: 4%; padding-bottom: 4%; padding-left: 9%; padding-right: 9%; border: 2px solid #b7b7b7; border-radius: 30px;background-color: white">
+        <form style=" padding-top: 4%; padding-bottom: 4%; padding-left: 9%; padding-right: 9%; border: 1px solid #b7b7b7; border-radius: 0px;background-color: white;">
             <legend>
                 <div style="color: #e03c78;">User Information</div>
             </legend>
@@ -192,7 +222,7 @@
             </div>
             <div id = "terms" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
             <div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 140px; margin-bottom:50px;"> 
-            <span class="close">&times;</span>
+            <span class="termsClose">&times;</span>
             <div class="modal-terms"> 
             <div class="modal-header"> 
             <h3 class="modal-title" style="color: #e03c78">Terms and Conditions</h3> 
@@ -286,23 +316,23 @@
             </div> 
             <script>
                 // Get the modal
-                var modal = document.getElementById('terms');
+                var termsButton = document.getElementById('terms');
                 // Get the button that opens the modal
-                var btn = document.getElementById("myLink");
+                var termsBtn = document.getElementById("myLink");
                 // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];
+                var termsSpan = document.getElementsByClassName("termsClose")[0];
                 // When the user clicks the button, open the modal
-                btn.onclick = function() {
-                	modal.style.display = "block"; 
+                termsBtn.onclick = function() {
+                	termsButton.style.display = "block"; 
                 }
                 // When the user clicks on <span> (x), close the modal
-                span.onclick = function() {
-                	modal.style.display = "none";
+                termsSpan.onclick = function() {
+                	termsButton.style.display = "none";
                 }
                 // When the user clicks anywhere outside of the modal, close it
                 window.onclick = function(event) {
-                	if (event.target == modal) {
-                		modal.style.display = "none";
+                	if (event.target == termsButton) {
+                		termsButton.style.display = "none";
                 	}
                 }
             </script>
