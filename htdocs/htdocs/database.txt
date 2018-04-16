@@ -1,0 +1,39 @@
+/* Script for creating the mySQL database */
+/* Pocket Date */
+
+/* table name = pocketdate */
+
+create Table User(
+    user_id INT NOT NULL AUTO_INCREMENT,
+    username varchar(20) NOT NULL,
+    pass varchar(100) NOT NULL,
+    phone varchar(13) NOT NULL,
+    email varchar(30) NOT NULL,
+    firstname varchar(20) NOT NULL,
+    lastname varchar(20) NOT NULL,
+	profileLocation varchar(200) NOT NULL,
+    birthdate varchar(10) NOT NULL,
+	zipcode int NOT NULL,
+    gender varchar(10) NOT NULL,
+    preference varchar(10) NOT NULL,
+    about varchar(1000),
+PRIMARY KEY(user_id));
+
+/* on ER diagram take out user foreign key, it is unneccessary */
+create Table Chat(
+    chat_id INT NOT NULL AUTO_INCREMENT,
+    message_length INT NOT NULL,
+	user1 int,
+	user2 int,
+PRIMARY KEY(chat_id),
+CONSTRAINT paired_user1 FOREIGN KEY (user1) REFERENCES User(user_id),
+CONSTRAINT paired_user2 FOREIGN KEY (user2) REFERENCES User(user_id));
+
+create Table Message(
+    message_id INT NOT NULL AUTO_INCREMENT,
+    text varchar(100),
+	current_chat int,
+PRIMARY KEY(message_id),
+CONSTRAINT FOREIGN KEY(current_chat) REFERENCES Chat(chat_id));
+
+    

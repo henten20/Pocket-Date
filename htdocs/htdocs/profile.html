@@ -1,0 +1,184 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <!-- LIST OF FONTS -->
+        <link href="https://fonts.googleapis.com/css?family=Lato|Raleway" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Main javascript controller -->
+        <script src="controller.js"></script>
+        <script src="update.js"></script>
+        <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top bg-light">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src="./png/logo2.png" style="height:50px;float:left;margin:10px;display:inline;padding-left:200px">
+                    <a class="navbar-brand" href="index.html">Pocket Date</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="myBtn" style="color: #e03c78"><span class="glyphicon glyphicon-log-in"></span>Signout</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script>
+            var btn = document.getElementById("myBtn");
+            // When the user clicks the button, open the modal
+            btn.onclick = function()
+			{
+              signOut();
+            }
+        </script>
+        <script>
+            // junk
+        </script>
+    </head>
+        <body onload="profileLoad()" style="background-image: url(photo/clouds.jpg); background-size: 100% 62%; background-repeat:no-repeat">
+            <div class="container-fluid" style = "padding-top:90px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                         
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="min-width: 600px;left: 10%; width: 45%;">
+						<div class="panel panel-default" >
+							<div class="panel-heading" style="background-color: #ffffff;">
+							<legend style="font-size: 27px; color: #e03c78;">Profile</legend>
+						</div>
+						<div class="panel-body" style="color: black; font-family: 'Raleway', sans-serif;">
+                        <div class="informationSection" style="height:455px;overflow-y:scroll">
+							<form action="upload.php" id="form-submit" method="post" enctype="multipart/form-data" onchange="uploadFile()">
+                                <label for="file-input">
+                                <img title="Click to update profile picture" class="profile-location" id="profile_img" for="fileElem" src="./png/add-user.png" style="margin:auto; width: 40%; margin-left: 30%">
+                                </label>
+                                <input name="file-input" id="file-input" type="file" style="visibility: hidden;"/>
+                            </form>
+							<div style="padding-left: 60px">
+                            <label for="username" style="font-family: 'Raleway', sans-serif;">Username:</label>
+                            <p id="username"></p>
+                            <br>
+                            <!-- Insert User's Name -->
+                            <label for="email" style="font-family: 'Raleway', sans-serif;">Email Address:</label>
+                            <p id = "email">
+                                <span type="button" id="setEmail" onclick = "editEmail()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="firstname" style="font-family: 'Raleway', sans-serif;">First Name:</label>
+                            <p id = "firstname">
+                                <span type="button" id="setFirst" onclick = "editFirst()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="lastname" style="font-family: 'Raleway', sans-serif;">Last Name:</label>
+                            <p id = "lastname">
+                                <span type="button" id="setLast" onclick = "editLast()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="dob" style="font-family: 'Raleway', sans-serif;">Age:</label>
+                            <p id="age"> </p>
+                            <br>
+                            <label for="zipcode" style="font-family: 'Raleway', sans-serif;">Zip Code:</label>
+                            <p id = "zipcode">
+                                <span type="button" id="setZip" onclick = "editZip()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="preference" style="font-family: 'Raleway', sans-serif;">Preference:</label>
+                            <p id = "preference">
+                                <span type="button" id="setPreference" onclick = "editPreference()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+                            <br>
+                            <label for="about" style="font-family: 'Raleway', sans-serif;">About me:</label>
+                            <p id = "about" style="max-width: 50%">
+                                <span type="button" id="setAbout" onclick = "editAbout()" class="glyphicon glyphicon-pencil"></span>
+                            </p>
+							</div>
+                            <br>
+							 <!-- Trigger/Open The Modal -->
+                            <button type="button" class="btn btn-primary" id = "myCP" style = "margin-top: 15px; margin-bottom: 10px; margin-left: 60px;">Change Password</button>
+                            <!-- The Modal -->
+                            <div id="myModal2" class="modal2" style= "height = 200px;">
+                                <!-- Modal content -->
+                                <div class="modal-content2">
+                                    <span class="close" id="close">&times;</span>
+                                    <form class="form-changepassword" style="padding-top: 20px;">
+                                        <h3 class="form-changepassword-heading">Change Your Password</h3>
+                                        <label for="inputPassword" class="sr-only">Old Password</label>
+                                        <input type="password" id="oldPass" class="form-control" placeholder="Old Password">
+                                        <label for="password" class="sr-only">New Password</label>
+                                        <input type="password" id="newPass" class="form-control" placeholder="New Password">
+                                        <label for="confirmPassword" class="sr-only">Confirm Password</label>
+                                        <input type="password" id="confirmPass" class="form-control" placeholder="Confirm Password" required onkeypress="return keyPress(event);"><br>
+                                        <button type="button" id="editPassword" class="btn btn-lg btn-primary btn-block" onclick="editPass();">Change Password</button>
+                                    </form>
+                                </div>
+								 <!-- Script for hitting enter on the search -->
+                            <script>
+                                function keyPress(e)
+                                {
+                                	// look for window.event in case event isn't passed in
+                                	e = e || window.event;
+                                	if (e.keyCode == 13)
+                                	{
+                                		document.getElementById('editPassword').click();
+                                		return false;
+                                	}
+                                	return true;
+                                }
+                            </script>
+                            <script>
+                                var modal2 = document.getElementById('myModal2');
+                                var chp = document.getElementById("myCP");
+                                var span = document.getElementsByClassName("close")[0];
+                                // When the user clicks the button, open the modal
+                                chp.onclick = function()
+								{
+                                  modal2.style.display = "block";
+                                }
+                                span.onclick = function()
+								{
+                                  modal2.style.display = "none";
+                                }
+                                window.onclick = function(event)
+								{
+                                  if (event.target == modal2)
+								  {
+                                    modal2.style.display = "none";
+                                  }
+                                }
+                            </script>
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+			<!-- FOOTER -->
+			<hr>
+        <div class="footer">
+            <ul style="list-style-type:none;width:300px; height: 50px; margin: auto;padding-top:20px;">
+                <li style="float:left"><a href="https://www.facebook.com/pg/Pocket-Date-520160165052879/posts/"><img src="./png/004-facebook.png" style="height:50px;margin:10px;display:inline;"></a></li>
+                <li style="float:left"><a href="https://twitter.com/PocketDate"><img src="./png/001-twitter.png" style="height:50px;margin:10px;display:inline;"></a></li>
+                <li style="float:left"><a href="https://www.instagram.com/therealpocketdate/"><img src="./png/002-instagram.png" style="height:50px;margin:10px;display:inline;"></a></li>
+            </ul>
+            <br><br><br><br>
+            <div style= "text-align:center">
+                <p style="font-size:20px"> Contributors: </p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Henry Ton </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Austin Bryant </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Priyank Krishnamoorthi </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Lili Lin </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Joe Hummel </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Daniel Keller </a></p>
+                <p><a href="mailto:pocketdatehelp@gmail.com">Ming Jiang </a></p>
+                <br><br>
+                <p style= "text-align:center;font-size:16px">Designs from Shashicons <a href="">https://smashicons.com/<a></p>
+            </div>
+            <p style= "text-align:center"> Contact Us: <a href="mailto:pocketdatehelp@gmail.com">pocketdatehelp@gmail.com</a> </p>
+        </div>
+    </body>
+</html>
