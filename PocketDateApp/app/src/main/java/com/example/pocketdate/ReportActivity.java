@@ -106,7 +106,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                Log.v("item", (String) parent.getItemAtPosition(position));
+                //Log.v("item", (String) parent.getItemAtPosition(position));
             }
 
             @Override
@@ -124,7 +124,7 @@ public class ReportActivity extends AppCompatActivity {
                 String comments = aboutMe.getText().toString();
                 String blockFlag = staticSpinner.getSelectedItem().toString();
 
-                Log.v("Match's id", Integer.toString(ReportActivity.this.matchID));
+                //Log.v("Match's id", Integer.toString(ReportActivity.this.matchID));
                 // creates the server connection that will process the report
 
                 confirmUnmatch(reason, comments, blockFlag);
@@ -146,7 +146,6 @@ public class ReportActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which)
             {
                 // Do nothing but close the dialog
-                Log.v("Unmatch chosen", "User chose to unmatch with the person");
                 ServerConnection reportConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
                 String error = reportConn.reportUser(ReportActivity.this.userID, ReportActivity.this.matchID, reason, comments, blockFlag);
                 processUnmatch();
@@ -169,9 +168,7 @@ public class ReportActivity extends AppCompatActivity {
     private void processUnmatch()
     {
         ServerConnection unMatchConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
-        Log.v("user's id", Integer.toString(this.userID));
         String resultString = unMatchConn.unmatchPerson(this.userID);
-        Log.v("Returned JSON", resultString);
 
         JSONArray resultJSON = null;
         JSONObject jsonObj = null;
@@ -185,8 +182,6 @@ public class ReportActivity extends AppCompatActivity {
             String firstName = jsonObj.getString("firstName");
             String lastName = jsonObj.getString("lastName");
             boolean inChat = jsonObj.getBoolean("inChat");
-
-            Log.v("Profile", profileLocation);
 
             // login attempt was successful and we should proceed to the next activity
             // Start NewActivity.class
