@@ -3,6 +3,8 @@ package com.example.pocketdate;
 import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -12,11 +14,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -45,6 +50,12 @@ public class MessageListActivity extends AppCompatActivity {
     private String matchFirstName;
     private String matchLastName;
     private String matchProfileLocation;
+    private String matchAbout;
+    private String matchGender;
+    private String matchBirthdate;
+
+    // Session Manager Class
+    SessionManagement session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,7 +71,8 @@ public class MessageListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         adapter=new CustomAdapter(this);
 
-
+        // Session class instance
+        session = new SessionManagement(getApplicationContext());
 
         // grabs the intent object that contains the bundled data being passed in
         Intent thisActivity = getIntent();
@@ -102,12 +114,19 @@ public class MessageListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText textEntry = (EditText) findViewById(R.id.edittext_chatbox);
                 String messageContents = textEntry.getText().toString();
-                pushMessage(messageContents);
+                // had to jump through some hoops to get the DateTime string to match mySQL's version
+                java.util.Date date = new java.util.Date();
+                java.util.Date stamp = new java.sql.Timestamp(date.getTime());
+                int lastIndxDot = stamp.toString().lastIndexOf('.');
+                String timeString = stamp.toString().substring(0, lastIndxDot);
+
+                pushMessage(messageContents, timeString);
+
                 // cool, message is created, but it needs to be pushed to the server.
                 CustomPojo newMessage = new CustomPojo();
                 newMessage.setName("Sender");
                 newMessage.setContent(messageContents);
-                newMessage.setTime("6:22");
+                newMessage.setTime(timeString);
                 newMessage.setType(1);
 
                 textEntry.setText("");
@@ -176,7 +195,7 @@ public class MessageListActivity extends AppCompatActivity {
         builder.setTitle("Match Options");
 
         // add a list
-        String[] animals = {"View Match Profile", "Unmatch", "Report"};
+        String[] animals = {"View Match Profile", "View Creep Level", "Unmatch", "Report"};
         builder.setItems(animals, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -184,10 +203,13 @@ public class MessageListActivity extends AppCompatActivity {
                     case 0: // view match profile
                         viewMatchProfile();
                         break;
-                    case 1: // unmatch
+                    case 1:
+                        viewCreepLevel();
+                        break;
+                    case 2: // unmatch
                         confirmUnmatch();
                         break;
-                    case 2: // report
+                    case 3: // report
                         processReport();
                         break;
                 }
@@ -199,6 +221,58 @@ public class MessageListActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void viewCreepLevel()
+    {
+        AlertDialog.Builder alertadd = new AlertDialog.Builder(MessageListActivity.this, R.style.CustomDialog);
+        LayoutInflater factory = getLayoutInflater();
+        final View view = factory.inflate(R.layout.creeplayout, null);
+        ImageView creepView = (ImageView) view.findViewById(R.id.creepView);
+        TextView creepTextView = (TextView) view.findViewById(R.id.creepText);
+
+        alertadd.setView(view);
+        final AlertDialog alert = alertadd.create();
+
+        // switch statement that will set the appropriate textview/imageview depending on the creep level of the match
+        switch(this.matchCreepLevel)
+        {
+            case 0:
+                creepView.setImageResource(R.drawable.progress0);
+                creepTextView.setText("Not a creep!");
+                break;
+            case 1:
+                creepView.setImageResource(R.drawable.progress1);
+                creepTextView.setText("Might be a creep.");
+                break;
+            case 2:
+                creepView.setImageResource(R.drawable.progress2);
+                creepTextView.setText("Creepy");
+                break;
+            case 3:
+                creepView.setImageResource(R.drawable.progress3);
+                creepTextView.setText("Creepier than average");
+                break;
+            case 4:
+                creepView.setImageResource(R.drawable.progress4);
+                creepTextView.setText("Very creepy. Be careful.");
+                break;
+            default:
+                creepView.setImageResource(R.drawable.progress4);
+                creepTextView.setText("Very creepy. Be careful.");
+                break;
+        }
+
+
+        alert.show();
+
+        Button closeButton = (Button)view.findViewById(R.id.closeButton);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.dismiss();
+            }
+        });
+    }
+
     private void viewMatchProfile()
     {
         Intent myIntent = new Intent(MessageListActivity.this,
@@ -207,6 +281,9 @@ public class MessageListActivity extends AppCompatActivity {
         myIntent.putExtra("profileLocation", this.matchProfileLocation);
         myIntent.putExtra("matchFirstName", this.matchFirstName);
         myIntent.putExtra("matchLastName", this.matchLastName);
+        myIntent.putExtra("matchAbout", this.matchAbout);
+        myIntent.putExtra("matchGender", this.matchGender);
+        myIntent.putExtra("matchBirthdate", this.matchBirthdate);
         startActivity(myIntent);
     }
 
@@ -237,6 +314,10 @@ public class MessageListActivity extends AppCompatActivity {
         JSONObject jsonObj = null;
 
         try {
+
+            // modifies the shared preference variables to match the new chat status of the user
+            session.handleUnmatch();
+
             resultJSON = new JSONArray(resultString);
             jsonObj = resultJSON.getJSONObject(0);
             int userID = jsonObj.getInt("userID");
@@ -312,6 +393,13 @@ public class MessageListActivity extends AppCompatActivity {
             this.matchProfileLocation = jsonObj.getString("profileLocation");
             this.matchCreepLevel = Integer.parseInt(jsonObj.getString("creepLevel"));
             this.matchID = Integer.parseInt(jsonObj.getString("matchID"));
+            this.matchAbout = jsonObj.getString("about");
+            this.matchGender = jsonObj.getString("gender");
+            this.matchBirthdate = jsonObj.getString("birthdate");
+
+            Log.v("test", this.matchAbout);
+            Log.v("test", this.matchGender);
+            Log.v("test", this.matchBirthdate);
 
         } catch (JSONException | NullPointerException e)
         {
@@ -325,10 +413,10 @@ public class MessageListActivity extends AppCompatActivity {
         }
     }
     // method that will push a message up to our remote server
-    private void pushMessage(String contents)
+    private void pushMessage(String contents, String timeString)
     {
         ServerConnection pushConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
-        String resultString = pushConn.sendMessage(contents, this.userID);
+        String resultString = pushConn.sendMessage(contents, this.userID, timeString);
     }
     // this is where the recyclerview is populated with all of the message data
     private void populateRecyclerViewValues(JSONArray messageArray)
@@ -364,17 +452,24 @@ public class MessageListActivity extends AppCompatActivity {
 
                 // sets the xml depending on who sent the message
                 Log.v("ids", Integer.toString(senderID) + " " + Integer.toString(this.userID));
-                if(senderID == this.userID)
-                    pojoObject.setType(1);
-                else
-                    pojoObject.setType(2);
 
-                //After setting the values, we add all the Objects to the array
-                //Hence, listConentArr is a collection of Array of POJO objects
-                listContentArr.add(pojoObject);
+                // checks to make sure a valid message was sent
+                if(senderID != -1)
+                {
+                    if(senderID == this.userID)
+                        pojoObject.setType(1);
+                    else
+                        pojoObject.setType(2);
+
+                    //After setting the values, we add all the Objects to the array
+                    //Hence, listConentArr is a collection of Array of POJO objects
+                    listContentArr.add(pojoObject);
+                }
             }
-            //We set the array to the adapter
+
+            //We set the array to the adapter if we have received a message
             adapter.setListContent(listContentArr);
+
             //We in turn set the adapter to the RecyclerView
             recyclerView.setAdapter(adapter);
         }

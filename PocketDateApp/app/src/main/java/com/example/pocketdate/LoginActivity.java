@@ -15,18 +15,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.webkit.WebView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import android.app.AlertDialog;
-import android.content.Context;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -38,7 +32,8 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    final Context context = this;
+    // Session Manager Class
+    SessionManagement session;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -49,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+
+        // Session Manager
+        session = new SessionManagement(getApplicationContext());
 
         ImageView instaView = (ImageView) findViewById(R.id.instagram_image);
         ImageView facebookView = (ImageView) findViewById(R.id.facebook_image);
@@ -109,20 +107,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         ActionBar bar = getSupportActionBar();
+
         //sets color of the action bar to black
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
         bar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
 
-        //TextView tv = (TextView) findViewById(R.id.textView2);
-        //tv.setText(Html.fromHtml("<a href=http://www.cop4331groupeight.com> Need an account?"));
-        //tv.setMovementMethod(LinkMovementMethod.getInstance());
-
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
-        // initially deactivate loading view
-        //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -139,13 +130,33 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                 attemptLogin();
-                //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
 
-        //mLoginFormView = findViewById(R.id.login_form);
+        // creates bottomnav view where we will reference the website buttons from
+        View bottomNav = findViewById(R.id.bottom_navigation);
+        View websiteButton = bottomNav.findViewById(R.id.action_website);
+        View registerButton = bottomNav.findViewById(R.id.action_register);
+
+        // goes to the website
+        websiteButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://cop4331groupeight.com")));
+            }
+        });
+
+        // goes to the website
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://cop4331groupeight.com/createAccount.html")));
+            }
+        });
+
     }
 
     /**
@@ -154,10 +165,6 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-
-        HttpURLConnection conn;
-        URL url = null;
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
 
         // Reset errors.
         mEmailView.setError(null);
@@ -170,24 +177,12 @@ public class LoginActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
         }
-
 
         if (cancel)
         {
@@ -205,8 +200,6 @@ public class LoginActivity extends AppCompatActivity {
                 ServerConnection loginConn = new ServerConnection("http://cop4331groupeight.com/androidlogin.php");
                 String resultString = loginConn.initialLogin(email, password);
 
-                //String resultString = result.toString();
-                Log.v("JSON", resultString);
                 JSONArray resultJSON = new JSONArray(resultString);
                 JSONObject jsonObj = resultJSON.getJSONObject(0);
 
@@ -218,23 +211,19 @@ public class LoginActivity extends AppCompatActivity {
                 String firstName = jsonObj.getString("firstName");
                 String lastName = jsonObj.getString("lastName");
                 boolean inChat = jsonObj.getBoolean("inChat");
+                String preference = jsonObj.getString("preference");
+                String about = jsonObj.getString("about");
 
-                Log.v("Profile", profileLocation);
                 // login attempt was successful and we should proceed to the next activity
                 if(error.equals("None"))
                 {
-                    // Start NewActivity.class
-                    Intent myIntent = new Intent(LoginActivity.this,
-                            MatchActivity.class);
-                    myIntent.putExtra("userID", userID);
-                    myIntent.putExtra("inputEmail", email);
-                    myIntent.putExtra("profileLocation", profileLocation);
-                    myIntent.putExtra("firstName", firstName);
-                    myIntent.putExtra("lastName", lastName);
-                    myIntent.putExtra("inChat", inChat);
-                    // creates a little text bubble indicating that the login was successful
-                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
-                    startActivity(myIntent);
+
+                    session.createLoginSession(userID, userEmail, pass, profileLocation, firstName, lastName, inChat, true, preference, about);
+
+                    // Staring MainActivity
+                    Intent i = new Intent(getApplicationContext(), MatchActivity.class);
+                    startActivity(i);
+                    finish();
                 }
                 else
                 {
@@ -260,16 +249,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
-    // sample method that will check if an email is valid or not.
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    // sample method that will check if a password is valid or not
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
-    }
-
 }
 

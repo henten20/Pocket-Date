@@ -127,12 +127,13 @@ public class ServerConnection {
     }
 
     // method that handles setting the parameters for a connection to the remote server that will load all of the messages
-    public String loadMessages(int userID, String userEmail)
+    public String loadMessages(int userID, String userEmail, String preferences)
     {
         // Append parameters to URL - we can pass our parameters to the php code here
         Uri.Builder builder = new Uri.Builder()
                 .appendQueryParameter("action", "load")
                 .appendQueryParameter("userID", Integer.toString(userID))
+                .appendQueryParameter("preference", preferences)
                 .appendQueryParameter("userEmail", userEmail);
 
         // constructs the query that will be posted to the webserver
@@ -163,12 +164,13 @@ public class ServerConnection {
         return initiateConnection();
     }
 
-    public String sendMessage(String contents, int userID)
+    public String sendMessage(String contents, int userID, String timeString)
     {
         // Append parameters to URL - we can pass our parameters to the php code here
         Uri.Builder builder = new Uri.Builder()
                 .appendQueryParameter("action", "send")
                 .appendQueryParameter("userID", Integer.toString(userID))
+                .appendQueryParameter("timeString", timeString)
                 .appendQueryParameter("messageContents", contents);
 
         // constructs the query that will be posted to the webserver
@@ -216,7 +218,7 @@ public class ServerConnection {
         return initiateConnection();
     }
 
-    public String reportUser(int userID, int recipientID, String reason, String comments)
+    public String reportUser(int userID, int recipientID, String reason, String comments, String blockFlag)
     {
         // Append parameters to URL - we can pass our parameters to the php code here
         Uri.Builder builder = new Uri.Builder()
@@ -224,7 +226,62 @@ public class ServerConnection {
                 .appendQueryParameter("userID", Integer.toString(userID))
                 .appendQueryParameter("reason", reason)
                 .appendQueryParameter("recipientID", Integer.toString(recipientID))
-                .appendQueryParameter("comments", comments);
+                .appendQueryParameter("comments", comments)
+                .appendQueryParameter("blockFlag", blockFlag);
+
+        // constructs the query that will be posted to the webserver
+        String query = builder.build().getEncodedQuery();
+
+        // sets object's query with the correct parameters for loading messages
+        this.query = query;
+
+        // returns the string that is obtained from the "chatapi.php" file
+        return initiateConnection();
+    }
+
+    public String checkMessages(int userID)
+    {
+        // Append parameters to URL - we can pass our parameters to the php code here
+        Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("action", "check")
+                .appendQueryParameter("userID", Integer.toString(userID));
+
+        // constructs the query that will be posted to the webserver
+        String query = builder.build().getEncodedQuery();
+
+        // sets object's query with the correct parameters for loading messages
+        this.query = query;
+
+        // returns the string that is obtained from the "chatapi.php" file
+        return initiateConnection();
+    }
+
+    public String updateInfo(int userID, String about, String preference)
+    {
+        // Append parameters to URL - we can pass our parameters to the php code here
+        Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("action", "updateInfo")
+                .appendQueryParameter("userID", Integer.toString(userID))
+                .appendQueryParameter("about", about)
+                .appendQueryParameter("preference", preference);
+
+        // constructs the query that will be posted to the webserver
+        String query = builder.build().getEncodedQuery();
+
+        // sets object's query with the correct parameters for loading messages
+        this.query = query;
+
+        // returns the string that is obtained from the "chatapi.php" file
+        return initiateConnection();
+    }
+
+    public String changePass(int userID, String pass)
+    {
+        // Append parameters to URL - we can pass our parameters to the php code here
+        Uri.Builder builder = new Uri.Builder()
+                .appendQueryParameter("action", "changePass")
+                .appendQueryParameter("userID", Integer.toString(userID))
+                .appendQueryParameter("pass", pass);
 
         // constructs the query that will be posted to the webserver
         String query = builder.build().getEncodedQuery();
