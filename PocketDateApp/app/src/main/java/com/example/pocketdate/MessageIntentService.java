@@ -74,7 +74,6 @@ public class MessageIntentService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         //performs the desired task
-        Log.v("blend","yoooooo");
         ServerConnection checkNew = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
 
         // ensures that there are extras to access
@@ -90,14 +89,10 @@ public class MessageIntentService extends IntentService {
             // attempts to convert the JSONString into a JSONArray for simple data manipulation
             try
             {
-                Log.v("what is this", resultString);
                 resultJSON = new JSONArray(resultString);
                 resultJSONObj = resultJSON.getJSONObject(0);
                 String matchFirstName = resultJSONObj.getString("matchName");
                 boolean notificationCheck = resultJSONObj.getBoolean("newNotification");
-
-                Log.v("MatchName", matchFirstName);
-                Log.v("NotificationCheck", Boolean.toString(notificationCheck));
 
                 // if we received a new message, let the user know via a push notification
                 if(notificationCheck)
@@ -122,7 +117,6 @@ public class MessageIntentService extends IntentService {
             // handles the exception where the user loses connection to the internet
             catch(JSONException | NullPointerException e)
             {
-                Log.v("Failed", e.toString());
                 if(e instanceof NullPointerException)
                 {
                     Toast.makeText(MessageIntentService.this, "Error Connecting to Internet. Check your connection settings.", Toast.LENGTH_SHORT).show();
