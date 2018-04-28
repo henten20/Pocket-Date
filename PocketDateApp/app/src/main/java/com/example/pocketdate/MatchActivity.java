@@ -1,15 +1,24 @@
 package com.example.pocketdate;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,40 +45,60 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.HashMap;
 
 public class MatchActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // Session Manager Class
+    SessionManagement session;
+
+    public static PendingIntent sender;
     private static final int FLIP_DURATION = 3000;
     private ViewFlipper viewFlipper;
-    private boolean isSlideshowOn = false;
 
-    boolean isClicked = false;
     int userID;
     String userEmail;
     String profileLocation;
     String firstName;
     String lastName;
+    String preference;
+    String about;
     boolean inChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Session class instance
+        session = new SessionManagement(getApplicationContext());
+        session.checkLogin();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
-        // grabs the intent object that contains the bundled data being passed in
-        Intent thisActivity = getIntent();
+        // cancels current alarms that are set
+        cancelCurrentAlarms();
 
-        // this is a bad way to do this (use bundles and checks instead of directly accessing data from intent)
-        this.userID = thisActivity.getIntExtra("userID", -1);
-        this.userEmail = thisActivity.getStringExtra("inputEmail");
-        this.profileLocation = thisActivity.getStringExtra("profileLocation");
-        this.firstName = thisActivity.getStringExtra("firstName");
-        this.lastName = thisActivity.getStringExtra("lastName");
-        this.inChat = thisActivity.getBooleanExtra("inChat", true);
+        /**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity is he is not
+         * logged in
+         * */
+
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+
+        // name
+        this.firstName = user.get(SessionManagement.KEY_FIRST);
+        this.lastName = user.get(SessionManagement.KEY_LAST);
+        this.inChat = Boolean.parseBoolean(user.get(SessionManagement.KEY_CHATSTATUS));
+        this.userID = Integer.parseInt(user.get(SessionManagement.KEY_USER));
+        this.userEmail = user.get(SessionManagement.KEY_EMAIL);
+        this.profileLocation = user.get(SessionManagement.KEY_PROFILE);
+        this.preference = user.get(SessionManagement.KEY_PREFERENCE);
+        this.about = user.get(SessionManagement.KEY_ABOUT);
 
         // grabs the navigation view
         NavigationView myNav = (NavigationView) findViewById(R.id.nav_view);
@@ -86,7 +115,22 @@ public class MatchActivity extends AppCompatActivity
 
         // image is being updated
         ImageView img = (ImageView) headerView.findViewById(R.id.imageView);
-        new DownloadImageTask(img).execute(this.profileLocation);
+
+        // only starts the timer if the user is logged in
+        if(session.isLoggedIn() && getApplicationContext() != null && this.userID > -1 && this.profileLocation != null && this.firstName != null && this.preference != null && this.about != null)
+        {
+            new DownloadImageTask(img).execute(this.profileLocation);
+
+            boolean alarmUp = (sender != null);
+
+            // checks to see if an instance of our alarm manager is currently up.
+            // if it isn't, then we should start the service that looks for new messages
+            if (!alarmUp)
+            {
+                setOnetimeTimer(getApplicationContext());
+            }
+
+        }
 
         TextView nameText = (TextView) headerView.findViewById(R.id.nameField);
         nameText.setText(this.firstName + " " + this.lastName);
@@ -108,9 +152,9 @@ public class MatchActivity extends AppCompatActivity
         Button matchButton = (Button) findViewById(R.id.match_button);
 
         // if the user is currently in a convrsation, change the button from start matching to open convo
-        if(inChat)
+        if(this.inChat)
         {
-            matchButton.setText("Open Conversation");
+            matchButton.setText("Chat");
         }
 
         // event listexner that will open the new activity
@@ -123,21 +167,27 @@ public class MatchActivity extends AppCompatActivity
                 String matchProfileLocation;
                 String matchFirstName;
                 boolean justMatched = false;
-
-                // default creep level value
-                int creepLevel = -1;
-                //int matchID = -1;
+                int creepLevel;
 
                 if(!inChat)
                 {
                     try {
                         JSONObject myObj = resultJSON.getJSONObject(0);
-                        inChat = true;
-                        creepLevel = myObj.getInt("creepLevel");
-                        //matchID = myObj.getInt("matchID");
                         matchProfileLocation = myObj.getString("profileLocation");
                         matchFirstName = myObj.getString("firstName");
-                        openDialog(matchProfileLocation, matchFirstName, creepLevel);
+                        creepLevel = myObj.getInt("creepLevel");
+
+                        // if the values returned by the json are empty and == -1, then no potential sutors are available
+                        if(matchProfileLocation == null || matchFirstName == null || creepLevel == -1 || matchFirstName.isEmpty() || matchProfileLocation.isEmpty())
+                        {
+                            Toast.makeText(MatchActivity.this, "Unfortunately, there are no potential matches available right now. Please wait to be matched and try again later.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else
+                        {
+                            inChat = true;
+                            openDialog(matchProfileLocation, matchFirstName);
+                        }
 
                     } catch (JSONException | NullPointerException e) {
                         e.printStackTrace();
@@ -152,6 +202,7 @@ public class MatchActivity extends AppCompatActivity
                 //otherwise,
                 else
                 {
+
                     Intent myIntent = new Intent(MatchActivity.this,
                             MessageListActivity.class);
 
@@ -174,12 +225,21 @@ public class MatchActivity extends AppCompatActivity
                     myIntent.putExtra("justMatched", justMatched);
                     myIntent.putExtra("inChat", MatchActivity.this.inChat);
                     myIntent.putExtra("userID", MatchActivity.this.userID);
-                    myIntent.putExtra("creepLevel", creepLevel);
-                    //myIntent.putExtra("matchID", matchID);
                     startActivity(myIntent);
                 }
             }
         });
+
+    }
+
+    public void setOnetimeTimer(Context context) {
+        Log.v("code runs...", "hmmmm");
+        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, MessageIntentService.class);
+        intent.putExtra("userID", this.userID);
+        sender = PendingIntent.getService(context, 0, intent, 0);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 10), 10000, sender);
+        Log.v("code finishes....", "also hmmmm");
 
     }
 
@@ -192,7 +252,7 @@ public class MatchActivity extends AppCompatActivity
         }
     }
 
-    private void openDialog(String matchProfileLocation, String matchFirstName, final int creepLevel)
+    private void openDialog(String matchProfileLocation, String matchFirstName)
     {
         AlertDialog.Builder alertadd = new AlertDialog.Builder(MatchActivity.this, R.style.CustomDialog);
         LayoutInflater factory = LayoutInflater.from(MatchActivity.this);
@@ -201,6 +261,8 @@ public class MatchActivity extends AppCompatActivity
         TextView matchText = (TextView) view.findViewById(R.id.matchText);
         matchText.setText("You've matched with " + matchFirstName + "!");
         new DownloadImageTask(myImage).execute(matchProfileLocation);
+
+        session.handleMatch();
 
         Button chatButton = (Button)view.findViewById(R.id.chatButton);
         chatButton.setOnClickListener(new View.OnClickListener() {
@@ -216,7 +278,6 @@ public class MatchActivity extends AppCompatActivity
                 myIntent.putExtra("inChat", MatchActivity.this.inChat);
                 myIntent.putExtra("jsonArray", "empty");
                 myIntent.putExtra("userID", getUserID());
-                myIntent.putExtra("creepLevel", creepLevel);
                 startActivity(myIntent);
             }
         });
@@ -241,7 +302,8 @@ public class MatchActivity extends AppCompatActivity
 
         // creates a ServerConnectionObject that handles establishing a connection with the remote server
         ServerConnection messageConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
-        String resultString = messageConn.loadMessages(this.userID, this.userEmail);
+        String resultString = messageConn.loadMessages(this.userID, this.userEmail, this.preference);
+        Log.v("PHP RETURNED", resultString);
 
         // attempts to convert the JSONString into a JSONArray for simple data manipulation
         try
@@ -252,6 +314,7 @@ public class MatchActivity extends AppCompatActivity
         catch(JSONException | NullPointerException e)
         {
             Log.v("Failed", e.toString());
+            Log.v("TELL ME", "WTF");
             if(e instanceof NullPointerException)
             {
                 Toast.makeText(MatchActivity.this, "Error Connecting to Internet. Check your connection settings.", Toast.LENGTH_SHORT).show();
@@ -285,6 +348,23 @@ public class MatchActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void cancelCurrentAlarms()
+    {
+        // cancels the existing notification service when the user logs out
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+
+        Intent updateServiceIntent = new Intent(getApplicationContext(), MessageIntentService.class);
+        //PendingIntent pendingUpdateIntent = PendingIntent.getService(getApplicationContext(), 0, updateServiceIntent, 0);
+
+        // Cancel alarms
+        try {
+            alarmManager.cancel(sender);
+            Log.v("AlarmManager", "CANCELED");
+        } catch (Exception e) {
+            Log.e("AlarmManager update", e.toString());
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -300,6 +380,11 @@ public class MatchActivity extends AppCompatActivity
             {
                 public void onClick(DialogInterface dialog, int which)
                 {
+
+                    session.logoutUser();
+
+                    cancelCurrentAlarms();
+
                     // process logout
                     Intent myIntent = new Intent(MatchActivity.this,
                             LoginActivity.class);
@@ -336,6 +421,8 @@ public class MatchActivity extends AppCompatActivity
             myIntent.putExtra("firstName", firstName);
             myIntent.putExtra("lastName", lastName);
             myIntent.putExtra("inChat", inChat);
+            myIntent.putExtra("preference", this.preference);
+            myIntent.putExtra("about", this.about);
             startActivity(myIntent);
         }
 

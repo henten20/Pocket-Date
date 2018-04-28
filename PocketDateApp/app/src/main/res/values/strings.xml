@@ -2,7 +2,7 @@
     <string name="app_name">PocketDate</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
+    <string name="prompt_email">Email/Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -24,9 +24,9 @@
     <string name="title_send_feedback">Send Feedback</string>
     <string name="title_faq">FAQ</string>
     <string name="summary_faq">View frequently asked questions</string>
-    <string name="url_faq">https://cop4331groupeight.com/</string>
+    <string name="url_faq">http://cop4331groupeight.com/</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="url_privacy">https://cop4331groupeight.com/</string>
+    <string name="url_privacy">http://cop4331groupeight.com/</string>
     <string name="title_terms">Terms &amp; Conditions</string>
     <string name="url_terms">https://cop4331groupeight.com/</string>
     <string name="title_version">Version</string>
@@ -36,6 +36,15 @@
     <string name="reason_label">Reason for filing report</string>
     <string name="block_label">Would you like to block this user?</string>
     <string name="comments_label">Additional comments</string>
+    <string name="PreferenceSummary">Set your preferred distance</string>
+    <string name="PreferenceTitle">Distance</string>
+    <string name="PreferenceFormat">%d mi.</string>
+    <string name="settings_password2">Password</string>
+    <string name="settings_password">Confirm Password</string>
+    <string name="settings_pwd_equal">Passwords match</string>
+    <string name="settings_pwd_not_equal">Passwords do not match</string>
+    <string name="pass_change_text">Change Password</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
 
     <string-array name="reason_array">
         <item>Fake Account</item>

@@ -3,16 +3,21 @@ package com.example.pocketdate;
 
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -23,6 +28,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -38,11 +44,16 @@ import java.io.InputStream;
 public class ProfileActivity extends AppCompatPreferenceActivity  {
     private static final String TAG = ProfileActivity.class.getSimpleName();
 
+    // Session Manager Class
+    SessionManagement session;
+
     int userID;
     String userEmail;
     String profileLocation;
     String firstName;
     String lastName;
+    String preference;
+    String about;
     boolean inChat;
     private boolean changeHappened;
 
@@ -53,9 +64,13 @@ public class ProfileActivity extends AppCompatPreferenceActivity  {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent thisActivity = getIntent();
 
+        // Session class instance
+        session = new SessionManagement(getApplicationContext());
+
         // change happened represents whether or not the user changed any personal information while on this page
         // if they did, then we need to refresh the mainactivity page when we return. otherwise, onBackPressed() will suffice
         this.changeHappened = false;
+
         // this is a bad way to do this (use bundles and checks instead of directly accessing data from intent)
         this.userID = thisActivity.getIntExtra("userID", -1);
         this.userEmail = thisActivity.getStringExtra("inputEmail");
@@ -63,6 +78,26 @@ public class ProfileActivity extends AppCompatPreferenceActivity  {
         this.firstName = thisActivity.getStringExtra("firstName");
         this.lastName = thisActivity.getStringExtra("lastName");
         this.inChat = thisActivity.getBooleanExtra("inChat", true);
+        this.about = thisActivity.getStringExtra("about");
+        this.preference = thisActivity.getStringExtra("preference");
+
+        if(this.userID == -1)
+        {
+            HashMap<String, String> user = session.getUserDetails();
+
+            // name
+            this.firstName = user.get(SessionManagement.KEY_FIRST);
+            this.lastName = user.get(SessionManagement.KEY_LAST);
+            this.inChat = Boolean.parseBoolean(user.get(SessionManagement.KEY_CHATSTATUS));
+            this.userID = Integer.parseInt(user.get(SessionManagement.KEY_USER));
+            this.userEmail = user.get(SessionManagement.KEY_EMAIL);
+            this.profileLocation = user.get(SessionManagement.KEY_PROFILE);
+            this.preference = user.get(SessionManagement.KEY_PREFERENCE);
+            this.about = user.get(SessionManagement.KEY_ABOUT);
+            this.changeHappened = true;
+
+        }
+
         //load profile fragment
         getFragmentManager().beginTransaction().replace(android.R.id.content, new ProfilePreferenceFragment()).commit();
 
@@ -91,7 +126,7 @@ public class ProfileActivity extends AppCompatPreferenceActivity  {
                     imageStream = getContentResolver().openInputStream(targetUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                     String encodedImage = encodeImage(selectedImage);
-                    // establishes a connectino to our remote server where our php code will process the uploading of the image
+                    // establishes a connection to our remote server where our php code will process the uploading of the image
                     ServerConnection myServer = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
                     String resultString = myServer.updateProfilePic(encodedImage, this.userID);
                     Toast.makeText(getApplicationContext(), "Successfully updated profile picture", Toast.LENGTH_SHORT).show();
@@ -139,24 +174,108 @@ public class ProfileActivity extends AppCompatPreferenceActivity  {
 
     // preference fragment
     public static class ProfilePreferenceFragment extends PreferenceFragment {
+
+        public ProfileActivity mainProfile;
+
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
 
             // grabs the preference item that will activate the method for changing a user's profile image
-                    Preference myPref = (Preference) findPreference("change_prof_pic");
-                    myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                        public boolean onPreferenceClick(Preference preference) {
-                            // in onCreate or any event where your want the user to  select a file
-                            Intent intent = new Intent(Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            // call main activity's startActivityForResult function (allows us to return data to main activity)
-                            // the 2 is an arbitrary request code. value just needs to be something greater than 0
-                            getActivity().startActivityForResult(intent, 2);
-                            return true;
+            Preference myPref = (Preference) findPreference("change_prof_pic");
+            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    // in onCreate or any event where your want the user to  select a file
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    // call main activity's startActivityForResult function (allows us to return data to main activity)
+                    // the 2 is an arbitrary request code. value just needs to be something greater than 0
+                    getActivity().startActivityForResult(intent, 2);
+                    return true;
                 }
-            });}
+            });
+
+            // creates a link between the preference fragment and the profileactivity
+            this.mainProfile = (ProfileActivity) getActivity();
+
+            final int userID = mainProfile.userID;
+
+            final EditTextPreference editPref = (EditTextPreference) findPreference("about_text");
+            final ListPreference genderPref = (ListPreference) findPreference("gender_pref");
+
+            editPref.setSummary(mainProfile.about);
+            genderPref.setSummary(mainProfile.preference);
+
+            if(mainProfile.preference == "Male")
+            {
+                genderPref.setValueIndex(0);
+            }
+            else
+            {
+                genderPref.setValueIndex(1);
+            }
+
+
+            editPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    editPref.setSummary(newValue.toString());
+                    setAbout(newValue.toString());
+                    return true;
+                }
+            });
+
+            genderPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                    if(Integer.parseInt(newValue.toString()) == 1)
+                    {
+                        genderPref.setSummary("Male");
+                        setPreference("Male");
+                    }
+                    else
+                    {
+                        genderPref.setSummary("Female");
+                        setPreference("Female");
+                    }
+                    return true;
+                }
+            });
+
+            Preference changePref = (Preference) findPreference("change_password");
+
+            changePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+
+                public boolean onPreferenceClick(Preference preference) {
+
+                    Intent myIntent = new Intent(getActivity(), ChangePasswordActivity.class);
+                    myIntent.putExtra("userID", userID);
+                    startActivity(myIntent);
+
+                    return true;
+
+                }
+
+            });
+        }
+
+        public void setPreference(String change)
+        {
+            this.mainProfile.preference = change;
+            this.mainProfile.changeHappened = true;
+        }
+
+        public void setAbout(String change)
+        {
+            this.mainProfile.about = change;
+            this.mainProfile.changeHappened = true;
+        }
+
+
     }
 
     // if the user selects the back button, process the request depending on whether or not any data was altered (profile pic change, etc.)
@@ -167,6 +286,12 @@ public class ProfileActivity extends AppCompatPreferenceActivity  {
             // if there was a change to the profile information, we need to refresh the main activity
             if(changeHappened)
             {
+                ServerConnection updateConn = new ServerConnection("http://cop4331groupeight.com/chatapi.php");
+                String resultString = updateConn.updateInfo(this.userID, this.about, this.preference);
+
+                // updates the sharedpreference with the desired info
+                session.updateInfo(this.about, this.preference);
+
                 Intent returnToMain = new Intent(this, MatchActivity.class);
                 returnToMain.putExtra("userID", userID);
                 returnToMain.putExtra("inputEmail", userEmail);

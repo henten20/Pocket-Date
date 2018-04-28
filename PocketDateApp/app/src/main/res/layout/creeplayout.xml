@@ -7,31 +7,29 @@
     >
 
     <TextView
-        android:id="@+id/matchText"
+        android:id="@+id/creepText"
         android:layout_width="400dp"
         android:textAlignment="center"
         android:layout_height="50dp"
         android:textColor="@color/white"
         android:fontFamily="georgia"
         android:textSize="40px"
-        android:text="You've matched with Priyank!"
+        android:text="Not a creep!"
         />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+
+    <ImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profileImageView"
+        android:id="@+id/creepView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:paddingTop="30dp"
-        android:src="@drawable/profile"
+        android:src="@drawable/progress0"
         android:layout_centerInParent="true"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"
         android:background="@color/transparent"/>
 
-
     <Button
-        android:id="@+id/chatButton"
+        android:id="@+id/closeButton"
         android:layout_width="match_parent"
         android:layout_height="370dp"
         android:background="@android:color/transparent"
